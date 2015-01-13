@@ -1,12 +1,22 @@
 
 package org.usfirst.frc.team294.robot;
 
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
 import org.usfirst.frc.team294.robot.commands.ExampleCommand;
+import org.usfirst.frc.team294.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team294.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team294.robot.subsystems.Intake;
+import org.usfirst.frc.team294.robot.subsystems.Jaw;
+import org.usfirst.frc.team294.robot.subsystems.Pivot;
+import org.usfirst.frc.team294.robot.subsystems.RangeFinder;
+import org.usfirst.frc.team294.robot.subsystems.Shifter;
+import org.usfirst.frc.team294.robot.subsystems.Winch;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -17,6 +27,33 @@ import org.usfirst.frc.team294.robot.subsystems.ExampleSubsystem;
  */
 public class Robot extends IterativeRobot {
 
+	public static PowerDistributionPanel pdp;
+	public static Gyro gyro;
+
+	public static Drivetrain drivetrain;
+	public static ToteGrab toteGrab;
+	public static CanGrab canGrab;
+	public static Telescope telescope;
+	public static IntakeRollers intakeRollers;
+	//public static RangeFinder rangeFinder;
+	//public static Shifter shifter;
+	//public static Winch winch;
+
+	public static OI oi;
+
+	public static boolean disabledTrigPressed = false;
+	public static boolean disabledButton2Pressed = false;
+	public static boolean disabledButton5Pressed = false;
+	public static boolean disabledButton4Pressed = false;
+	public static boolean disabledButton3Pressed = false;
+
+	public static int autoMode = 0;
+
+	public static float autoDelay = 0;
+
+	public static int startPosition = 0;
+	
+	
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 
