@@ -60,12 +60,22 @@ public class OI {
 			co[i] = new JoystickButton(coStick, i);
 			test[i] = new JoystickButton(testStick, i);
 		}
+		if(Robot.hasCan())
+			left[1].whenPressed(new ReleaseCan());
+		else
+			left[1].whenPressed(new GrabCan());
+		
+		if(Robot.hasTote())
+			right[1].whenPressed(new ReleaseTote());
+		else
+			right[1].whenPressed(new GrabTote());
 
-		left[1].whenPressed(new ShiftDown());
-		right[1].whenPressed(new ShiftUp());
-
-		right[4].whenPressed(new SingleStickDrive());
-		right[3].whenPressed(new ArcadeDriveWithJoysticks());
-		right[2].whenPressed(new TankDriveWithJoysticks());
+		co[4].whenPressed(new TelescopeToHeight(1));
+		co[3].whenPressed(new TelescopeToHeight(2));
+		co[2].whenPressed(new TelescopeToHeight(3));
+		co[1].whenPressed(new TelescopeToHeight(4));
+		
+		co[5].whenPressed(new IntakeOn()); // make sure IntakeRollers command tests whether its on or not and determines direction based on that
+		co[6].whenPressed(new IntakeStop());
 	}
 }
