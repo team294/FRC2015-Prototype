@@ -61,9 +61,6 @@ public class OI {
 			test[i] = new JoystickButton(testStick, i);
 		}
 
-		left[1].whenPressed(new ShiftDown());
-		right[1].whenPressed(new ShiftUp());
-
 		right[4].whenPressed(new SingleStickDrive());
 		right[3].whenPressed(new ArcadeDriveWithJoysticks());
 		right[2].whenPressed(new TankDriveWithJoysticks());
