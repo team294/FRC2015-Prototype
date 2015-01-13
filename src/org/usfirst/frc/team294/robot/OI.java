@@ -60,15 +60,11 @@ public class OI {
 			co[i] = new JoystickButton(coStick, i);
 			test[i] = new JoystickButton(testStick, i);
 		}
-		if(Robot.hasCan())
-			left[1].whenPressed(new ReleaseCan());
-		else
-			left[1].whenPressed(new GrabCan());
+
+		left[1].whenPressed(new GrabOrReleaseCan());
 		
-		if(Robot.hasTote())
-			right[1].whenPressed(new ReleaseTote());
-		else
-			right[1].whenPressed(new GrabTote());
+		right[1].whenPressed(new GrabOrReleaseTote());
+
 
 		co[4].whenPressed(new TelescopeToHeight(1));
 		co[3].whenPressed(new TelescopeToHeight(2));
