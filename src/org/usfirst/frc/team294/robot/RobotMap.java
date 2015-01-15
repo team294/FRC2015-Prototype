@@ -12,6 +12,7 @@ public class RobotMap {
  	public static int kPWM_leftMotor2 = 1;
  	public static int kPWM_rightMotor1 = 3;
  	public static int kPWM_rightMotor2 = 4;
+ 	
 
     
     // If you are using multiple modules, make sure to define both the port
@@ -22,6 +23,8 @@ public class RobotMap {
   // PWM
  	public static int kPWM_intakeWheelMotor = 7;
  	public static int kPWM_elevator = 8;
+ 	public static int kPWM_telescope1 = 5;
+ 	public static int kPWM_telescope2 = 6;
 
  	// Digital Inputs
  	public static int kDIN_leftDriveEncoderA = 0;
@@ -34,6 +37,7 @@ public class RobotMap {
  	public static int kDIN_kickerEncoderB = 7;
  	public static int kDIN_kickerResetLimitSwitch = 8;
  	public static int kDIN_buttonIntake = 9;
+ 	
 
  	// Analog Inputs
  	public static int kAIN_elevatorPot = 0;
@@ -42,10 +46,7 @@ public class RobotMap {
  	// Solenoids
  	public static int kSOL_shifterPiston_reverse = 0;
  	public static int kSOL_shifterPiston_forward = 1;
- 	public static int kSOL_totePistonModule = 1;
- 	public static int kSOL_totePiston_reverse = 3;
- 	public static int kSOL_totePiston_forward = 2;
- 	public static int kSOL_canPistonModule = 1;
+ 	public static int kSOL_totePiston = 1;
  	public static int kSOL_canPiston = 4;
  	public static int kSOL_system_module = 1;
  	public static int kSOL_system = 0;

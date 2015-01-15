@@ -1,5 +1,7 @@
 package org.usfirst.frc.team294.robot.commands;
 
+import org.usfirst.frc.team294.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -8,8 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class GrabOrReleaseTote extends Command {
 
     public GrabOrReleaseTote() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    	requires(Robot.toteGrab);
     }
 
     // Called just before this Command runs the first time
@@ -18,10 +19,12 @@ public class GrabOrReleaseTote extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(isToteGrabbed())
-    		releaseTote();
+    	if(Robot.toteGrab.isOpen())
+    	{
+    		Robot.toteGrab.actuateClose();
+    	}
     	else
-    		grabTote();
+    		Robot.toteGrab.actuateOpen();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -37,21 +40,4 @@ public class GrabOrReleaseTote extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     }
-    
-    public boolean isToteGrabbed()
-    {
-    	return true;
-    	//return toteSolenoid.getPosition(); //Not real method, find method for getting position of pneumatic
-    }
-    
-    public void grabTote()
-    {
-    	//Actuate solenoid in
-    }
-    
-    public void releaseTote()
-    {
-    	//Actuate solenoid out
-    }
- }
-
+}

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team294.robot.commands;
 
+import org.usfirst.frc.team294.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -9,22 +11,24 @@ public class GrabOrReleaseCan extends Command {
 
     public GrabOrReleaseCan() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.canGrab);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(isCanGrabbed())
+		if(Robot.canGrab.isOpen())
     	{
-    		releaseCan();
+    		Robot.canGrab.grab();
     	}
-    	else
-    		grabCan();
-    	//Execute pneumatic
+		else
+		{
+			Robot.canGrab.release();
+		}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -39,21 +43,5 @@ public class GrabOrReleaseCan extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    }
-    
-    public boolean isCanGrabbed()
-    {
-    	return false;
-    	//return canGrabSolenoid.getPosition();  //find real method for getting position of pneumatic
-    }
-    
-    public void releaseCan()
-    {
-    	//execute solenoid
-    }
-    
-    public void grabCan()
-    {
-    	//execute solenoid
     }
 }

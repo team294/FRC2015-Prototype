@@ -74,7 +74,7 @@ public class OI {
 		co[2].whenPressed(new TelescopeToHeight(3));
 		co[1].whenPressed(new TelescopeToHeight(4));
 		
-		co[5].whenPressed(new IntakeOn()); // make sure IntakeRollers command tests whether its on or not and determines direction based on that
+		co[5].whenPressed(new IntakeReverse());
 		co[6].whenPressed(new IntakeStop());
 	}
 }
