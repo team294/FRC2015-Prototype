@@ -65,6 +65,9 @@ public class OI {
 		
 		right[1].whenPressed(new GrabOrReleaseTote());
 
+		right[4].whenPressed(new SingleStickDrive());
+		right[3].whenPressed(new ArcadeDriveWithJoysticks());
+		right[2].whenPressed(new TankDriveWithJoysticks());
 
 		co[4].whenPressed(new TelescopeToHeight(1));
 		co[3].whenPressed(new TelescopeToHeight(2));

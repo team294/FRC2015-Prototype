@@ -1,22 +1,21 @@
 
 package org.usfirst.frc.team294.robot;
 
+import org.usfirst.frc.team294.robot.commands.ExampleCommand;
+import org.usfirst.frc.team294.robot.subsystems.CanGrab;
+import org.usfirst.frc.team294.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team294.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team294.robot.subsystems.IntakeRollers;
+import org.usfirst.frc.team294.robot.subsystems.RangeFinder;
+import org.usfirst.frc.team294.robot.subsystems.Telescope;
+import org.usfirst.frc.team294.robot.subsystems.ToteGrab;
+
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
-import org.usfirst.frc.team294.robot.commands.ExampleCommand;
-import org.usfirst.frc.team294.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team294.robot.subsystems.ExampleSubsystem;
-import org.usfirst.frc.team294.robot.subsystems.Intake;
-import org.usfirst.frc.team294.robot.subsystems.Jaw;
-import org.usfirst.frc.team294.robot.subsystems.Pivot;
-import org.usfirst.frc.team294.robot.subsystems.RangeFinder;
-import org.usfirst.frc.team294.robot.subsystems.Shifter;
-import org.usfirst.frc.team294.robot.subsystems.Winch;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,6 +24,7 @@ import org.usfirst.frc.team294.robot.subsystems.Winch;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
+
 public class Robot extends IterativeRobot {
 
 	public static PowerDistributionPanel pdp;
@@ -35,9 +35,7 @@ public class Robot extends IterativeRobot {
 	public static CanGrab canGrab;
 	public static Telescope telescope;
 	public static IntakeRollers intakeRollers;
-	//public static RangeFinder rangeFinder;
-	//public static Shifter shifter;
-	//public static Winch winch;
+	public static RangeFinder rangeFinder;
 
 	public static OI oi;
 
