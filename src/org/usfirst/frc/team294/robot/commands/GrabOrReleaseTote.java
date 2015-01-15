@@ -40,6 +40,7 @@ public class GrabOrReleaseTote extends Command {
     
     public boolean isToteGrabbed()
     {
+    	return true;
     	//return toteSolenoid.getPosition(); //Not real method, find method for getting position of pneumatic
     }
     
@@ -52,5 +53,5 @@ public class GrabOrReleaseTote extends Command {
     {
     	//Actuate solenoid out
     }
-    }
-}
+ }
+
