@@ -1,10 +1,8 @@
 
 package org.usfirst.frc.team294.robot;
 
-import org.usfirst.frc.team294.robot.commands.ExampleCommand;
 import org.usfirst.frc.team294.robot.subsystems.CanGrab;
 import org.usfirst.frc.team294.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team294.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team294.robot.subsystems.IntakeRollers;
 import org.usfirst.frc.team294.robot.subsystems.RangeFinder;
 import org.usfirst.frc.team294.robot.subsystems.Telescope;
@@ -51,9 +49,6 @@ public class Robot extends IterativeRobot {
 
 	public static int startPosition = 0;
 	
-	
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-
     Command autonomousCommand;
 
     /**
@@ -63,7 +58,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
         // instantiate the command used for the autonomous period
-        autonomousCommand = new ExampleCommand();
+      
     }
 	
 	public void disabledPeriodic() {

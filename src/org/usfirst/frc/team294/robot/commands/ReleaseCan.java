@@ -1,5 +1,7 @@
 package org.usfirst.frc.team294.robot.commands;
 
+import org.usfirst.frc.team294.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -10,6 +12,7 @@ public class ReleaseCan extends Command {
     public ReleaseCan() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(Robot.canGrab);
     }
 
     // Called just before this Command runs the first time
@@ -18,10 +21,13 @@ public class ReleaseCan extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.canGrab.release();
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+        if(Robot.canGrab.isOpen())return true;
         return false;
     }
 
