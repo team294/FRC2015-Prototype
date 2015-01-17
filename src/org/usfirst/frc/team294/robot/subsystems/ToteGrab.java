@@ -1,6 +1,7 @@
 package org.usfirst.frc.team294.robot.subsystems;
 
 import org.usfirst.frc.team294.robot.RobotMap;
+import org.usfirst.frc.team294.robot.util.PotLimitedSpeedController;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -13,8 +14,9 @@ public class ToteGrab extends Subsystem {
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	//DoubleSolenoid totePiston = new DoubleSolenoid(RobotMap.kSOL_totePistonModule, RobotMap.kSOL_totePiston_forward, RobotMap.kSOL_totePiston_reverse);
-	Solenoid totePiston = new Solenoid(RobotMap.kSOL_totePiston);
+	
+	
+	
 	private boolean open = true;
 
     public void initDefaultCommand() {
@@ -29,13 +31,13 @@ public class ToteGrab extends Subsystem {
     
     public void actuateOpen()
     {
-    	totePiston.set(true);
+    	
     	open = true;
     }
     
     public void actuateClose()
     {
-    	totePiston.set(false);
+    	
     	open = false;
     }
 }

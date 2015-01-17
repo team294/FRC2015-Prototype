@@ -7,40 +7,42 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
+
 public class GrabTote extends Command {
 
-    public GrabTote() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.toteGrab);
-    	requires(Robot.intakeRollers);
-    	requires(Robot.telescope);
-    }
+	public GrabTote() {
+		// Use requires() here to declare subsystem dependencies
+		// eg. requires(chassis);
+		requires(Robot.toteGrab);
+		requires(Robot.intakeRollers);
+		requires(Robot.telescope);
+	}
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	Robot.toteGrab.actuateOpen();
-    	//Robot.telescope.actuateOpen();//TODO
-    	//Robot.intakeRollers.actuateOpen();//TODO
-    	
-    }
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {//TODO
+		if(!Robot.toteGrab.isOpen()){
+			Robot.toteGrab.actuateOpen();
+		}else{
+			Robot.toteGrab.actuateClose();
+		}
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return false;
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }
