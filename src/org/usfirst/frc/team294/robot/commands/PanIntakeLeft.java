@@ -1,17 +1,18 @@
 package org.usfirst.frc.team294.robot.commands;
 
-import org.usfirst.frc.team294.robot.Robot;
+import org.usfirst.frc.team294.robot.util.PotLimitedSpeedController;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-//done
-public class IntakeOn extends Command {
-
-    public IntakeOn() {
-        requires(Robot.intakeRollers);
+public class PanIntakeLeft extends Command {
+	
+	//PotLimitedSpeedController toteControllerLeft = new PotLimitedSpeedController();
+    public PanIntakeLeft() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
@@ -20,7 +21,6 @@ public class IntakeOn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intakeRollers.runIn();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,6 +35,5 @@ public class IntakeOn extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.intakeRollers.stop();
     }
 }
