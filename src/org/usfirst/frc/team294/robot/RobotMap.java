@@ -40,7 +40,7 @@ public class RobotMap {
  	
 
  	// Analog Inputs
- 	public static int kAIN_elevatorPot = 0;
+ 	public static int kAIN_telescopePot = 0;
 
 
  	// Solenoids
