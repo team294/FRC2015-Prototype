@@ -141,6 +141,22 @@ public class Telescope extends PIDSubsystem {
 	public synchronized boolean is2Tote() {
 		return m_setpoint == Setpoint.k2Tote;
 	}
+	
+	public synchronized boolean is3Tote() {
+		return m_setpoint == Setpoint.k3Tote;
+	}
+	
+	public synchronized boolean is4Tote() {
+		return m_setpoint == Setpoint.k4Tote;
+	}
+	public synchronized boolean is5Tote() {
+		return m_setpoint == Setpoint.k1Tote;
+	}
+	
+	public synchronized boolean kHumanLoad() {
+		return m_setpoint == Setpoint.kHumanLoad;
+	}
+	
 	//Add other tote levels
 	public synchronized boolean isIntake() {
 		return m_setpoint == Setpoint.kIntake;

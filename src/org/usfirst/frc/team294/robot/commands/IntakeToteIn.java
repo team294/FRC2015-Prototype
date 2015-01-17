@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class IntakeOn extends Command {
+public class IntakeToteIn extends Command {
 
     public IntakeOn() {
         requires(Robot.intakeRollers);
