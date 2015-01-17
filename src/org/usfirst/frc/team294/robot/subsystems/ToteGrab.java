@@ -15,8 +15,6 @@ public class ToteGrab extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	
-	
 	private boolean open = true;
 
     public void initDefaultCommand() {

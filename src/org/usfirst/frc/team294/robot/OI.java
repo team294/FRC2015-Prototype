@@ -61,7 +61,11 @@ public class OI {
 			test[i] = new JoystickButton(testStick, i);
 		}
 
-		left[1].whenPressed(new GrabOrReleaseCan());
+		left[3].whileActive(new PanIntakeLeft());
+		right[3].whileActive(new PanIntakeRight());
+		
+		right[2].whenPressed(new CenterIntake());
+		left[2].whenPressed(new CenterIntake());
 		
 		right[1].whenPressed(new GrabOrReleaseTote());
 
