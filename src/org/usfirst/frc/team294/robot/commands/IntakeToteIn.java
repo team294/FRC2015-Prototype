@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class IntakeToteIn extends Command {
 
-    public IntakeOn() {
+    public IntakeToteIn() {
         requires(Robot.intakeRollers);
     }
 
@@ -34,5 +34,6 @@ public class IntakeToteIn extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.intakeRollers.stop();
     }
 }
