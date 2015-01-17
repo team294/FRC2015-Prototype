@@ -1,5 +1,6 @@
 package org.usfirst.frc.team294.robot.commands;
 
+import org.usfirst.frc.team294.robot.Robot;
 import org.usfirst.frc.team294.robot.util.PotLimitedSpeedController;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -13,6 +14,8 @@ public class PanIntakeLeft extends Command {
     public PanIntakeLeft() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	//requires(Robot.intakeRollers);
+    	requires(Robot.toteGrab);
     }
 
     // Called just before this Command runs the first time
@@ -21,6 +24,7 @@ public class PanIntakeLeft extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.toteGrab.;
     }
 
     // Make this return true when this Command no longer needs to run execute()

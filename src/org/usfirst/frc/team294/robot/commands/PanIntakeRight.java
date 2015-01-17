@@ -1,13 +1,16 @@
 package org.usfirst.frc.team294.robot.commands;
 
+import org.usfirst.frc.team294.robot.RobotMap;
 import org.usfirst.frc.team294.robot.util.PotLimitedSpeedController;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class PanIntakeRight extends Command {
+
 
 	//PotLimitedSpeedController toteControllerRight = new PotLimitedSpeedController();
     public PanIntakeRight() {

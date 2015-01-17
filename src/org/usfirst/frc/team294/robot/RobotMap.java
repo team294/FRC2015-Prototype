@@ -21,10 +21,13 @@ public class RobotMap {
     // public static int rangefinderModule = 1;
      
   // PWM
+
  	public static int kPWM_intakeWheelMotor = 7;
  	public static int kPWM_elevator = 8;
  	public static int kPWM_telescope1 = 5;
  	public static int kPWM_telescope2 = 6;
+	public static int kPWM_intakeMotorLeft = 9;
+	public static int kPWM_intakeMotorRight = 10;
 
  	// Digital Inputs
  	public static int kDIN_leftDriveEncoderA = 0;
@@ -41,12 +44,13 @@ public class RobotMap {
 
  	// Analog Inputs
  	public static int kAIN_telescopePot = 0;
+ 	public static int kAIN_leftIntakePot = 1;
+ 	public static int kAIN_rightIntakePot = 2;
 
 
  	// Solenoids
  	public static int kSOL_shifterPiston_reverse = 0;
  	public static int kSOL_shifterPiston_forward = 1;
- 	public static int kSOL_totePiston = 1;
  	public static int kSOL_canPiston = 4;
  	public static int kSOL_system_module = 1;
  	public static int kSOL_system = 0;
