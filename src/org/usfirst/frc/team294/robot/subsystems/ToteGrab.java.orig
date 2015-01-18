@@ -14,6 +14,9 @@ public class ToteGrab extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
+<<<<<<< HEAD
+	private boolean open = true;
+=======
 	CANTalon leftMotor = new CANTalon(RobotMap.kPWM_intakeMotorLeft);
 	CANTalon rightMotor = new CANTalon(RobotMap.kPWM_intakeMotorRight);
 	
@@ -22,6 +25,7 @@ public class ToteGrab extends Subsystem {
 	
 	private int voltageThreshold=5;//TODO
 	private int isOpenDistance=100;//TODO
+>>>>>>> c6363f5d5d248be0149c20862f813d4d2876fca5
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -48,11 +52,11 @@ public class ToteGrab extends Subsystem {
     	if(motor.getBusVoltage()>voltageThreshold)return true;
     	return false;
     }
-    public void setLeftMotor(double d){
+    public void setLeftMotor(int s){
     	if(isBlocked(leftMotor))return;
-    	leftMotor.set(d);
+    	leftMotor.set(s);
     }
-    public void setRightMotorSpeed(double s){
+    public void setRightMotorSpeed(int s){
     	if(isBlocked(rightMotor))return;
     	rightMotor.set(s);
     }
@@ -65,19 +69,9 @@ public class ToteGrab extends Subsystem {
     public int getVoltageThreshold(){
     	return this.voltageThreshold;
     }
-    public int getRightPosition()
-    {
-    	return leftMotor.getAnalogInPosition();
-    }
-    public int getLeftPosition()
-    {
-    	return rightMotor.getAnalogInPosition();
-    }
-    
     public boolean isOpen(){
     	if(Math.abs(leftMotor.getAnalogInPosition()-rightMotor.getAnalogInPosition())>isOpenDistance)return true;
     	return false;
     }
-
 }
 

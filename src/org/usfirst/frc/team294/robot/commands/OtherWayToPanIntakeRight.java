@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class PanIntakeRight extends Command {
+public class OtherWayToPanIntakeRight extends Command {
 
 	private double error;
 	private double relativeDistance = 0;
 	private double constant = 0.1;
 	//PotLimitedSpeedController toteControllerRight = new PotLimitedSpeedController();
-    public PanIntakeRight() {
+    public OtherWayToPanIntakeRight() {
         requires(Robot.toteGrab);
     }
 
