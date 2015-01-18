@@ -22,6 +22,11 @@ public class MultiCANTalon implements SpeedController {
 		controllers[motor].reverseOutput(isInverted);
 	}
 
+	public CANTalon getCANTalon(int motor)
+	{
+		return controllers[motor];
+	}
+	
 	@Override
 	public void pidWrite(double output) {
 		set(output);

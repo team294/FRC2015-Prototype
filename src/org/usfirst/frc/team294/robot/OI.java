@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team294.robot.commands.*;
+import org.usfirst.frc.team294.robot.subsystems.Pivot;
+import org.usfirst.frc.team294.robot.subsystems.Telescope.Setpoint;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -67,16 +69,20 @@ public class OI {
 		right[2].whenPressed(new CenterIntake());
 		left[2].whenPressed(new CenterIntake());
 		
-		right[1].whenPressed(new GrabOrReleaseTote());
+		right[3].whenPressed(new ManualGrabOrReleaseTote(GrabOrRelease.GRAB));
+		right[4].whenPressed(new ManualGrabOrReleaseTote(GrabOrRelease.RELEASE));
+		right[1].whileHeld(new SafeGrabOrReleaseTote(GrabOrRelease.GRAB));
+		right[2].whileHeld(new SafeGrabOrReleaseTote(GrabOrRelease.RELEASE));
 
-		right[4].whenPressed(new SingleStickDrive());
-		right[3].whenPressed(new ArcadeDriveWithJoysticks());
-		right[2].whenPressed(new TankDriveWithJoysticks());
+		right[11].whenPressed(new SingleStickDrive());
+		right[12].whenPressed(new ArcadeDriveWithJoysticks());
+		right[13].whenPressed(new TankDriveWithJoysticks());
 
-		co[4].whenPressed(new TelescopeToHeight(1));
-		co[3].whenPressed(new TelescopeToHeight(2));
-		co[2].whenPressed(new TelescopeToHeight(3));
-		co[1].whenPressed(new TelescopeToHeight(4));
+		co[5].whenPressed(new TelescopeToHeight(Setpoint.k5Tote));
+		co[4].whenPressed(new TelescopeToHeight(Setpoint.k1Tote));
+		co[3].whenPressed(new TelescopeToHeight(Setpoint.k2Tote));
+		co[2].whenPressed(new TelescopeToHeight(Setpoint.k3Tote));
+		co[1].whenPressed(new TelescopeToHeight(Setpoint.k4Tote));
 		
 		co[5].whenPressed(new IntakeReverse());
 		co[6].whenPressed(new IntakeStop());

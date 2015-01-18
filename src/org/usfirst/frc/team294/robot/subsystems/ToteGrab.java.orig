@@ -14,6 +14,9 @@ public class ToteGrab extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
+<<<<<<< HEAD
+	private boolean open = true;
+=======
 	CANTalon leftMotor = new CANTalon(RobotMap.kPWM_intakeMotorLeft);
 	CANTalon rightMotor = new CANTalon(RobotMap.kPWM_intakeMotorRight);
 	
@@ -21,13 +24,10 @@ public class ToteGrab extends Subsystem {
 	//AnalogPotentiometer right = new AnalogPotentiometer(RobotMap.kAIN_rightIntakePot);
 	
 	private int voltageThreshold=5;//TODO
-	private int preferredOpenDistance=420+69;//TODO
+	private int isOpenDistance=100;//TODO
+>>>>>>> c6363f5d5d248be0149c20862f813d4d2876fca5
 
-    public int getPreferredOpenDistance() {
-		return preferredOpenDistance;
-	}
-
-	public void initDefaultCommand() {
+    public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
@@ -42,23 +42,23 @@ public class ToteGrab extends Subsystem {
     }
     public void panLeftRight(){
     	if(isBlocked(leftMotor))return;
-    	leftMotor.set(-1);
+    	leftMotor.set(1);
     }
     public void panLeftLeft(){
     	if(isBlocked(leftMotor))return;
-    	leftMotor.set(1);
+    	leftMotor.set(-1);
     }
     public boolean isBlocked(CANTalon motor){
     	if(motor.getBusVoltage()>voltageThreshold)return true;
     	return false;
     }
-    public void setLeftMotorSpeed(float leftSpeed){
+    public void setLeftMotor(int s){
     	if(isBlocked(leftMotor))return;
-    	leftMotor.set(leftSpeed);
+    	leftMotor.set(s);
     }
-    public void setRightMotorSpeed(float rightSpeed){
+    public void setRightMotorSpeed(int s){
     	if(isBlocked(rightMotor))return;
-    	rightMotor.set(rightSpeed);
+    	rightMotor.set(s);
     }
     public CANTalon getLeftMotor(){
     	return this.leftMotor;
@@ -69,19 +69,9 @@ public class ToteGrab extends Subsystem {
     public int getVoltageThreshold(){
     	return this.voltageThreshold;
     }
-    public int getRightPosition()
-    {
-    	return leftMotor.getAnalogInPosition();
-    }
-    public int getLeftPosition()
-    {
-    	return rightMotor.getAnalogInPosition();
-    }
-    
     public boolean isOpen(){
-    	if(Math.abs(leftMotor.getAnalogInPosition()-rightMotor.getAnalogInPosition())>=preferredOpenDistance)return true;
+    	if(Math.abs(leftMotor.getAnalogInPosition()-rightMotor.getAnalogInPosition())>isOpenDistance)return true;
     	return false;
     }
-
 }
 
