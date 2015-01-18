@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team294.robot.commands.*;
+import org.usfirst.frc.team294.robot.commands.SafeGrabOrReleaseTote.GrabOrRelease;
 import org.usfirst.frc.team294.robot.subsystems.Pivot;
 import org.usfirst.frc.team294.robot.subsystems.Telescope.Setpoint;
 
@@ -78,11 +79,11 @@ public class OI {
 		right[12].whenPressed(new ArcadeDriveWithJoysticks());
 		right[13].whenPressed(new TankDriveWithJoysticks());
 
-		co[5].whenPressed(new TelescopeToHeight(Setpoint.k5Tote));
-		co[4].whenPressed(new TelescopeToHeight(Setpoint.k1Tote));
-		co[3].whenPressed(new TelescopeToHeight(Setpoint.k2Tote));
-		co[2].whenPressed(new TelescopeToHeight(Setpoint.k3Tote));
-		co[1].whenPressed(new TelescopeToHeight(Setpoint.k4Tote));
+		co[5].whenPressed(new TelescopeToHeight(TelescopeToHeight.Setpoint.k1Tote));
+		co[4].whenPressed(new TelescopeToHeight(TelescopeToHeight.Setpoint.k2Tote));
+		co[3].whenPressed(new TelescopeToHeight(TelescopeToHeight.Setpoint.k3Tote));
+		co[2].whenPressed(new TelescopeToHeight(TelescopeToHeight.Setpoint.k4Tote));
+		co[1].whenPressed(new TelescopeToHeight(TelescopeToHeight.Setpoint.k5Tote));
 		
 		co[5].whenPressed(new IntakeReverse());
 		co[6].whenPressed(new IntakeStop());

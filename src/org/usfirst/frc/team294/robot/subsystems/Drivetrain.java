@@ -124,4 +124,9 @@ public class Drivetrain extends Subsystem {
 		double right = rightDriveEncoder.getDistance();
 		return right;
 	}
+
+	public double getAngle() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
