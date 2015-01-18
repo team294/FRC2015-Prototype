@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team294.robot.commands.*;
+import org.usfirst.frc.team294.robot.commands.SafeGrabOrReleaseTote.GrabOrRelease;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -63,11 +64,14 @@ public class OI {
 
 		left[1].whenPressed(new GrabOrReleaseCan());
 		
-		right[1].whenPressed(new GrabOrReleaseTote());
+		right[3].whenPressed(new ManualGrabOrReleaseTote(GrabOrRelease.GRAB));
+		right[4].whenPressed(new ManualGrabOrReleaseTote(GrabOrRelease.RELEASE));
+		right[1].whileHeld(new SafeGrabOrReleaseTote(GrabOrRelease.GRAB));
+		right[2].whileHeld(new SafeGrabOrReleaseTote(GrabOrRelease.RELEASE));
 
-		right[4].whenPressed(new SingleStickDrive());
-		right[3].whenPressed(new ArcadeDriveWithJoysticks());
-		right[2].whenPressed(new TankDriveWithJoysticks());
+		right[11].whenPressed(new SingleStickDrive());
+		right[12].whenPressed(new ArcadeDriveWithJoysticks());
+		right[13].whenPressed(new TankDriveWithJoysticks());
 
 		co[4].whenPressed(new TelescopeToHeight(1));
 		co[3].whenPressed(new TelescopeToHeight(2));
