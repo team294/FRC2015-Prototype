@@ -52,9 +52,9 @@ public class ToteGrab extends Subsystem {
     	if(motor.getBusVoltage()>voltageThreshold)return true;
     	return false;
     }
-    public void setLeftMotorSpeed(float leftSpeed){
+    public void setLeftMotorSpeed(float d){
     	if(isBlocked(leftMotor))return;
-    	leftMotor.set(leftSpeed);
+    	leftMotor.set(d);
     }
     public void setRightMotorSpeed(float rightSpeed){
     	if(isBlocked(rightMotor))return;

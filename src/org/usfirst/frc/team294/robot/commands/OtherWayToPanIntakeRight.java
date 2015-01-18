@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class OtherWayToPanIntakeRight extends Command {
 
-	private double error;
-	private double relativeDistance = 0;
-	private double constant = 0.1;
+	private float error;
+	private float relativeDistance = 0;
+	private float constant = 1;
 	//PotLimitedSpeedController toteControllerRight = new PotLimitedSpeedController();
     public OtherWayToPanIntakeRight() {
         requires(Robot.toteGrab);
@@ -28,8 +28,8 @@ public class OtherWayToPanIntakeRight extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	error = ((Robot.toteGrab.getLeftPosition() - Robot.toteGrab.getRightPosition()) - relativeDistance) * constant;
-    	Robot.toteGrab.setLeftMotor(.8 - error);
-    	Robot.toteGrab.setRightMotorSpeed(.8 + error);
+    	Robot.toteGrab.setLeftMotorSpeed(1 - error);
+    	Robot.toteGrab.setRightMotorSpeed(1 + error);
     }
 
     // Make this return true when this Command no longer needs to run execute()
