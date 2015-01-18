@@ -47,10 +47,8 @@ public class RobotMap {
  	public static int kAIN_leftIntakePot = 1;
  	public static int kAIN_rightIntakePot = 2;
 
-
  	// Solenoids
- 	public static int kSOL_shifterPiston_reverse = 0;
- 	public static int kSOL_shifterPiston_forward = 1;
+
  	public static int kSOL_canPiston = 4;
  	public static int kSOL_system_module = 1;
  	public static int kSOL_system = 0;
