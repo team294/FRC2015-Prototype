@@ -7,6 +7,8 @@ import org.usfirst.frc.team294.robot.util.MultiCANTalon;
 import org.usfirst.frc.team294.robot.util.PotLimitedSpeedController;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
@@ -15,28 +17,18 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class Telescope extends PIDSubsystem {
+public class Telescope extends Subsystem {
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	int[] telescopeMotors = {RobotMap.kPWM_telescope1,RobotMap.kPWM_telescope2};
 	SpeedController telescope = new MultiCANTalon(telescopeMotors);
-	AnalogInput telescopePot = new AnalogInput(RobotMap.kAIN_telescopePot);
+	//AnalogInput telescopePot = new AnalogInput(RobotMap.kAIN_telescopePot);
 	
-	PotLimitedSpeedController teleMotor = new PotLimitedSpeedController(telescope, telescopePot, "pivMinLimit", "pivMaxLimit");
+	//PotLimitedSpeedController teleMotor = new PotLimitedSpeedController(telescope, telescopePot, "pivMinLimit", "pivMaxLimit");
 	//SpeedController pivotMotor=pivotMotorUnlimited;
 	
-	public enum Setpoint {
-		kStart,
-		k1Tote,
-		k2Tote,
-		k3Tote,
-		k4Tote,
-		k5Tote,
-		kHumanLoad,
-		kIntake
-	}
-	Setpoint m_setpoint;
+
 	
 	public Telescope() {
 		// Use these to get going:
@@ -44,21 +36,28 @@ public class Telescope extends PIDSubsystem {
 		//                  to
 		// enable() - Enables the PID controller.
 		
-		super(Preferences.getInstance().getDouble("pivP", 0.0),
-				Preferences.getInstance().getDouble("pivI", 0.0),
-				Preferences.getInstance().getDouble("pivD", 0.0));
+		//super(Preferences.getInstance().getDouble("pivP", 0.0),
+		//		Preferences.getInstance().getDouble("pivI", 0.0),
+		//		Preferences.getInstance().getDouble("pivD", 0.0));
 		System.out.println("limit="+Preferences.getInstance().getDouble("pivMinLimit", 0.0));		
 		System.out.println("limit="+Preferences.getInstance().getDouble("pivMaxLimit", 0.0));
 		
 		((MultiCANTalon) telescope).SetInverted(1, true);
+		getMainTelescope().changeControlMode(ControlMode.Position);
+		getMainTelescope().setPID(1.0, 1.0, 1.0); //TODO
 		
-		setInputRange(Preferences.getInstance().getDouble("pivMinLimit", 0.0),
-				Preferences.getInstance().getDouble("pivMaxLimit", 5.0));
+		//setInputRange(Preferences.getInstance().getDouble("pivMinLimit", 0.0),
+		//		Preferences.getInstance().getDouble("pivMaxLimit", 5.0));
 		//setOutputRange(-0.75, 0.75);
 		//setTolerance(0.1);
-		setAbsoluteTolerance(0.03);
-		teleMotor.setInverted(true);
-		teleMotor.setScale(1.0/200.0);
+		//setAbsoluteTolerance(0.03);
+	//	teleMotor.setInverted(true);
+	//	teleMotor.setScale(1.0/200.0);
+	}
+	
+	public CANTalon getMainTelescope()
+	{
+		return ((MultiCANTalon) telescope).getCANTalon(0);
 	}
 	
     public void initDefaultCommand() {
@@ -66,49 +65,39 @@ public class Telescope extends PIDSubsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    protected double returnPIDInput() {
-		return telescopePot.getAverageValue() / 200.0;
-	}
+   // protected double returnPIDInput() {
+	//	return telescopePot.getAverageValue() / 200.0;
+	//}
 	
-	protected void usePIDOutput(double output) {
-		teleMotor.set(-output);
-	}
+	//protected void usePIDOutput(double output) {
+	//	teleMotor.set(-output);
+	//}
 
 	public void stop() {
-		disable();
+		//disable();
 	}
 	
 	public void setManual(double value) {
-		if (getPIDController().isEnable())
-			disable();
-		teleMotor.set(value);
+		if (getMainTelescope().isControlEnabled())
+			getMainTelescope().changeControlMode(ControlMode.Speed);
+		getMainTelescope().set(value);
+		//getMainTelescope().disableControl();
 	}
 	
-	public boolean isIntakeUpOk() {
+	/*public boolean isIntakeUpOk() {
 		double pivStartSetpoint = Preferences.getInstance().getDouble("pivStartSetpoint", Double.POSITIVE_INFINITY);
 		if (pivStartSetpoint == Double.POSITIVE_INFINITY)
 			return false;
 		return getPosition() < (pivStartSetpoint+2);
 	}
-	
-	public void goHome() {
+	*/
+/*	public void goHome() {
 		setPrefSetpoint(Setpoint.kStart);
-	}
+	} */
 
-	private void setPrefSetpoint(String pref) {
-		if (pref == null)
-			return;
-		double setp = Preferences.getInstance().getDouble(pref, Double.POSITIVE_INFINITY);
-		if (setp == Double.POSITIVE_INFINITY)
-			return;
-		setSetpoint(setp);
-		if (!getPIDController().isEnable()) {
-			getPIDController().reset();
-			enable();
-		}
-	}
+	
 
-	private String getSetpointPrefName(Setpoint setpoint) {
+	/*private String getSetpointPrefName(Setpoint setpoint) {
 		switch (setpoint) {
 		case kStart:		return "telStartSetpoint";
 		case k1Tote:		return "tel1ToteSetpoint";
@@ -120,17 +109,17 @@ public class Telescope extends PIDSubsystem {
 		case kIntake:		return "telIntakeSetpoint";
 		default:			return null;
 		}
-	}
+	} */
     
-    public void setPrefSetpoint(Setpoint setpoint) {
+ /*   public void setPrefSetpoint(Setpoint setpoint) {
 	
 		setPrefSetpoint(getSetpointPrefName(setpoint));
 		synchronized (this) {
 			m_setpoint = setpoint;
 		}
 	}
-	
-	public synchronized Setpoint getPrefSetpoint() {
+	*/
+/*	public synchronized Setpoint getPrefSetpoint() {
 		return m_setpoint;
 	}
 	
@@ -155,23 +144,23 @@ public class Telescope extends PIDSubsystem {
 	
 	public synchronized boolean kHumanLoad() {
 		return m_setpoint == Setpoint.kHumanLoad;
-	}
+	} */
 	
 	//Add other tote levels
-	public synchronized boolean isIntake() {
-		return m_setpoint == Setpoint.kIntake;
-	}
+//	public synchronized boolean isIntake() {
+//		return m_setpoint == Setpoint.kIntake;
+//	}
 	
-	public boolean onTarget() {
+	/*public boolean onTarget() {
 		//logging.debug("cur: %.2f setpoint: %.2f error: %.2f ontarget: %s",
 		//		self.pidSource.PIDGet(),
 		//		self.pid.GetSetpoint(),
 		//		self.pid.GetError(),
 		//		self.pid.OnTarget())
 		return super.onTarget();
-	}
+	} */
 	
-	public void tweakSetpoint(double amt) {
+	/*public void tweakSetpoint(double amt) {
 		if (getPIDController().isEnable()) {
 			double oldSetpoint = getSetpoint();
 			double newSetpoint = oldSetpoint + amt;
@@ -193,15 +182,14 @@ public class Telescope extends PIDSubsystem {
 			getPIDController().reset();
 			enable();
 		}
-	}
+	}*/
 
-	public void tweakDown() {
+	/*public void tweakDown() {
 		tweakSetpoint(4);
 	}
 	
 	public void tweakUp() {
 		tweakSetpoint(-4);
-	}
-    
+	}*/
 }
 
