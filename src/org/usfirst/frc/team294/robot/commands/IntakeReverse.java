@@ -12,14 +12,14 @@ public class IntakeReverse extends Command {
     public IntakeReverse() {
         requires(Robot.intakeRollers);
     }
-
+    int runMode;
     // Called just before this Command runs the first time
     protected void initialize() {
+    	runMode = Robot.intakeRollers.runMode();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	int runMode = Robot.intakeRollers.runMode();
     	if(runMode == 1) //If intake is running forward
     	{
     		Robot.intakeRollers.runOut(); //run in reverse
@@ -36,7 +36,7 @@ public class IntakeReverse extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

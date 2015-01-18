@@ -7,20 +7,30 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-//done
-public class IntakeStop extends Command {
+public class TestPanRight extends Command {
 
-    public IntakeStop() {
-        requires(Robot.intakeRollers);
+	double leftSpeed=  .25;
+	double rightSpeed= -.25;
+	
+    public TestPanRight() {
+    	requires(Robot.toteGrab);
+    	
+    	
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("panning right");
+    	//relativeDistance=Math.abs(Robot.toteGrab.getLeftMotor().getAnalogInPosition()-Robot.toteGrab.getRightMotor().getAnalogInPosition());
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intakeRollers.stop();
+    	
+    	Robot.toteGrab.setLeftTest(leftSpeed);
+    	Robot.toteGrab.setRightTest(rightSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

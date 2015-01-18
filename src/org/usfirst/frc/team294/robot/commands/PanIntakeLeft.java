@@ -23,6 +23,7 @@ public class PanIntakeLeft extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	relativeDistance=Math.abs(Robot.toteGrab.getLeftMotor().getAnalogInPosition()-Robot.toteGrab.getRightMotor().getAnalogInPosition());
+    	System.out.println("Pan left yoo");
     }
 
     // Called repeatedly when this Command is scheduled to run

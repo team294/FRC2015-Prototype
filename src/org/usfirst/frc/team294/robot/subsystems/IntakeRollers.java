@@ -39,12 +39,12 @@ public class IntakeRollers extends Subsystem {
     
     public void runIn()
     {
-    	intakeMotor.set(1.0);
+    	intakeMotor.set(0.5);
     	runmode = 1;
     }
     public void runOut()
     {
-    	intakeMotor.set(-1.0);
+    	intakeMotor.set(-0.5);
     	runmode = -1;
     }
     public void stop()

@@ -7,20 +7,22 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-//done
-public class IntakeStop extends Command {
+public class PanStop extends Command {
 
-    public IntakeStop() {
-        requires(Robot.intakeRollers);
+    public PanStop() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("panning stopped");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intakeRollers.stop();
+    	Robot.toteGrab.setLeftTest(0);
+    	Robot.toteGrab.setRightTest(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
