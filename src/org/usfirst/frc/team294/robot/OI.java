@@ -69,11 +69,14 @@ public class OI {
 		right[2].whenPressed(new CenterIntake());
 		left[2].whenPressed(new CenterIntake());
 		
-		right[1].whenPressed(new GrabOrReleaseTote());
+		right[3].whenPressed(new ManualGrabOrReleaseTote(GrabOrRelease.GRAB));
+		right[4].whenPressed(new ManualGrabOrReleaseTote(GrabOrRelease.RELEASE));
+		right[1].whileHeld(new SafeGrabOrReleaseTote(GrabOrRelease.GRAB));
+		right[2].whileHeld(new SafeGrabOrReleaseTote(GrabOrRelease.RELEASE));
 
-		right[4].whenPressed(new SingleStickDrive());
-		right[3].whenPressed(new ArcadeDriveWithJoysticks());
-		right[2].whenPressed(new TankDriveWithJoysticks());
+		right[11].whenPressed(new SingleStickDrive());
+		right[12].whenPressed(new ArcadeDriveWithJoysticks());
+		right[13].whenPressed(new TankDriveWithJoysticks());
 
 		co[5].whenPressed(new TelescopeToHeight(Setpoint.k5Tote));
 		co[4].whenPressed(new TelescopeToHeight(Setpoint.k1Tote));

@@ -21,9 +21,13 @@ public class ToteGrab extends Subsystem {
 	//AnalogPotentiometer right = new AnalogPotentiometer(RobotMap.kAIN_rightIntakePot);
 	
 	private int voltageThreshold=5;//TODO
-	private int isOpenDistance=100;//TODO
+	private int preferredOpenDistance=420+69;//TODO
 
-    public void initDefaultCommand() {
+    public int getPreferredOpenDistance() {
+		return preferredOpenDistance;
+	}
+
+	public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
@@ -38,23 +42,23 @@ public class ToteGrab extends Subsystem {
     }
     public void panLeftRight(){
     	if(isBlocked(leftMotor))return;
-    	leftMotor.set(1);
+    	leftMotor.set(-1);
     }
     public void panLeftLeft(){
     	if(isBlocked(leftMotor))return;
-    	leftMotor.set(-1);
+    	leftMotor.set(1);
     }
     public boolean isBlocked(CANTalon motor){
     	if(motor.getBusVoltage()>voltageThreshold)return true;
     	return false;
     }
-    public void setLeftMotor(double d){
+    public void setLeftMotorSpeed(float leftSpeed){
     	if(isBlocked(leftMotor))return;
-    	leftMotor.set(d);
+    	leftMotor.set(leftSpeed);
     }
-    public void setRightMotorSpeed(double s){
+    public void setRightMotorSpeed(float rightSpeed){
     	if(isBlocked(rightMotor))return;
-    	rightMotor.set(s);
+    	rightMotor.set(rightSpeed);
     }
     public CANTalon getLeftMotor(){
     	return this.leftMotor;
@@ -75,7 +79,7 @@ public class ToteGrab extends Subsystem {
     }
     
     public boolean isOpen(){
-    	if(Math.abs(leftMotor.getAnalogInPosition()-rightMotor.getAnalogInPosition())>isOpenDistance)return true;
+    	if(Math.abs(leftMotor.getAnalogInPosition()-rightMotor.getAnalogInPosition())>=preferredOpenDistance)return true;
     	return false;
     }
 
