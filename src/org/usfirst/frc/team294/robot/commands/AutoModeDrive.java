@@ -28,7 +28,7 @@ public class AutoModeDrive extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	addSequential(new WaitCommand(Robot.autoDelay));
-    	addSequential(new AutoDriveForward(87.5));
+    	//addSequential(new AutoDriveForward(87.5));
 
     }
     public void interrupted(){

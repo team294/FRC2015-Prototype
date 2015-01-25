@@ -1,11 +1,12 @@
 package org.usfirst.frc.team294.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team294.robot.commands.*;
-import org.usfirst.frc.team294.robot.commands.SafeGrabOrReleaseTote.GrabOrRelease;
+//import org.usfirst.frc.team294.robot.commands.SafeGrabOrReleaseTote.GrabOrRelease;
 //import org.usfirst.frc.team294.robot.subsystems.Telescope.Setpoint;
 
 /**
@@ -52,7 +53,7 @@ public class OI {
 	Button[] left = new Button[13];
 	Button[] right = new Button[13];
 	Button[] co = new Button[13];
-	Button[] test = new Button[13];
+	public Button[] test = new Button[13];
 
 	public OI() {
 		// Create buttons
@@ -62,23 +63,40 @@ public class OI {
 			co[i] = new JoystickButton(coStick, i);
 			test[i] = new JoystickButton(testStick, i);
 		}
+		
+		
+		test[3].whenPressed(new TeleUpTest());
+		test[3].whenReleased(new TeleStopTest());
+		
+		test[1].whenPressed(new ToteMotorOpen());
+		test[1].whenReleased(new ToteMotorStop());
+		test[4].whenPressed(new ToteMotorClose());
+		test[4].whenReleased(new ToteMotorStop());
+		
+		test[5].whileHeld(new TeleWithJoystick());
+		test[5].whenReleased(new TeleStopTest());
+		
+		//test[6].whenPressed(new TelescopeToMid()); //DO NOT DO THIS
+		
+		test[2].whenPressed(new TeleDownTest());
+		test[2].whenReleased(new TeleStopTest());	
+		
+		test[6].whenPressed(new Rumble());
+		
+		test[8].whenPressed(new IntakeOpen());
+		test[9].whenPressed(new IntakeClose());
+		
+		test[10].whenPressed(new OtherIntIn());
+		test[11].whenPressed(new OtherIntOut());
 
-		left[3].whileActive(new PanIntakeLeft());
+		right[2].whenPressed(new TankDriveWithJoysticks());
+	/*	left[3].whileActive(new PanIntakeLeft());
 		right[3].whileActive(new PanIntakeRight());
 		
 		right[2].whenPressed(new CenterIntake());
 		left[2].whenPressed(new CenterIntake());
 		
-		//Test code
-		test[4].whileActive(new TestPanLeft());
-		test[4].whenReleased(new PanStop());
-		test[5].whileActive(new TestPanRight());
-		test[5].whenReleased(new PanStop());
-		test[8].whenPressed(new IntakeStop()); //Intake motor on port 7
-		test[9].whenPressed(new IntakeToteIn());
-		test[10].whenPressed(new IntakeReverse());
-		test[11].whenPressed(new IntakeOut());
-		//End test code
+
 		
 		right[3].whenPressed(new ManualGrabOrReleaseTote(GrabOrRelease.GRAB));
 		right[4].whenPressed(new ManualGrabOrReleaseTote(GrabOrRelease.RELEASE));
@@ -87,15 +105,15 @@ public class OI {
 
 		right[11].whenPressed(new SingleStickDrive());
 		right[12].whenPressed(new ArcadeDriveWithJoysticks());
-		//right[13].whenPressed(new TankDriveWithJoysticks()); //CAN NOT BE 13
+		//right[13].whenPressed(new TankDriveWithJoysticks()); //CAN NOT BE 13 */
 
-		co[5].whenPressed(new TelescopeToHeight(TelescopeToHeight.Setpoint.k1Tote));
+	/*	co[5].whenPressed(new TelescopeToHeight(TelescopeToHeight.Setpoint.k1Tote));
 		co[4].whenPressed(new TelescopeToHeight(TelescopeToHeight.Setpoint.k2Tote));
 		co[3].whenPressed(new TelescopeToHeight(TelescopeToHeight.Setpoint.k3Tote));
 		co[2].whenPressed(new TelescopeToHeight(TelescopeToHeight.Setpoint.k4Tote));
 		co[1].whenPressed(new TelescopeToHeight(TelescopeToHeight.Setpoint.k5Tote));
 		
 		co[5].whenPressed(new IntakeReverse());
-		co[6].whenPressed(new IntakeStop());
+		co[6].whenPressed(new IntakeStop()); */
 	}
 }

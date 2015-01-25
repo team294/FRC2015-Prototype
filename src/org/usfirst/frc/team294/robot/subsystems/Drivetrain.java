@@ -2,6 +2,7 @@ package org.usfirst.frc.team294.robot.subsystems;
 
 import org.usfirst.frc.team294.robot.RobotMap;
 import org.usfirst.frc.team294.robot.commands.TankDriveWithJoysticks;
+//import org.usfirst.frc.team294.robot.commands.TankDriveWithJoysticks;
 import org.usfirst.frc.team294.robot.util.MultiCANTalon;
 import org.usfirst.frc.team294.robot.util.RateLimitFilter;
 
@@ -24,10 +25,10 @@ public class Drivetrain extends Subsystem {
 	
 	RobotDrive drive = new RobotDrive(leftMotor, rightMotor);
 
-	Encoder rightDriveEncoder = new Encoder(RobotMap.kDIN_rightDriveEncoderA,
+	/*Encoder rightDriveEncoder = new Encoder(RobotMap.kDIN_rightDriveEncoderA,
 			RobotMap.kDIN_rightDriveEncoderB);
 	Encoder leftDriveEncoder = new Encoder(RobotMap.kDIN_leftDriveEncoderA,
-			RobotMap.kDIN_leftDriveEncoderB);
+			RobotMap.kDIN_leftDriveEncoderB); */
 
 	RateLimitFilter leftFilter = new RateLimitFilter(6.0);
 	RateLimitFilter rightFilter = new RateLimitFilter(6.0);
@@ -56,7 +57,7 @@ public class Drivetrain extends Subsystem {
 		lowBatteryScale = 1.0;
 	}
 
-	public void resetEncoders() {
+	/*public void resetEncoders() {
 		leftDriveEncoder.reset();
 		rightDriveEncoder.reset();
 	}
@@ -81,7 +82,7 @@ public class Drivetrain extends Subsystem {
 		// logging.info("lenc: %s renc: %s lout: %s rout: %s", leftValue,
 		// rightValue, leftSpeed, rightSpeed)
 		tankDrive(leftSpeed, rightSpeed);
-	}
+	} */
 
 	public void tankDrive(double lPower, double rPower) {
 		double l = leftFilter.update(lPower);
@@ -100,7 +101,7 @@ public class Drivetrain extends Subsystem {
 		drive.tankDrive(l * lowBatteryScale, r * lowBatteryScale, false);
 	}
 
-	public void arcDrive(double lPower, double rPower) {
+	/*public void arcDrive(double lPower, double rPower) {
 		double l = leftFilter.update(lPower);
 		double r = rightFilter.update(rPower);
 		// System.out.println("voltage: " + Robot.pdp.getVoltage());
@@ -109,11 +110,11 @@ public class Drivetrain extends Subsystem {
 		 * (lowBatteryTimer.get() > 0.1) { lowBatteryScaleTimer.reset();
 		 * lowBatteryScale = 0.25; } if (lowBatteryScaleTimer.get() > 0.5)
 		 */
-		lowBatteryScale = 1.0;
+	/*	lowBatteryScale = 1.0;
 		drive.arcadeDrive(l * lowBatteryScale, r * lowBatteryScale, false);
-	}
+	} */
 
-	public double getLeft() {
+	/*public double getLeft() {
 		leftDriveEncoder.setDistancePerPulse(.1);
 		double left = leftDriveEncoder.getDistance();
 		return left;
@@ -128,5 +129,5 @@ public class Drivetrain extends Subsystem {
 	public double getAngle() {
 		// TODO Auto-generated method stub
 		return 0;
-	}
+	} */
 }

@@ -2,17 +2,26 @@
 package org.usfirst.frc.team294.robot;
 
 
-import org.usfirst.frc.team294.robot.commands.IntakeReverse;
+//import org.usfirst.frc.team294.robot.commands.IntakeReverse;
 
-import org.usfirst.frc.team294.robot.commands.IntakeStop;
+//import org.usfirst.frc.team294.robot.commands.IntakeStop;
 
+import org.usfirst.frc.team294.robot.commands.TankDriveWithJoysticks;
 import org.usfirst.frc.team294.robot.subsystems.CanGrab;
+import org.usfirst.frc.team294.robot.subsystems.DoublePistonIntake;
 import org.usfirst.frc.team294.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team294.robot.subsystems.IntakeRollers;
 import org.usfirst.frc.team294.robot.subsystems.RangeFinder;
 import org.usfirst.frc.team294.robot.subsystems.Telescope;
-import org.usfirst.frc.team294.robot.subsystems.ToteGrab;
+//import org.usfirst.frc.team294.robot.subsystems.ToteGrab;
 
+
+
+
+import org.usfirst.frc.team294.robot.subsystems.ToteMotorClose;
+import org.usfirst.frc.team294.robot.subsystems.compress;
+
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -35,11 +44,14 @@ public class Robot extends IterativeRobot {
 	public static Gyro gyro;
 
 	public static Drivetrain drivetrain;
-	public static ToteGrab toteGrab;
+	//public static ToteGrab toteGrab;
 	public static CanGrab canGrab;
 	public static Telescope telescope;
 	public static IntakeRollers intakeRollers;
 	public static RangeFinder rangeFinder;
+	public static DoublePistonIntake doublePistonIntake;
+	public static compress compressor;
+	public static ToteMotorClose toteMotorClose;
 
 	public static OI oi;
 
@@ -64,20 +76,23 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	pdp = new PowerDistributionPanel();
     	
-    	toteGrab = new ToteGrab();
+    	//toteGrab = new ToteGrab();
+    	doublePistonIntake = new DoublePistonIntake();
     	canGrab = new CanGrab();
     	drivetrain = new Drivetrain();
     	telescope = new Telescope();
     	intakeRollers = new IntakeRollers();
     	rangeFinder = new RangeFinder();
+    	compressor = new compress();
+    	toteMotorClose = new ToteMotorClose();
     	
-    	SmartDashboard.putData(drivetrain);
+    	/*SmartDashboard.putData(drivetrain);
 		SmartDashboard.putData(toteGrab);
 		SmartDashboard.putData(canGrab);
 		SmartDashboard.putData(intakeRollers);
 		SmartDashboard.putData(rangeFinder);
 		SmartDashboard.putData(telescope);
-		//SmartDashboard.putData();
+		//SmartDashboard.putData(); */
 
 		/*SmartDashboard.putData(new IntakeRun());
 		SmartDashboard.putData(new IntakeReverse());
@@ -117,6 +132,7 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        TankDriveWithJoysticks tank = new TankDriveWithJoysticks();
     }
 
     /**

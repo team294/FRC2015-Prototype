@@ -23,6 +23,7 @@ public class Telescope extends Subsystem {
     // here. Call these from Commands.
 	int[] telescopeMotors = {RobotMap.kPWM_telescope1,RobotMap.kPWM_telescope2};
 	SpeedController telescope = new MultiCANTalon(telescopeMotors);
+	AnalogInput telePot = new AnalogInput(RobotMap.kAIN_telescopePot); //3715 at bottom, 3050 at top
 	//AnalogInput telescopePot = new AnalogInput(RobotMap.kAIN_telescopePot);
 	
 	//PotLimitedSpeedController teleMotor = new PotLimitedSpeedController(telescope, telescopePot, "pivMinLimit", "pivMaxLimit");
@@ -42,9 +43,9 @@ public class Telescope extends Subsystem {
 		System.out.println("limit="+Preferences.getInstance().getDouble("pivMinLimit", 0.0));		
 		System.out.println("limit="+Preferences.getInstance().getDouble("pivMaxLimit", 0.0));
 		
-		((MultiCANTalon) telescope).SetInverted(1, true);
-		getMainTelescope().changeControlMode(ControlMode.Position);
-		getMainTelescope().setPID(1.0, 1.0, 1.0); //TODO
+		//((MultiCANTalon) telescope).SetInverted(1, true);
+		//getMainTelescope().changeControlMode(ControlMode.Position);
+		//getMainTelescope().setPID(1.0, 1.0, 1.0); //TODO
 		
 		//setInputRange(Preferences.getInstance().getDouble("pivMinLimit", 0.0),
 		//		Preferences.getInstance().getDouble("pivMaxLimit", 5.0));
@@ -55,9 +56,9 @@ public class Telescope extends Subsystem {
 	//	teleMotor.setScale(1.0/200.0);
 	}
 	
-	public CANTalon getMainTelescope()
+	public void setTelescopeSpeed(double speed)
 	{
-		return ((MultiCANTalon) telescope).getCANTalon(0);
+		((MultiCANTalon) telescope).set(speed);
 	}
 	
     public void initDefaultCommand() {
@@ -65,6 +66,10 @@ public class Telescope extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
+    public double getPotVal()
+    {
+    return telePot.getValue();
+    }
    // protected double returnPIDInput() {
 	//	return telescopePot.getAverageValue() / 200.0;
 	//}
@@ -77,13 +82,13 @@ public class Telescope extends Subsystem {
 		//disable();
 	}
 	
-	public void setManual(double value) {
+	/*public void setManual(double value) {
 		if (getMainTelescope().isControlEnabled())
 			getMainTelescope().changeControlMode(ControlMode.Speed);
 		getMainTelescope().set(value);
 		//getMainTelescope().disableControl();
 	}
-	
+	*/
 	/*public boolean isIntakeUpOk() {
 		double pivStartSetpoint = Preferences.getInstance().getDouble("pivStartSetpoint", Double.POSITIVE_INFINITY);
 		if (pivStartSetpoint == Double.POSITIVE_INFINITY)
