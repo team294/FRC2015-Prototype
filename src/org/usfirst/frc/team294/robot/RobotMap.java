@@ -26,10 +26,14 @@ public class RobotMap {
  	public static int kPWM_telescope2 = 6;
  	
  	public static int kPWM_toteCloseIntake = 7;
+ 	public static int kPWM_toteCloseIntake2 = 8;
 
 
  	// Digital Inputs
- 	
+ 	public static int kDIN_leftDriveEncoderA = 0;
+ 	public static int kDIN_leftDriveEncoderB = 1;
+ 	public static int kDIN_rightDriveEncoderA = 2;
+ 	public static int kDIN_rightDriveEncoderB = 3;
 
  	// Analog Inputs
  	public static int kAIN_telescopePot = 3;

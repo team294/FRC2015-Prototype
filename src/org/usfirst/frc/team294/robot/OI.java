@@ -70,6 +70,7 @@ public class OI {
 		
 		test[1].whenPressed(new ToteMotorOpen());
 		test[1].whenReleased(new ToteMotorStop());
+		test[7].whenPressed(new AutoRotateXDegreesRel(45));
 		test[4].whenPressed(new ToteMotorClose());
 		test[4].whenReleased(new ToteMotorStop());
 		
@@ -77,9 +78,10 @@ public class OI {
 		test[5].whenReleased(new TeleStopTest());
 		
 		//test[6].whenPressed(new TelescopeToMid()); //DO NOT DO THIS
-		
-		test[2].whenPressed(new TeleDownTest());
-		test[2].whenReleased(new TeleStopTest());	
+		test[2].whileHeld(new ManualTelescope());
+		test[2].whenReleased(new ToteMotorStop());
+		//test[2].whenPressed(new TeleDownTest());
+		//test[2].whenReleased(new TeleStopTest());	
 		
 		test[6].whenPressed(new Rumble());
 		

@@ -18,7 +18,7 @@ import org.usfirst.frc.team294.robot.subsystems.Telescope;
 
 
 
-import org.usfirst.frc.team294.robot.subsystems.ToteMotorClose;
+import org.usfirst.frc.team294.robot.subsystems.ToteGrabber;
 import org.usfirst.frc.team294.robot.subsystems.compress;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
 	public static RangeFinder rangeFinder;
 	public static DoublePistonIntake doublePistonIntake;
 	public static compress compressor;
-	public static ToteMotorClose toteMotorClose;
+	public static ToteGrabber toteGrab;
 
 	public static OI oi;
 
@@ -84,7 +84,7 @@ public class Robot extends IterativeRobot {
     	intakeRollers = new IntakeRollers();
     	rangeFinder = new RangeFinder();
     	compressor = new compress();
-    	toteMotorClose = new ToteMotorClose();
+    	toteGrab = new ToteGrabber();
     	
     	/*SmartDashboard.putData(drivetrain);
 		SmartDashboard.putData(toteGrab);

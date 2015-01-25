@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -21,16 +20,14 @@ public class Telescope extends Subsystem {
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	int[] telescopeMotors = {RobotMap.kPWM_telescope1,RobotMap.kPWM_telescope2};
+	int[] telescopeMotors = {RobotMap.kPWM_telescope2,RobotMap.kPWM_telescope1};
 	SpeedController telescope = new MultiCANTalon(telescopeMotors);
-	AnalogInput telePot = new AnalogInput(RobotMap.kAIN_telescopePot); //3715 at bottom, 3050 at top
-	//AnalogInput telescopePot = new AnalogInput(RobotMap.kAIN_telescopePot);
 	
-	//PotLimitedSpeedController teleMotor = new PotLimitedSpeedController(telescope, telescopePot, "pivMinLimit", "pivMaxLimit");
+	
+	AnalogInput telescopePot = new AnalogInput(RobotMap.kAIN_telescopePot);
+	PotLimitedSpeedController teleMotor = new PotLimitedSpeedController(telescope, telescopePot, "pivMinLimit", "pivMaxLimit");
 	//SpeedController pivotMotor=pivotMotorUnlimited;
-	
 
-	
 	public Telescope() {
 		// Use these to get going:
 		// setSetpoint() -  Sets where the PID controller should move the system
@@ -45,7 +42,8 @@ public class Telescope extends Subsystem {
 		
 		//((MultiCANTalon) telescope).SetInverted(1, true);
 		//getMainTelescope().changeControlMode(ControlMode.Position);
-		//getMainTelescope().setPID(1.0, 1.0, 1.0); //TODO
+		getMainTelescope().setPID(1.0, 1.0, 1.0); //TODO
+
 		
 		//setInputRange(Preferences.getInstance().getDouble("pivMinLimit", 0.0),
 		//		Preferences.getInstance().getDouble("pivMaxLimit", 5.0));
@@ -56,20 +54,57 @@ public class Telescope extends Subsystem {
 	//	teleMotor.setScale(1.0/200.0);
 	}
 	
-	public void setTelescopeSpeed(double speed)
+	public CANTalon getMainTelescope()
 	{
-		((MultiCANTalon) telescope).set(speed);
+		return ((MultiCANTalon) telescope).getCANTalon(0);
 	}
+
+	/*
+	public void setForwardSoftLimitTel(MultiCANTalon tel, int limit){
+		for(int x : telescopeMotors){
+			(tel.getCANTalon(x)).setForwardSoftLimit(limit);
+			(tel.getCANTalon(x)).enableForwardSoftLimit(true);
+		}
+		
+	}
+	public void setReverseSoftLimitTel(MultiCANTalon tel, int limit){
+		for(int x : telescopeMotors){
+			(tel.getCANTalon(x)).setReverseSoftLimit(limit);
+			(tel.getCANTalon(x)).enableReverseSoftLimit(true);
+		}
+		
+	}
+	*/
+	public double getPotCanVal(){
+		return (getMainTelescope()).getPosition();
+	}
+
+	private int forwardLimit=1023;
+	private int reverseLimit=0;
 	
+	public int getForwardLimit(){
+		return this.forwardLimit;
+	}
+	public int getReverseLimit(){
+		return this.reverseLimit;
+	}
+
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	
+
+    	}
+    
+    
+    public void setSoftMax(){
+    	
     }
     
-    public double getPotVal()
-    {
-    return telePot.getValue();
+    public void setSoftMin(){
+
     }
+    
    // protected double returnPIDInput() {
 	//	return telescopePot.getAverageValue() / 200.0;
 	//}
@@ -82,13 +117,22 @@ public class Telescope extends Subsystem {
 		//disable();
 	}
 	
-	/*public void setManual(double value) {
+	public void setManual(double value) {
 		if (getMainTelescope().isControlEnabled())
 			getMainTelescope().changeControlMode(ControlMode.Speed);
 		getMainTelescope().set(value);
 		//getMainTelescope().disableControl();
 	}
-	*/
+
+	public void setTelescopeSpeed(double d) {
+		this.getMainTelescope().set(d);
+	}
+
+	public double getPotVal() {
+		// TODO Auto-generated method stub
+		return this.teleMotor.get();
+	}
+	
 	/*public boolean isIntakeUpOk() {
 		double pivStartSetpoint = Preferences.getInstance().getDouble("pivStartSetpoint", Double.POSITIVE_INFINITY);
 		if (pivStartSetpoint == Double.POSITIVE_INFINITY)

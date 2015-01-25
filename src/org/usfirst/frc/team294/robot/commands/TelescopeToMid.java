@@ -7,42 +7,41 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class AutoDriveForward extends Command {
-	private double dis;
-    public AutoDriveForward(double distance) {
+public class TelescopeToMid extends Command {
+
+    public TelescopeToMid() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.drivetrain);
-    	dis=distance;
+    	requires(Robot.telescope);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drivetrain.resetEncoders();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.autoDrive(1);
+    	double telescopeError = (Robot.telescope.getPotVal() - 3300);
+    	double speed = ((telescopeError * -1) * .025);
+    	if(speed < -.75)
+    	{
+    		speed = -.75;
+    	}
+    	Robot.telescope.setTelescopeSpeed(speed);
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	double left=Robot.drivetrain.getLeft();
-    	double right=Robot.drivetrain.getRight();
-        return (right>=dis)||(left>=dis);
+        return (Robot.telescope.getPotVal() < 3300);
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drivetrain.stop();
-    	
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.drivetrain.stop();
     }
 }
