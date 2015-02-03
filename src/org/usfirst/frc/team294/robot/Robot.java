@@ -6,9 +6,7 @@ package org.usfirst.frc.team294.robot;
 
 //import org.usfirst.frc.team294.robot.commands.IntakeStop;
 
-import org.usfirst.frc.team294.robot.commands.TankDriveWithJoysticks;
 import org.usfirst.frc.team294.robot.subsystems.CanGrab;
-import org.usfirst.frc.team294.robot.subsystems.DoublePistonIntake;
 import org.usfirst.frc.team294.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team294.robot.subsystems.IntakeRollers;
 import org.usfirst.frc.team294.robot.subsystems.RangeFinder;
@@ -21,7 +19,6 @@ import org.usfirst.frc.team294.robot.subsystems.Telescope;
 import org.usfirst.frc.team294.robot.subsystems.ToteGrabber;
 import org.usfirst.frc.team294.robot.subsystems.compress;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -49,7 +46,6 @@ public class Robot extends IterativeRobot {
 	public static Telescope telescope;
 	public static IntakeRollers intakeRollers;
 	public static RangeFinder rangeFinder;
-	public static DoublePistonIntake doublePistonIntake;
 	public static compress compressor;
 	public static ToteGrabber toteGrab;
 
@@ -77,7 +73,6 @@ public class Robot extends IterativeRobot {
     	pdp = new PowerDistributionPanel();
     	
     	//toteGrab = new ToteGrab();
-    	doublePistonIntake = new DoublePistonIntake();
     	canGrab = new CanGrab();
     	drivetrain = new Drivetrain();
     	telescope = new Telescope();
@@ -86,7 +81,7 @@ public class Robot extends IterativeRobot {
     	compressor = new compress();
     	toteGrab = new ToteGrabber();
     	
-    	/*SmartDashboard.putData(drivetrain);
+    	SmartDashboard.putData(drivetrain);
 		SmartDashboard.putData(toteGrab);
 		SmartDashboard.putData(canGrab);
 		SmartDashboard.putData(intakeRollers);
@@ -132,7 +127,6 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
-        TankDriveWithJoysticks tank = new TankDriveWithJoysticks();
     }
 
     /**
@@ -148,6 +142,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        SmartDashboard.putNumber("Yaw:", Robot.drivetrain.getYaw());
     }
     
     /**

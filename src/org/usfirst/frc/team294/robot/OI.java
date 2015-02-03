@@ -1,11 +1,11 @@
 package org.usfirst.frc.team294.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team294.robot.commands.*;
+import org.usfirst.frc.team294.robot.commands.ToteMotorControl.ToteMotorActions;
 //import org.usfirst.frc.team294.robot.commands.SafeGrabOrReleaseTote.GrabOrRelease;
 //import org.usfirst.frc.team294.robot.subsystems.Telescope.Setpoint;
 
@@ -13,6 +13,7 @@ import org.usfirst.frc.team294.robot.commands.*;
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
+
 public class OI {
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a joystick.
@@ -63,34 +64,33 @@ public class OI {
 			co[i] = new JoystickButton(coStick, i);
 			test[i] = new JoystickButton(testStick, i);
 		}
-		
-		
-		test[3].whenPressed(new TeleUpTest());
-		test[3].whenReleased(new TeleStopTest());
-		
-		test[1].whenPressed(new ToteMotorOpen());
-		test[1].whenReleased(new ToteMotorStop());
+
+		left[4].whenPressed(new ToteMotorControl(ToteMotorActions.OPEN));
+		left[4].whenReleased(new ToteMotorControl(ToteMotorActions.STOP));
+		left[5].whenPressed(new ToteMotorControl(ToteMotorActions.CLOSE));
+		left[5].whenReleased(new ToteMotorControl(ToteMotorActions.STOP));
+
+		test[1].whenPressed(new ToteMotorControl(ToteMotorActions.OPEN)); 
+		//test[1].whenPressed(new ToteMotorOpen(leftPos, rightPos)); // DO NOT USE TILL POTS ARE IN
+		test[1].whenReleased(new ToteMotorControl(ToteMotorActions.STOP));
 		test[7].whenPressed(new AutoRotateXDegreesRel(45));
-		test[4].whenPressed(new ToteMotorClose());
-		test[4].whenReleased(new ToteMotorStop());
+		test[4].whenPressed(new ToteMotorControl(ToteMotorActions.CLOSE));
+		test[4].whenReleased(new ToteMotorControl(ToteMotorActions.STOP));
 		
 		test[5].whileHeld(new TeleWithJoystick());
-		test[5].whenReleased(new TeleStopTest());
+		//test[8].whenPressed(new Rumble());
+		//test[6].whenPressed(new TelescopeToPos(700)); //Value between 480 and 915
 		
-		//test[6].whenPressed(new TelescopeToMid()); //DO NOT DO THIS
 		test[2].whileHeld(new ManualTelescope());
-		test[2].whenReleased(new ToteMotorStop());
+		test[2].whenReleased(new ToteMotorControl(ToteMotorActions.STOP));
 		//test[2].whenPressed(new TeleDownTest());
 		//test[2].whenReleased(new TeleStopTest());	
 		
-		test[6].whenPressed(new Rumble());
+		//test[6].whenPressed(new Rumble());
 		
-		test[8].whenPressed(new IntakeOpen());
-		test[9].whenPressed(new IntakeClose());
+		//test[8].whenPressed(new IntakeOpen());
 		
-		test[10].whenPressed(new OtherIntIn());
-		test[11].whenPressed(new OtherIntOut());
-
+		left[1].whenPressed(new AutoPlaceToteAndPickupStack());
 		right[2].whenPressed(new TankDriveWithJoysticks());
 	/*	left[3].whileActive(new PanIntakeLeft());
 		right[3].whileActive(new PanIntakeRight());

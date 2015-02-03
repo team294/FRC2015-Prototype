@@ -7,8 +7,10 @@ import org.usfirst.frc.team294.robot.util.MultiCANTalon;
 import org.usfirst.frc.team294.robot.util.PotLimitedSpeedController;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.ControlMode;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -20,7 +22,7 @@ public class Telescope extends Subsystem {
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	int[] telescopeMotors = {RobotMap.kPWM_telescope2,RobotMap.kPWM_telescope1};
+	int[] telescopeMotors = {RobotMap.kPWM_telescope1,RobotMap.kPWM_telescope2};
 	SpeedController telescope = new MultiCANTalon(telescopeMotors);
 	
 	
@@ -40,10 +42,11 @@ public class Telescope extends Subsystem {
 		System.out.println("limit="+Preferences.getInstance().getDouble("pivMinLimit", 0.0));		
 		System.out.println("limit="+Preferences.getInstance().getDouble("pivMaxLimit", 0.0));
 		
-		//((MultiCANTalon) telescope).SetInverted(1, true);
+		getMainTelescope().setFeedbackDevice(FeedbackDevice.AnalogPot);
+		//getMainTelescope().reverseSensor(true);
 		//getMainTelescope().changeControlMode(ControlMode.Position);
-		getMainTelescope().setPID(1.0, 1.0, 1.0); //TODO
-
+		getMainTelescope().setPID(20, 0.0, 0.0, 0.0, 0, 0.0, 0); //gains going up
+		getMainTelescope().setPID(4, 0.0, 0.0, 0.0, 0, 0.0, 1); //gains going down, have to change this!
 		
 		//setInputRange(Preferences.getInstance().getDouble("pivMinLimit", 0.0),
 		//		Preferences.getInstance().getDouble("pivMaxLimit", 5.0));
@@ -75,8 +78,8 @@ public class Telescope extends Subsystem {
 		
 	}
 	*/
-	public double getPotCanVal(){
-		return (getMainTelescope()).getPosition();
+	public int getPotCanVal(){
+		return (getMainTelescope()).getAnalogInPosition();
 	}
 
 	private int forwardLimit=1023;
@@ -95,150 +98,36 @@ public class Telescope extends Subsystem {
     	
 
     	}
-    
-    
-    public void setSoftMax(){
-    	
-    }
-    
-    public void setSoftMin(){
-
-    }
-    
-   // protected double returnPIDInput() {
-	//	return telescopePot.getAverageValue() / 200.0;
-	//}
-	
-	//protected void usePIDOutput(double output) {
-	//	teleMotor.set(-output);
-	//}
 
 	public void stop() {
 		//disable();
 	}
 	
 	public void setManual(double value) {
-		if (getMainTelescope().isControlEnabled())
-			getMainTelescope().changeControlMode(ControlMode.Speed);
-		getMainTelescope().set(value);
-		//getMainTelescope().disableControl();
+		getMainTelescope().changeControlMode(ControlMode.PercentVbus);
+		telescope.set(value);
+	}
+	
+	public void setPosition(int pos) {
+		getMainTelescope().changeControlMode(ControlMode.Position);
+		telescope.set(pos);
 	}
 
 	public void setTelescopeSpeed(double d) {
 		this.getMainTelescope().set(d);
 	}
+	
+	public void setTelescopeSpeed2(double d)
+	{
+		telescope.set(d);
+		System.out.println("Motors running at " + d);
+	}
 
 	public double getPotVal() {
 		// TODO Auto-generated method stub
-		return this.teleMotor.get();
+		//return this.telescopePot.getValue();
+		return getMainTelescope().getPosition();
 	}
 	
-	/*public boolean isIntakeUpOk() {
-		double pivStartSetpoint = Preferences.getInstance().getDouble("pivStartSetpoint", Double.POSITIVE_INFINITY);
-		if (pivStartSetpoint == Double.POSITIVE_INFINITY)
-			return false;
-		return getPosition() < (pivStartSetpoint+2);
-	}
-	*/
-/*	public void goHome() {
-		setPrefSetpoint(Setpoint.kStart);
-	} */
-
-	
-
-	/*private String getSetpointPrefName(Setpoint setpoint) {
-		switch (setpoint) {
-		case kStart:		return "telStartSetpoint";
-		case k1Tote:		return "tel1ToteSetpoint";
-		case k2Tote:		return "tel2ToteSetpoint";
-		case k3Tote:		return "tel3ToteSetpoint";
-		case k4Tote:		return "tel4ToteSetpoint";
-		case k5Tote:		return "tel5ToteSetpoint";
-		case kHumanLoad:	return "telHumanLoadSetpoint";
-		case kIntake:		return "telIntakeSetpoint";
-		default:			return null;
-		}
-	} */
-    
- /*   public void setPrefSetpoint(Setpoint setpoint) {
-	
-		setPrefSetpoint(getSetpointPrefName(setpoint));
-		synchronized (this) {
-			m_setpoint = setpoint;
-		}
-	}
-	*/
-/*	public synchronized Setpoint getPrefSetpoint() {
-		return m_setpoint;
-	}
-	
-	public synchronized boolean is1Tote() {
-		return m_setpoint == Setpoint.k1Tote;
-	}
-	
-	public synchronized boolean is2Tote() {
-		return m_setpoint == Setpoint.k2Tote;
-	}
-	
-	public synchronized boolean is3Tote() {
-		return m_setpoint == Setpoint.k3Tote;
-	}
-	
-	public synchronized boolean is4Tote() {
-		return m_setpoint == Setpoint.k4Tote;
-	}
-	public synchronized boolean is5Tote() {
-		return m_setpoint == Setpoint.k1Tote;
-	}
-	
-	public synchronized boolean kHumanLoad() {
-		return m_setpoint == Setpoint.kHumanLoad;
-	} */
-	
-	//Add other tote levels
-//	public synchronized boolean isIntake() {
-//		return m_setpoint == Setpoint.kIntake;
-//	}
-	
-	/*public boolean onTarget() {
-		//logging.debug("cur: %.2f setpoint: %.2f error: %.2f ontarget: %s",
-		//		self.pidSource.PIDGet(),
-		//		self.pid.GetSetpoint(),
-		//		self.pid.GetError(),
-		//		self.pid.OnTarget())
-		return super.onTarget();
-	} */
-	
-	/*public void tweakSetpoint(double amt) {
-		if (getPIDController().isEnable()) {
-			double oldSetpoint = getSetpoint();
-			double newSetpoint = oldSetpoint + amt;
-			// Update preferences so the robot remembers it for next time
-			String pref;
-			synchronized (this) {
-				// don't update start setpoint
-				if (m_setpoint == Setpoint.kStart)
-					return;
-				pref = getSetpointPrefName(m_setpoint);
-			}
-			if (pref == null)
-				return;
-			Preferences.getInstance().putDouble(pref, newSetpoint);
-			Preferences.getInstance().save();
-			setSetpoint(newSetpoint);
-		} else {
-			setSetpoint(getPosition() + amt);
-			getPIDController().reset();
-			enable();
-		}
-	}*/
-
-	/*public void tweakDown() {
-		tweakSetpoint(4);
-	}
-	
-	public void tweakUp() {
-		tweakSetpoint(-4);
-	}*/
 }
 

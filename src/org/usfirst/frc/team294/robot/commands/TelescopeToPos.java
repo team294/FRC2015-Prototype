@@ -7,25 +7,31 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class OtherIntOut extends Command {
-
-    public OtherIntOut() {
+public class TelescopeToPos extends Command {
+	private int pos;
+    public TelescopeToPos(int pos) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	this.pos = pos;
+    	requires(Robot.telescope);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	if (Robot.telescope.getPotVal() > pos)
+    		Robot.telescope.getMainTelescope().setProfile(0);
+    	else
+    		Robot.telescope.getMainTelescope().setProfile(1);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.doublePistonIntake.pistonOtherOut();
+    	Robot.telescope.setPosition(pos);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return (Math.abs(Robot.telescope.getPotVal() - pos) < 5);
     }
 
     // Called once after isFinished returns true

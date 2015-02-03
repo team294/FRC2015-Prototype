@@ -9,12 +9,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ManualTelescope extends Command {
 
+
 	public ManualTelescope() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 
 		requires(Robot.telescope);
-
+		
 	}
 
 	// Called just before this Command runs the first time
@@ -24,10 +25,10 @@ public class ManualTelescope extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		try{
-		Robot.telescope.setManual(-.7 * (Robot.oi.testStick.getY()));
+			Robot.telescope.setTelescopeSpeed2(-.3 * (Robot.oi.testStick.getY()));
 		}
 		catch(ArrayIndexOutOfBoundsException e){
-		Robot.telescope.setManual(0);
+			Robot.telescope.setTelescopeSpeed2(0);
 		}
 		System.out.println(Robot.telescope.getPotCanVal());
 	}

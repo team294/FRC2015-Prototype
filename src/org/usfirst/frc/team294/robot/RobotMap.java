@@ -27,13 +27,16 @@ public class RobotMap {
  	
  	public static int kPWM_toteCloseIntake = 7;
  	public static int kPWM_toteCloseIntake2 = 8;
-
+ 	
+ 	public static int kPWM_intakeWheelMotorRight = 9;
+ 	public static int kPWM_intakeWheelMotorLeft = 10;
 
  	// Digital Inputs
  	public static int kDIN_leftDriveEncoderA = 0;
  	public static int kDIN_leftDriveEncoderB = 1;
  	public static int kDIN_rightDriveEncoderA = 2;
  	public static int kDIN_rightDriveEncoderB = 3;
+ 	//public static int KDIN_buttonIntake = 1;
 
  	// Analog Inputs
  	public static int kAIN_telescopePot = 3;
@@ -51,4 +54,6 @@ public class RobotMap {
 	public static int kSOL_shiftLight;//TODO
 	public static int kAIN_rangeFinder;//TODO
 	public static int kSOL_rangeLight;//TODO
+	
+	
 }

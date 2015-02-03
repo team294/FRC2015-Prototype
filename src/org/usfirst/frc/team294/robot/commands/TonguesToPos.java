@@ -7,27 +7,35 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class PanStop extends Command {
-
-    public PanStop() {
+public class TonguesToPos extends Command {
+	
+	public int posLeft;
+	public int posRight;
+	public boolean isManual = false;
+    public TonguesToPos(int posLeft, int posRight) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	this.posLeft = posLeft;
+    	this.posRight = posRight;
+    	requires(Robot.toteGrab);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	System.out.println("panning stopped");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.toteGrab.setLeftTest(0);
-    	Robot.toteGrab.setRightTest(0);
+    
+    	Robot.toteGrab.setLeftPosition(posLeft);
+    	Robot.toteGrab.setRightPosition(posRight);
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+
+    	return (Math.abs(Robot.toteGrab.leftMotor.getPosition() - posLeft) < 5) && (Math.abs(Robot.toteGrab.rightMotor.getPosition() - posRight) < 5);
     }
 
     // Called once after isFinished returns true

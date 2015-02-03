@@ -22,8 +22,7 @@ public class TeleWithJoystick extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	Robot.telescope.setTelescopeSpeed(Robot.oi.testStick.getRawAxis(1) * .8);
-    	System.out.println("Pot: " + Robot.telescope.getPotVal()); //TEST IF POT WORKS
+    	Robot.telescope.setManual(Robot.oi.testStick.getRawAxis(1) * .9);
     }
 
     // Make this return true when this Command no longer needs to run execute()
