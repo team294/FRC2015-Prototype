@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ToteMotorControl extends Command {
 
-	public enum ToteMotorActions{
+	public enum ToteMotorAction{
 		OPEN,
 		CLOSE,
 		PAN_LEFT,
@@ -22,10 +22,10 @@ public class ToteMotorControl extends Command {
 	}
 	
 	private double tolerance=10;
-	ToteMotorActions action;
+	ToteMotorAction action;
 	private int relativeDistance;
 
-	public ToteMotorControl(ToteMotorActions a) {
+	public ToteMotorControl(ToteMotorAction a) {
 		requires(Robot.toteGrab);
 		this.action=a;
 

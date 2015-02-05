@@ -8,7 +8,7 @@ package org.usfirst.frc.team294.robot;
 
 import org.usfirst.frc.team294.robot.subsystems.CanGrab;
 import org.usfirst.frc.team294.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team294.robot.subsystems.IntakeRollers;
+import org.usfirst.frc.team294.robot.subsystems.IntakeRollerArms;
 import org.usfirst.frc.team294.robot.subsystems.RangeFinder;
 import org.usfirst.frc.team294.robot.subsystems.Telescope;
 //import org.usfirst.frc.team294.robot.subsystems.ToteGrab;
@@ -17,7 +17,7 @@ import org.usfirst.frc.team294.robot.subsystems.Telescope;
 
 
 import org.usfirst.frc.team294.robot.subsystems.ToteGrabber;
-import org.usfirst.frc.team294.robot.subsystems.compress;
+//import org.usfirst.frc.team294.robot.subsystems.compress;
 
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -44,9 +44,9 @@ public class Robot extends IterativeRobot {
 	//public static ToteGrab toteGrab;
 	public static CanGrab canGrab;
 	public static Telescope telescope;
-	public static IntakeRollers intakeRollers;
+	public static IntakeRollerArms intakeRollers;
 	public static RangeFinder rangeFinder;
-	public static compress compressor;
+	//public static compress compressor;
 	public static ToteGrabber toteGrab;
 
 	public static OI oi;
@@ -76,9 +76,9 @@ public class Robot extends IterativeRobot {
     	canGrab = new CanGrab();
     	drivetrain = new Drivetrain();
     	telescope = new Telescope();
-    	intakeRollers = new IntakeRollers();
+    	intakeRollers = new IntakeRollerArms();
     	rangeFinder = new RangeFinder();
-    	compressor = new compress();
+    	//compressor = new compress();
     	toteGrab = new ToteGrabber();
     	
     	SmartDashboard.putData(drivetrain);

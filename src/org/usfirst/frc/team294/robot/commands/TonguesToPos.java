@@ -9,9 +9,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TonguesToPos extends Command {
 	
-	public int posLeft;
-	public int posRight;
-	public boolean isManual = false;
+	private int posLeft;
+	private int posRight;
+	private int threshold=5;	
+	
     public TonguesToPos(int posLeft, int posRight) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -35,15 +36,18 @@ public class TonguesToPos extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
 
-    	return (Math.abs(Robot.toteGrab.leftMotor.getPosition() - posLeft) < 5) && (Math.abs(Robot.toteGrab.rightMotor.getPosition() - posRight) < 5);
+    	return (Math.abs(Robot.toteGrab.leftMotor.getPosition() - posLeft) < threshold) && (Math.abs(Robot.toteGrab.rightMotor.getPosition() - posRight) < threshold);
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	System.out.println("TOUNGE TO POS INTERRUPTED");
+    	Robot.toteGrab.stop();
     }
 }

@@ -47,9 +47,12 @@ public class ToteGrabber extends Subsystem {
 		
 		public void setRightSpeed(double rightSpeed)
 		{
+			rightMotor.changeControlMode(ControlMode.Speed);
+			rightMotor.set(rightSpeed);
 		}
 		public void setLeftSpeed(double leftSpeed)
 		{
+			leftMotor.changeControlMode(ControlMode.Speed);
 			leftMotor.set(leftSpeed);
 		}
 		
@@ -62,9 +65,7 @@ public class ToteGrabber extends Subsystem {
 		public void stop(){
 			this.setLeftMotorSpeed(0);
 			this.setRightMotorSpeed(0);
-			//intakeMotor.set(0);
 		}
-
 		@Override
 		protected void initDefaultCommand() {
 			// TODO Auto-generated method stub

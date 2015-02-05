@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team294.robot.commands.*;
-import org.usfirst.frc.team294.robot.commands.ToteMotorControl.ToteMotorActions;
+import org.usfirst.frc.team294.robot.commands.ToteMotorControl.ToteMotorAction;
 //import org.usfirst.frc.team294.robot.commands.SafeGrabOrReleaseTote.GrabOrRelease;
 //import org.usfirst.frc.team294.robot.subsystems.Telescope.Setpoint;
 
@@ -65,24 +65,24 @@ public class OI {
 			test[i] = new JoystickButton(testStick, i);
 		}
 
-		left[4].whenPressed(new ToteMotorControl(ToteMotorActions.OPEN));
-		left[4].whenReleased(new ToteMotorControl(ToteMotorActions.STOP));
-		left[5].whenPressed(new ToteMotorControl(ToteMotorActions.CLOSE));
-		left[5].whenReleased(new ToteMotorControl(ToteMotorActions.STOP));
+		left[4].whenPressed(new ToteMotorControl(ToteMotorAction.OPEN));
+		left[4].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
+		left[5].whenPressed(new ToteMotorControl(ToteMotorAction.CLOSE));
+		left[5].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
 
-		test[1].whenPressed(new ToteMotorControl(ToteMotorActions.OPEN)); 
+		test[1].whenPressed(new ToteMotorControl(ToteMotorAction.OPEN)); 
 		//test[1].whenPressed(new ToteMotorOpen(leftPos, rightPos)); // DO NOT USE TILL POTS ARE IN
-		test[1].whenReleased(new ToteMotorControl(ToteMotorActions.STOP));
+		test[1].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
 		test[7].whenPressed(new AutoRotateXDegreesRel(45));
-		test[4].whenPressed(new ToteMotorControl(ToteMotorActions.CLOSE));
-		test[4].whenReleased(new ToteMotorControl(ToteMotorActions.STOP));
+		test[4].whenPressed(new ToteMotorControl(ToteMotorAction.CLOSE));
+		test[4].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
 		
 		test[5].whileHeld(new TeleWithJoystick());
 		//test[8].whenPressed(new Rumble());
 		//test[6].whenPressed(new TelescopeToPos(700)); //Value between 480 and 915
 		
 		test[2].whileHeld(new ManualTelescope());
-		test[2].whenReleased(new ToteMotorControl(ToteMotorActions.STOP));
+		test[2].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
 		//test[2].whenPressed(new TeleDownTest());
 		//test[2].whenReleased(new TeleStopTest());	
 		
