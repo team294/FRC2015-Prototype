@@ -15,7 +15,7 @@ public class ToteMotorControl extends Command {
 	 * @author team
 	 * actions designated auto will terminate upon reaching preset limits
 	 */
-	public enum ToteMotorAction{
+	public static enum ToteMotorAction{
 		OPEN,
 		CLOSE,
 		PAN_LEFT,
@@ -81,7 +81,9 @@ public class ToteMotorControl extends Command {
 	    	Robot.toteGrab.setLeftMotorSpeed(.8 + error * .01);
         	Robot.toteGrab.setRightMotorSpeed(.8 - error * .01);
 		case CENTER:
-			
+			System.out.println("Center command doesn't work. Need tested values!");
+			Robot.toteGrab.getLeftMotor().setPID(1.0, 1.0, 1.0);//TODO
+			Robot.toteGrab.getRightMotor().setPID(1.0, 1.0, 1.0);//TODO
 		case AUTO_CLOSE:
 			Robot.toteGrab.setLeftMotorSpeed(1);
 			Robot.toteGrab.setRightMotorSpeed(1);
@@ -110,7 +112,7 @@ public class ToteMotorControl extends Command {
 			return (onTargetRight() && onTargetLeft());
 		case AUTO_OPEN:
 			relativeDistance=Math.abs(Robot.toteGrab.getLeftMotor().getAnalogInPosition()-Robot.toteGrab.getRightMotor().getAnalogInPosition());
-			if(relativeDistance<this.autoAbsOpenDist){
+			if(relativeDistance>this.autoAbsOpenDist){
 				return true;
 			}
 		case AUTO_CLOSE:

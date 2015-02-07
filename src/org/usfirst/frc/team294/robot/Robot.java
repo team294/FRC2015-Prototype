@@ -6,14 +6,7 @@ import org.usfirst.frc.team294.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team294.robot.subsystems.IntakeRollerArms;
 import org.usfirst.frc.team294.robot.subsystems.RangeFinder;
 import org.usfirst.frc.team294.robot.subsystems.Telescope;
-//import org.usfirst.frc.team294.robot.subsystems.ToteGrab;
-
-
-
-
 import org.usfirst.frc.team294.robot.subsystems.ToteGrabber;
-//import org.usfirst.frc.team294.robot.subsystems.compress;
-
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -39,24 +32,24 @@ public class Robot extends IterativeRobot {
 	//public static ToteGrab toteGrab;
 	public static CanGrab canGrab;
 	public static Telescope telescope;
-	public static IntakeRollerArms intakeRollers;
+	public static IntakeRollerArms intakeRollerArms;
 	public static RangeFinder rangeFinder;
 	//public static compress compressor;
 	public static ToteGrabber toteGrab;
 
 	public static OI oi;
 
-	public static boolean disabledTrigPressed = false;
-	public static boolean disabledButton2Pressed = false;
-	public static boolean disabledButton5Pressed = false;
-	public static boolean disabledButton4Pressed = false;
-	public static boolean disabledButton3Pressed = false;
-
 	public static int autoMode = 0;
 
 	public static float autoDelay = 0;
 
 	public static int startPosition = 0;
+	
+	//Soft limits for all subsystems
+	public static int telescopeTopLim=1000;//TODO
+	public static int telescopeBottomLim=0;//TODO
+	public static int toteGrabberOutsideLim=1000;//TODO
+	public static int toteGrabberInsideLim=0;//TODO
 	
     Command autonomousCommand;
 
@@ -71,7 +64,7 @@ public class Robot extends IterativeRobot {
     	canGrab = new CanGrab();
     	drivetrain = new Drivetrain();
     	telescope = new Telescope();
-    	intakeRollers = new IntakeRollerArms();
+    	intakeRollerArms = new IntakeRollerArms();
     	rangeFinder = new RangeFinder();
     	//compressor = new compress();
     	toteGrab = new ToteGrabber();
@@ -79,7 +72,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putData(drivetrain);
 		SmartDashboard.putData(toteGrab);
 		SmartDashboard.putData(canGrab);
-		SmartDashboard.putData(intakeRollers);
+		SmartDashboard.putData(intakeRollerArms);
 		SmartDashboard.putData(rangeFinder);
 		SmartDashboard.putData(telescope);
 		SmartDashboard.putNumber("YAW", Robot.drivetrain.getYaw());
@@ -127,7 +120,6 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        SmartDashboard.putNumber("Yaw:", Robot.drivetrain.getYaw());
     }
     
     /**
