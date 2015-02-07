@@ -69,6 +69,8 @@ public class OI {
 		left[4].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
 		left[5].whenPressed(new ToteMotorControl(ToteMotorAction.CLOSE));
 		left[5].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
+		
+		left[1].whenPressed(new AutoRotateXDegreesRel(45));
 
 		test[1].whenPressed(new ToteMotorControl(ToteMotorAction.OPEN)); 
 		//test[1].whenPressed(new ToteMotorOpen(leftPos, rightPos)); // DO NOT USE TILL POTS ARE IN
@@ -90,7 +92,7 @@ public class OI {
 		
 		//test[8].whenPressed(new IntakeOpen());
 		
-		left[1].whenPressed(new AutoPlaceToteAndPickupStack());
+		//left[1].whenPressed(new AutoPlaceToteAndPickupStack());
 		right[2].whenPressed(new TankDriveWithJoysticks());
 	/*	left[3].whileActive(new PanIntakeLeft());
 		right[3].whileActive(new PanIntakeRight());

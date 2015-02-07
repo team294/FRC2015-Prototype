@@ -2,9 +2,7 @@ package org.usfirst.frc.team294.robot.commands;
 
 import org.usfirst.frc.team294.robot.Robot;
 
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Preferences;
-import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -12,15 +10,24 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ToteMotorControl extends Command {
 
+	/**
+	 * 
+	 * @author team
+	 * actions designated auto will terminate upon reaching preset limits
+	 */
 	public enum ToteMotorAction{
 		OPEN,
 		CLOSE,
 		PAN_LEFT,
 		PAN_RIGHT,
 		CENTER,
+		AUTO_OPEN,
+		AUTO_CLOSE,
 		STOP
 	}
 	
+	private int autoAbsOpenDist=400;
+	private int autoAbsCloseDist=300;
 	private double tolerance=10;
 	ToteMotorAction action;
 	private int relativeDistance;
@@ -47,25 +54,7 @@ public class ToteMotorControl extends Command {
 		case PAN_RIGHT:
 			relativeDistance=Math.abs(Robot.toteGrab.getLeftMotor().getAnalogInPosition()-Robot.toteGrab.getRightMotor().getAnalogInPosition());
 		case CENTER:
-			//Robot.toteGrab.centerIntake();
-	    	double setp = Preferences.getInstance().getDouble("setpointLeft", Double.POSITIVE_INFINITY);
-			double setpr = Preferences.getInstance().getDouble("setpointRight", Double.POSITIVE_INFINITY);
-			if (setp == Double.POSITIVE_INFINITY)
-				return;
-			if(setpr == Double.POSITIVE_INFINITY)
-				return;
-			Robot.toteGrab.leftMotor.set(setp);//setSetpoint(setp);
-			Robot.toteGrab.rightMotor.set(setpr);
-			if (!(ControlMode.Position == ((CANTalon) Robot.toteGrab.leftMotor).getControlMode())) {
-				if(!((CANTalon) Robot.toteGrab.leftMotor).isControlEnabled())
-					((CANTalon) Robot.toteGrab.leftMotor).enableControl();
-				((CANTalon) Robot.toteGrab.leftMotor).changeControlMode(ControlMode.Position);
-			}
-			if (!(ControlMode.Position == ((CANTalon) Robot.toteGrab.rightMotor).getControlMode())) {
-				if(!((CANTalon) Robot.toteGrab.rightMotor).isControlEnabled())
-					((CANTalon) Robot.toteGrab.rightMotor).enableControl();
-				((CANTalon) Robot.toteGrab.rightMotor).changeControlMode(ControlMode.Position);
-			}
+
 		case STOP:
 			this.end();
 		default:
@@ -80,9 +69,11 @@ public class ToteMotorControl extends Command {
     	    	
 		switch(this.action){
 		case OPEN:
-			
+			Robot.toteGrab.setLeftMotorSpeed(-1);
+			Robot.toteGrab.setRightMotorSpeed(-1);
 		case CLOSE:
-
+			Robot.toteGrab.setLeftMotorSpeed(1);
+			Robot.toteGrab.setRightMotorSpeed(1);
 		case PAN_LEFT:
 	    	Robot.toteGrab.setLeftMotorSpeed(.8 - error * .01);
 	    	Robot.toteGrab.setRightMotorSpeed(.8 + error * .01);
@@ -91,6 +82,12 @@ public class ToteMotorControl extends Command {
         	Robot.toteGrab.setRightMotorSpeed(.8 - error * .01);
 		case CENTER:
 			
+		case AUTO_CLOSE:
+			Robot.toteGrab.setLeftMotorSpeed(1);
+			Robot.toteGrab.setRightMotorSpeed(1);
+		case AUTO_OPEN:
+			Robot.toteGrab.setLeftMotorSpeed(-1);
+			Robot.toteGrab.setRightMotorSpeed(-1);
 		case STOP:
 			this.end();
 		default:
@@ -111,6 +108,16 @@ public class ToteMotorControl extends Command {
 			
 		case CENTER:
 			return (onTargetRight() && onTargetLeft());
+		case AUTO_OPEN:
+			relativeDistance=Math.abs(Robot.toteGrab.getLeftMotor().getAnalogInPosition()-Robot.toteGrab.getRightMotor().getAnalogInPosition());
+			if(relativeDistance<this.autoAbsOpenDist){
+				return true;
+			}
+		case AUTO_CLOSE:
+			relativeDistance=Math.abs(Robot.toteGrab.getLeftMotor().getAnalogInPosition()-Robot.toteGrab.getRightMotor().getAnalogInPosition());
+			if(relativeDistance<this.autoAbsCloseDist){
+				return true;
+			}
 		case STOP:
 			return true;
 		}
@@ -118,11 +125,11 @@ public class ToteMotorControl extends Command {
 	}
 	
     public boolean onTargetRight() {
-    	double error = Robot.toteGrab.rightMotor.get() - Preferences.getInstance().getDouble("setpointRight", Double.POSITIVE_INFINITY);
+    	double error = Robot.toteGrab.getRightMotor().get() - Preferences.getInstance().getDouble("setpointRight", Double.POSITIVE_INFINITY);
 		return (Math.abs(error) <= tolerance);
 	} 
     public boolean onTargetLeft() {
-    	double error = Robot.toteGrab.leftMotor.get() - Preferences.getInstance().getDouble("setpointLeft", Double.POSITIVE_INFINITY);
+    	double error = Robot.toteGrab.getLeftMotor().get() - Preferences.getInstance().getDouble("setpointLeft", Double.POSITIVE_INFINITY);
 		return (Math.abs(error) <= tolerance);
 	} 
     

@@ -36,7 +36,7 @@ public class TonguesToPos extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
 
-    	return (Math.abs(Robot.toteGrab.leftMotor.getPosition() - posLeft) < threshold) && (Math.abs(Robot.toteGrab.rightMotor.getPosition() - posRight) < threshold);
+    	return (Math.abs(Robot.toteGrab.getLeftMotor().getPosition() - posLeft) < threshold) && (Math.abs(Robot.toteGrab.getRightMotor().getPosition() - posRight) < threshold);
     }
 
     // Called once after isFinished returns true

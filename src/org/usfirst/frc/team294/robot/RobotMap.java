@@ -55,5 +55,4 @@ public class RobotMap {
 	public static int kAIN_rangeFinder;//TODO
 	public static int kSOL_rangeLight;//TODO
 	
-	
 }
