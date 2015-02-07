@@ -18,6 +18,9 @@ public class PathGenerator {
    * @param name The name of the new path.  THIS MUST BE A VALID JAVA CLASS NAME
    * @return The path.
    */
+	
+//wheel base is 36 inches
+//
   public static Path makePath(WaypointSequence waypoints, 
           TrajectoryGenerator.Config config, double wheelbase_width, 
           String name) {

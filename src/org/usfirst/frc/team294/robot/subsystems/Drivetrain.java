@@ -36,6 +36,9 @@ public class Drivetrain extends Subsystem {
 	RateLimitFilter leftFilter = new RateLimitFilter(6.0);
 	RateLimitFilter rightFilter = new RateLimitFilter(6.0);
 
+	// ticks to feet
+	public final double RIGHT_ENCOCDER_TO_DISTANCE_RATIO = (3.5 * Math.PI) / (12.0 * 256.0);
+	public final double LEFT_ENCOCDER_TO_DISTANCE_RATIO = (3.5 * Math.PI) / (12.0 * 256.0);
 
 	Timer lowBatteryTimer = new Timer();
 	Timer lowBatteryScaleTimer = new Timer();
@@ -79,7 +82,7 @@ public class Drivetrain extends Subsystem {
 		return this.imu.getYaw();
 
 	}
-	
+
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -161,6 +164,19 @@ public class Drivetrain extends Subsystem {
 		rightDriveEncoder.setDistancePerPulse(.1);
 		double right = rightDriveEncoder.getDistance();
 		return right;
+	}
+
+	public double getLeftEncoderDistance() { // in feet
+		return leftDriveEncoder.get() * LEFT_ENCOCDER_TO_DISTANCE_RATIO;
+	}
+	
+	public double getRightEncoderDistance(){
+		return rightDriveEncoder.get() * LEFT_ENCOCDER_TO_DISTANCE_RATIO;
+	}
+
+	public double getGyroAngleInRadians() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
