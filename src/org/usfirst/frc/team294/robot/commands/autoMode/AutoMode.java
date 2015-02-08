@@ -3,66 +3,56 @@ package org.usfirst.frc.team294.robot.commands.autoMode;
 import java.util.Hashtable;
 
 import org.usfirst.frc.team294.robot.Robot;
-import org.usfirst.frc.team294.robot.commands.autoMode.TrajectoryDrive.TrajectoryDriveController;
 
 import com.team254.lib.trajectory.Path;
 import com.team254.lib.trajectory.io.TextFileDeserializer;
 import com.team254.lib.trajectory.io.TextFileReader;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.CommandGroup;
-
-/*package org.usfirst.frc.team294.robot.commands.autoMode;
-
-//import java.util.Hashtable;
-
-import java.util.Hashtable;
-
-import org.usfirst.frc.team294.robot.Robot;
-
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.CommandGroup;
-
-import com.team254.lib.trajectory.Path;
-import com.team254.lib.trajectory.io.TextFileDeserializer;
-import com.team254.lib.trajectory.io.TextFileReader;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 
-public class AutoMode extends CommandGroup {
-	public TrajectoryDriveController driveController = new TrajectoryDriveController();
+public class AutoMode extends Command {
+	
 	protected Timer autoTimer = new Timer();
+	 
 	public  AutoMode() {
-		System.out.println("Starting auto mode!");
-		try {
-			autoTimer.reset();
-			autoTimer.start();
-			//routine();
-		} catch (RuntimeException e) {
-			System.out.println(e.getMessage());
-		}
-		System.out.println("Ending auto mode!");
-
-		// Add Commands here:
-		// e.g. addSequential(new Command1());
-		//      addSequential(new Command2());
-		// these will run in order.
-
-		// To run multiple commands at the same time,
-		// use addParallel()
-		// e.g. addParallel(new Command1());
-		//      addSequential(new Command2());
-		// Command1 and Command2 will run in parallel.
-
-		// A command group will require all of the subsystems that each member
-		// would require.
-		// e.g. if Command1 requires chassis, and Command2 requires arm,
-		// a CommandGroup containing them would require both the chassis and the
-		// arm.
-
+		requires(Robot.drivetrain);
 	}
+	
+	@Override
+	protected void end() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void execute() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void initialize() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void interrupted() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected boolean isFinished() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 	public final static String[] kPathNames = { 
 		"InsideLanePathFar",
 		"CenterLanePathFar",
@@ -70,6 +60,7 @@ public class AutoMode extends CommandGroup {
 		"InsideLanePathClose", 
 		"StraightAheadPath",
 	};
+	
 	public final static String[] kPathDescriptions = { 
 		"Inside, Far", 
 		"Middle Lane",
@@ -102,97 +93,6 @@ public class AutoMode extends CommandGroup {
 	public static Path getByIndex(int index) {
 		return (Path)paths_.get(kPathNames[index]);
 	}
-
-
-
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-	public class DrivePathAction extends Action {
-
-		double heading;
-		Path path;
-
-		public DrivePathAction(Path route, double timeout) {
-			path = route;
-			setTimeout(timeout);
-		}
-
-		public boolean execute() {
-			// We need to set the Trajectory each update as it may have been flipped from under us
-			driveController.loadProfileNoReset(path.getLeftWheelTrajectory(), path.getRightWheelTrajectory());
-			return isTimedOut() || driveController.onTarget();
-		}
-
-		public void init() {
-			System.out.println("Init Drive " + Timer.getFPGATimestamp());
-			Robot.drivetrain.resetEncoders();
-			driveController.loadProfile(path.getLeftWheelTrajectory(), path.getRightWheelTrajectory(), 1.0, heading);
-			Robot.drivetrain.useController(driveController);
-			driveController.enable();
-		}
-
-		public void done() {
-			System.out.println("Done Drive " + Timer.getFPGATimestamp());
-			driveController.disable();
-			Robot.drivetrain.setLeftRightPower(0, 0);
-			
-		}
-	}
-
-
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-	public abstract class Action{
-
-		public boolean shouldRun = true;
-
-		public abstract boolean execute();
-
-		public abstract void init();
-
-		public abstract void done();
-		Timer t = new Timer();
-		double timeout = 10000000;
-
-		public void kill() {
-			done();
-			shouldRun = false;
-		}
-
-		public void run() {
-			t.start();
-			if (shouldRun) {
-				init();
-			}
-			while (shouldRun && !execute() && !isTimedOut()) {
-				try {
-					Thread.sleep(30);
-				} catch (InterruptedException ex) {
-				}
-			}
-			if (shouldRun) {
-				done();
-			}
-		}
-
-		public void setTimeout(double timeout) {
-			this.timeout = timeout;
-		}
-
-		public boolean isTimedOut() {
-			return t.get() >= timeout;
-		}
-	}
-
-
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 }
 

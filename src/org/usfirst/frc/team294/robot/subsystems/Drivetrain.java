@@ -2,6 +2,7 @@ package org.usfirst.frc.team294.robot.subsystems;
 
 import org.usfirst.frc.team294.robot.RobotMap;
 import org.usfirst.frc.team294.robot.commands.TankDriveWithJoysticks;
+import org.usfirst.frc.team294.robot.commands.autoMode.TrajectoryDriveController;
 import org.usfirst.frc.team294.robot.util.MultiCANTalon;
 import org.usfirst.frc.team294.robot.util.RateLimitFilter;
 
@@ -177,6 +178,11 @@ public class Drivetrain extends Subsystem {
 	public double getGyroAngleInRadians() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public void useController(TrajectoryDriveController driveController) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

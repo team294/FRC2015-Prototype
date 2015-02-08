@@ -1,12 +1,14 @@
 
 package org.usfirst.frc.team294.robot;
 
+import org.usfirst.frc.team294.robot.commands.autoMode.TrajectoryDriveController;
 import org.usfirst.frc.team294.robot.subsystems.CanGrab;
 import org.usfirst.frc.team294.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team294.robot.subsystems.IntakeRollerArms;
 import org.usfirst.frc.team294.robot.subsystems.RangeFinder;
 import org.usfirst.frc.team294.robot.subsystems.Telescope;
 import org.usfirst.frc.team294.robot.subsystems.ToteGrabber;
+
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -29,6 +31,7 @@ public class Robot extends IterativeRobot {
 	public static Gyro gyro;
 
 	public static Drivetrain drivetrain;
+	public static TrajectoryDriveController driveController;
 	//public static ToteGrab toteGrab;
 	public static CanGrab canGrab;
 	public static Telescope telescope;
@@ -59,6 +62,8 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
     	pdp = new PowerDistributionPanel();
+    	
+    	driveController = new TrajectoryDriveController();
     	
     	//toteGrab = new ToteGrab();
     	canGrab = new CanGrab();
