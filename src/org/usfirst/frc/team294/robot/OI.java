@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team294.robot.commands.*;
+import org.usfirst.frc.team294.robot.commands.IntakeArmControl.IntakeArmAction;
 import org.usfirst.frc.team294.robot.commands.ToteMotorControl.ToteMotorAction;
 //import org.usfirst.frc.team294.robot.commands.SafeGrabOrReleaseTote.GrabOrRelease;
 //import org.usfirst.frc.team294.robot.subsystems.Telescope.Setpoint;
@@ -15,32 +16,6 @@ import org.usfirst.frc.team294.robot.commands.ToteMotorControl.ToteMotorAction;
  */
 
 public class OI {
-	//// CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
-
-	// There are a few additional built in buttons you can use. Additionally,
-	// by subclassing Button you can create custom triggers and bind those to
-	// commands the same as any other Button.
-
-	//// TRIGGERING COMMANDS WITH BUTTONS
-	// Once you have a button, it's trivial to bind it to a button in one of
-	// three ways:
-
-	// Start the command when the button is pressed and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenPressed(new ExampleCommand());
-
-	// Run the command while the button is being held down and interrupt it once
-	// the button is released.
-	// button.whileHeld(new ExampleCommand());
-
-	// Start the command when the button is released  and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenReleased(new ExampleCommand());
 
 	// Joystick controls
 	public Joystick leftStick = new Joystick(0);
@@ -71,7 +46,13 @@ public class OI {
 		left[5].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
 		
 		left[1].whenPressed(new AutoRotateXDegreesRel(45));
-
+		
+		test[2].whileHeld(new IntakeArmControl(IntakeArmAction.OPEN));
+		test[2].whenReleased(new IntakeArmControl(IntakeArmAction.STOP));
+		
+		test[3].whileHeld(new IntakeArmControl(IntakeArmAction.CLOSE));
+		test[3].whenReleased(new IntakeArmControl(IntakeArmAction.STOP));
+		
 		test[1].whenPressed(new ToteMotorControl(ToteMotorAction.OPEN)); 
 		//test[1].whenPressed(new ToteMotorOpen(leftPos, rightPos)); // DO NOT USE TILL POTS ARE IN
 		test[1].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
@@ -80,44 +61,8 @@ public class OI {
 		test[4].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
 		
 		test[5].whileHeld(new TeleWithJoystick());
-		//test[8].whenPressed(new Rumble());
 		//test[6].whenPressed(new TelescopeToPos(700)); //Value between 480 and 915
 		
-		test[2].whileHeld(new ManualTelescope());
-		test[2].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
-		//test[2].whenPressed(new TeleDownTest());
-		//test[2].whenReleased(new TeleStopTest());	
-		
-		//test[6].whenPressed(new Rumble());
-		
-		//test[8].whenPressed(new IntakeOpen());
-		
-		//left[1].whenPressed(new AutoPlaceToteAndPickupStack());
-		right[2].whenPressed(new TankDriveWithJoysticks());
-	/*	left[3].whileActive(new PanIntakeLeft());
-		right[3].whileActive(new PanIntakeRight());
-		
-		right[2].whenPressed(new CenterIntake());
-		left[2].whenPressed(new CenterIntake());
-		
-
-		
-		right[3].whenPressed(new ManualGrabOrReleaseTote(GrabOrRelease.GRAB));
-		right[4].whenPressed(new ManualGrabOrReleaseTote(GrabOrRelease.RELEASE));
-		right[1].whileHeld(new SafeGrabOrReleaseTote(GrabOrRelease.GRAB));
-		right[2].whileHeld(new SafeGrabOrReleaseTote(GrabOrRelease.RELEASE));
-
-		right[11].whenPressed(new SingleStickDrive());
-		right[12].whenPressed(new ArcadeDriveWithJoysticks());
-		//right[13].whenPressed(new TankDriveWithJoysticks()); //CAN NOT BE 13 */
-
-	/*	co[5].whenPressed(new TelescopeToHeight(TelescopeToHeight.Setpoint.k1Tote));
-		co[4].whenPressed(new TelescopeToHeight(TelescopeToHeight.Setpoint.k2Tote));
-		co[3].whenPressed(new TelescopeToHeight(TelescopeToHeight.Setpoint.k3Tote));
-		co[2].whenPressed(new TelescopeToHeight(TelescopeToHeight.Setpoint.k4Tote));
-		co[1].whenPressed(new TelescopeToHeight(TelescopeToHeight.Setpoint.k5Tote));
-		
-		co[5].whenPressed(new IntakeReverse());
-		co[6].whenPressed(new IntakeStop()); */
+		//test[2].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
 	}
 }

@@ -16,8 +16,8 @@ public class ToteGrabber extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
-	private CANTalon rightMotor = new CANTalon(RobotMap.kPWM_toteCloseIntake);
-	private CANTalon leftMotor = new CANTalon(RobotMap.kPWM_toteCloseIntake2);
+	private CANTalon rightMotor = new CANTalon(RobotMap.toteCloseIntake);
+	private CANTalon leftMotor = new CANTalon(RobotMap.toteCloseIntake2);
 
 	public ToteGrabber()
 	{

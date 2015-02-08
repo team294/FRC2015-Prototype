@@ -6,12 +6,11 @@
  * floating around.
  */
 public class RobotMap {
-    // For example to map the left and right motors, you could define the
-    // following variables to use with your drivetrain subsystem.
-	public static int kPWM_leftMotor1 = 1;
- 	public static int kPWM_leftMotor2 = 2;
- 	public static int kPWM_rightMotor1 = 3;
- 	public static int kPWM_rightMotor2 = 4;
+
+	public static int leftMotor1 = 1;
+ 	public static int leftMotor2 = 2;
+ 	public static int rightMotor1 = 3;
+ 	public static int rightMotor2 = 4;
  	
 
     
@@ -22,14 +21,14 @@ public class RobotMap {
      
   // PWM
 
- 	public static int kPWM_telescope1 = 5;
- 	public static int kPWM_telescope2 = 6;
+ 	public static int telescope1 = 5;
+ 	public static int telescope2 = 6;
  	
- 	public static int kPWM_toteCloseIntake = 7;
- 	public static int kPWM_toteCloseIntake2 = 8;
+ 	public static int toteCloseIntake = 7;
+ 	public static int toteCloseIntake2 = 8;
  	
- 	public static int kPWM_intakeWheelMotorRight = 9;
- 	public static int kPWM_intakeWheelMotorLeft = 10;
+ 	public static int intakeWheelMotorRight = 9;
+ 	public static int intakeWheelMotorLeft = 10;
 
  	// Digital Inputs
  	public static int kDIN_leftDriveEncoderA = 0;
@@ -39,15 +38,12 @@ public class RobotMap {
  	//public static int KDIN_buttonIntake = 1;
 
  	// Analog Inputs
- 	public static int kAIN_telescopePot = 3;
 
  	// Solenoids
 
  	public static int kSOL_canPiston = 4;
- 	public static int kSOL_IntakePistons1 = 2;
- 	public static int kSOL_IntakePistons2 = 0;
- 	public static int kSOL_OtherPiston1 = 1;
- 	public static int kSOL_OtherPiston2 = 3;
+ 	public static int kSOL_IntakePistons1 = 3;
+ 	public static int kSOL_IntakePistons2 = 1;
  	
  	public static int kSOL_system_module = 1;
  	public static int kSOL_system = 0;

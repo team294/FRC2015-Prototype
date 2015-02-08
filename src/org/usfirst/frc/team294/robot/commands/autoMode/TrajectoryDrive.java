@@ -2,18 +2,18 @@ package org.usfirst.frc.team294.robot.commands.autoMode;
 
 import org.usfirst.frc.team294.robot.Robot;
 
-import edu.wpi.first.wpilibj.command.Command;
-
-import com.team254.lib.Controller;
 import com.team254.lib.trajectory.Trajectory;
-import com.team254.lib.trajectory.TrajectoryFollower;
 import com.team254.lib.util.ChezyMath;
+
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  *
  */
-public class FollowTrajectory extends Command {
+public class TrajectoryDrive extends Command {
 
-	public FollowTrajectory() {
+	public TrajectoryDrive() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 	}
@@ -40,9 +40,84 @@ public class FollowTrajectory extends Command {
 	protected void interrupted() {
 	}
 
+	/**
+	 * PID + Feedforward controller for following a Trajectory.
+	 *
+	 * @author Jared341
+	 */
+	public class TrajectoryFollower {
 
+		private double kp_;
+		private double kd_;
+		private double kv_;
+		private double ka_;
+		private double last_error_;
+		private double current_heading = 0;
+		private int current_segment;
+		private Trajectory profile_;
+		private String name;
 
+		public TrajectoryFollower() {
 
+		}
+
+		public void configure(double kp, double ki, double kd, double kv, double ka) {
+			kp_ = kp;
+			kd_ = kd;
+			kv_ = kv;
+			ka_ = ka;
+		}
+
+		public void reset() {
+			last_error_ = 0.0;
+			current_segment = 0;
+		}
+
+		public void setTrajectory(Trajectory profile) {
+			profile_ = profile;
+		}
+
+		public TrajectoryFollower(String name) {
+			this.name = name;
+		}
+
+		public double calculate(double distance_so_far) {
+
+			if (current_segment < profile_.getNumSegments()) {
+				Trajectory.Segment segment = profile_.getSegment(current_segment);
+				double error = segment.pos - distance_so_far;
+				double output = kp_ * error + kd_ * ((error - last_error_)
+						/ segment.dt - segment.vel) + (kv_ * segment.vel
+								+ ka_ * segment.acc);
+
+				last_error_ = error;
+				current_heading = segment.heading;
+				current_segment++;
+				SmartDashboard.putNumber(name + "FollowerSensor", distance_so_far);
+				SmartDashboard.putNumber(name + "FollowerGoal", segment.pos);
+				SmartDashboard.putNumber(name + "FollowerError", error);
+				return output;
+			} else {
+				return 0;
+			}
+		}
+
+		public double getHeading() {
+			return current_heading;
+		}
+
+		public boolean isFinishedTrajectory() {
+			return current_segment >= profile_.getNumSegments();
+		}
+
+		public int getCurrentSegment() {
+			return current_segment;
+		}
+
+		public int getNumSegments() {
+			return profile_.getNumSegments();
+		}
+	}
 	/**
 	 * TrajectoryDriveController.java
 	 * This controller drives the robot along a specified trajectory.
@@ -59,7 +134,6 @@ public class FollowTrajectory extends Command {
 		double direction;
 		double heading;
 		double kTurn = -3.0/80.0;
-		private boolean enabled;
 
 		public boolean onTarget() {
 			return followerLeft.isFinishedTrajectory(); 
@@ -98,13 +172,8 @@ public class FollowTrajectory extends Command {
 		}
 
 		public void update() {
-			if (!enabled) {
-				return;
-			}
-
 			if (onTarget()) {
-				Robot.drivetrain.tankDrive(0.0,0.0);
-				//Robot.drivetrain.setLeftRightPower(0.0, 0.0);
+				Robot.drivetrain.tankDrive(0.0, 0.0);
 			} else  {
 				double distanceL = direction * Robot.drivetrain.getLeftEncoderDistance();
 				double distanceR = direction * Robot.drivetrain.getRightEncoderDistance();
@@ -119,7 +188,7 @@ public class FollowTrajectory extends Command {
 				double angleDiff = Math.toDegrees(angleDiffRads);
 
 				double turn = kTurn * angleDiff;
-				drivebase.setLeftRightPower(speedLeft + turn, speedRight - turn);
+				Robot.drivetrain.tankDrive(speedLeft + turn, speedRight - turn);
 			}
 		}
 
@@ -131,5 +200,4 @@ public class FollowTrajectory extends Command {
 			return 0;
 		}
 	}
-
 }

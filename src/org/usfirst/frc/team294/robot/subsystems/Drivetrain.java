@@ -20,10 +20,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Drivetrain extends Subsystem {
 
-	int[] leftDrive={RobotMap.kPWM_leftMotor1,RobotMap.kPWM_leftMotor2};
+	int[] leftDrive={RobotMap.leftMotor1,RobotMap.leftMotor2};
 	SpeedController leftMotor = new MultiCANTalon(leftDrive);
 
-	int[] rightDrive={RobotMap.kPWM_rightMotor1,RobotMap.kPWM_rightMotor2};
+	int[] rightDrive={RobotMap.rightMotor1,RobotMap.rightMotor2};
 	SpeedController rightMotor = new MultiCANTalon(rightDrive);
 
 	RobotDrive drive = new RobotDrive(leftMotor, rightMotor);

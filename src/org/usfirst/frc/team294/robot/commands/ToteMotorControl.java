@@ -23,11 +23,13 @@ public class ToteMotorControl extends Command {
 		CENTER,
 		AUTO_OPEN,
 		AUTO_CLOSE,
-		STOP
+		STOP,
+		WIDE_TOTE,
+		NARROW_TOTE
 	}
 	
-	private int autoAbsOpenDist=400;
-	private int autoAbsCloseDist=300;
+	private int autoAbsOpenDist=400;//TODO
+	private int autoAbsCloseDist=300;//TODO
 	private double tolerance=10;
 	ToteMotorAction action;
 	private int relativeDistance;
@@ -54,6 +56,10 @@ public class ToteMotorControl extends Command {
 		case PAN_RIGHT:
 			relativeDistance=Math.abs(Robot.toteGrab.getLeftMotor().getAnalogInPosition()-Robot.toteGrab.getRightMotor().getAnalogInPosition());
 		case CENTER:
+		
+		case WIDE_TOTE:
+			
+		case NARROW_TOTE:
 
 		case STOP:
 			this.end();
@@ -90,6 +96,8 @@ public class ToteMotorControl extends Command {
 		case AUTO_OPEN:
 			Robot.toteGrab.setLeftMotorSpeed(-1);
 			Robot.toteGrab.setRightMotorSpeed(-1);
+		case WIDE_TOTE:
+			
 		case STOP:
 			this.end();
 		default:
@@ -122,6 +130,12 @@ public class ToteMotorControl extends Command {
 			}
 		case STOP:
 			return true;
+		case NARROW_TOTE:
+			
+		case WIDE_TOTE:
+			
+		default:
+			break;
 		}
 		return false;
 	}

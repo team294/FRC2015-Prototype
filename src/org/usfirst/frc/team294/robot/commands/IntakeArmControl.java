@@ -11,7 +11,8 @@ public class IntakeArmControl extends Command {
 
 	public static enum IntakeArmAction{
 		OPEN,
-		CLOSE
+		CLOSE,
+		STOP
 	}
 
 	private IntakeArmAction act;
@@ -33,6 +34,8 @@ public class IntakeArmControl extends Command {
 			Robot.intakeRollerArms.open();
 		case CLOSE:
 			Robot.intakeRollerArms.close();
+		case STOP:
+			Robot.intakeRollerArms.stop();
 		}
 	}
 

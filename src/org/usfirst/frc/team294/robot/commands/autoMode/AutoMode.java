@@ -1,5 +1,19 @@
 package org.usfirst.frc.team294.robot.commands.autoMode;
 
+import java.util.Hashtable;
+
+import org.usfirst.frc.team294.robot.Robot;
+import org.usfirst.frc.team294.robot.commands.autoMode.TrajectoryDrive.TrajectoryDriveController;
+
+import com.team254.lib.trajectory.Path;
+import com.team254.lib.trajectory.io.TextFileDeserializer;
+import com.team254.lib.trajectory.io.TextFileReader;
+
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+
+/*package org.usfirst.frc.team294.robot.commands.autoMode;
+
 //import java.util.Hashtable;
 
 import java.util.Hashtable;
@@ -16,7 +30,9 @@ import com.team254.lib.trajectory.io.TextFileReader;
 /**
  *
  */
+
 public class AutoMode extends CommandGroup {
+	public TrajectoryDriveController driveController = new TrajectoryDriveController();
 	protected Timer autoTimer = new Timer();
 	public  AutoMode() {
 		System.out.println("Starting auto mode!");
@@ -115,14 +131,15 @@ public class AutoMode extends CommandGroup {
 			System.out.println("Init Drive " + Timer.getFPGATimestamp());
 			Robot.drivetrain.resetEncoders();
 			driveController.loadProfile(path.getLeftWheelTrajectory(), path.getRightWheelTrajectory(), 1.0, heading);
-			drivebase.useController(driveController);
+			Robot.drivetrain.useController(driveController);
 			driveController.enable();
 		}
 
 		public void done() {
 			System.out.println("Done Drive " + Timer.getFPGATimestamp());
 			driveController.disable();
-			drivebase.setLeftRightPower(0, 0);
+			Robot.drivetrain.setLeftRightPower(0, 0);
+			
 		}
 	}
 
@@ -178,3 +195,4 @@ public class AutoMode extends CommandGroup {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
+

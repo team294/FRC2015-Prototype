@@ -19,9 +19,9 @@ public class TelescopeToPos extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	if (Robot.telescope.getPotVal() > pos)
-    		Robot.telescope.getMainTelescope().setProfile(0);
+    		Robot.telescope.getMainTelescope().setProfile(0); //Values going up
     	else
-    		Robot.telescope.getMainTelescope().setProfile(1);
+    		Robot.telescope.getMainTelescope().setProfile(1); //Values going down
     }
 
     // Called repeatedly when this Command is scheduled to run

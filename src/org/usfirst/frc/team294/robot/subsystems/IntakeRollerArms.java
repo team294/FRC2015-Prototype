@@ -15,7 +15,7 @@ public class IntakeRollerArms extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	int[] motors=new int[]{RobotMap.kPWM_intakeWheelMotorLeft, RobotMap.kPWM_intakeWheelMotorRight};
+	int[] motors=new int[]{RobotMap.intakeWheelMotorLeft, RobotMap.intakeWheelMotorRight};
 	SpeedController intakeMotors = new MultiCANTalon(motors);
 	DoubleSolenoid armPistons = new DoubleSolenoid(RobotMap.kSOL_IntakePistons1, RobotMap.kSOL_IntakePistons2);
 	
@@ -27,7 +27,7 @@ public class IntakeRollerArms extends Subsystem {
 		// Set the default command for a subsystem here.
 		//setDefaultCommand(new MySpecialCommand());
 		//buttonIntakeHit.whileActive(new IntakeStop());
-		this.close();
+		//this.close();
 	}
 	
 	public boolean isOpen(){
@@ -40,13 +40,20 @@ public class IntakeRollerArms extends Subsystem {
 	
 	public synchronized void close(){
 		this.setMotorSpeed(-1);
+		/*if(!(armPistons.get() == DoubleSolenoid.Value.kReverse))
+		{
 		armPistons.set(DoubleSolenoid.Value.kReverse);
+		}*/
 	}
 	
 	public synchronized void open(){
 		this.setMotorSpeed(1);
+		/*if(!(armPistons.get() == DoubleSolenoid.Value.kForward))
+		{
 		armPistons.set(DoubleSolenoid.Value.kForward);
+		}*/
 	}
+
 	
 	public boolean getButton()
 	{
@@ -57,7 +64,7 @@ public class IntakeRollerArms extends Subsystem {
     public void stop()
     {
     	intakeMotors.set(0);
-    	armPistons.free();
+    	//armPistons.free();
     } 
 }
 
