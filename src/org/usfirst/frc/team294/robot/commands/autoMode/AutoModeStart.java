@@ -15,18 +15,17 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 
-public class AutoMode extends Command {
-	
+public class AutoModeStart extends Command {
+
 	protected Timer autoTimer = new Timer();
-	 
-	public  AutoMode() {
+
+	public  AutoModeStart() {
 		requires(Robot.drivetrain);
 	}
-	
+
 	@Override
 	protected void end() {
-		// TODO Auto-generated method stub
-		
+		Robot.drivetrain.stop();
 	}
 
 	@Override
@@ -37,30 +36,29 @@ public class AutoMode extends Command {
 
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
+		this.loadPaths();
+		new DrivePathAction(this.getPath("StraightAheadPath"), 10000000);
 		
 	}
 
 	@Override
 	protected void interrupted() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	public final static String[] kPathNames = { 
+
+	public final static String[] kPathNames = {
 		"InsideLanePathFar",
 		"CenterLanePathFar",
 		"WallLanePath",
 		"InsideLanePathClose", 
 		"StraightAheadPath",
 	};
-	
+
 	public final static String[] kPathDescriptions = { 
 		"Inside, Far", 
 		"Middle Lane",
@@ -69,9 +67,9 @@ public class AutoMode extends Command {
 		"Straight ahead",
 	};
 
-	static Hashtable paths_ = new Hashtable();
+	private Hashtable<String, Path> paths_ = new Hashtable<String, Path>();
 
-	public static void loadPaths() {
+	public void loadPaths() {
 		Timer t = new Timer();
 		t.start();
 		TextFileDeserializer deserializer = new TextFileDeserializer();
@@ -86,13 +84,13 @@ public class AutoMode extends Command {
 		System.out.println("Parsing paths took: " + t.get());
 	}
 
-	public static Path get(String name) {
+	public Path getPath(String name) {
 		return (Path)paths_.get(name);
 	}
 
-	public static Path getByIndex(int index) {
+	public Path getPath(int index) {
 		return (Path)paths_.get(kPathNames[index]);
 	}
-	
+
 }
 

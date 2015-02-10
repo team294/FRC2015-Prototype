@@ -59,5 +59,7 @@ public class OI {
 		test[6].whenPressed(new ToteMotorControl(ToteMotorAction.AUTO_OPEN));
 		
 		test[5].whileHeld(new TeleWithJoystick());
+		
+		test[8].whenPressed(new DrivetrainStressTest());
 	}
 }

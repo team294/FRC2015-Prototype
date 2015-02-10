@@ -10,17 +10,26 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AutoDriveStraight extends Command {
 	
 	private double dis;
+	private double velocity;
 	//private int initDir;
 	//private int dirCorrectionThreshold=5;
 	/**
 	 * 
 	 * @param distance is negative for backwards and positive for forwards.
 	 */
+    public AutoDriveStraight(double distance, double absoluteSpeed) {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    	requires(Robot.drivetrain);
+    	dis=distance;
+    	velocity=absoluteSpeed;
+    }
     public AutoDriveStraight(double distance) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
     	dis=distance;
+    	velocity=1;
     }
 
     // Called just before this Command runs the first time
@@ -31,7 +40,10 @@ public class AutoDriveStraight extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.autoDrive(1);
+    	if(dis<0){
+    		velocity*=-1;
+    	}
+    	Robot.drivetrain.autoDrive(velocity);
     	
     }
 
