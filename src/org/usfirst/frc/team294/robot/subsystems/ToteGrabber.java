@@ -25,6 +25,11 @@ public class ToteGrabber extends Subsystem {
 		rightMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		rightMotor.setPosition(0);
 		leftMotor.setPosition(0);
+		
+		rightMotor.setPID(4.0, 0, 0);
+		leftMotor.setPID(4.0, 0, 0);
+		
+		rightMotor.enableLimitSwitch(false, true);
 	}
 
 	public void setLeftMotorSpeed(double leftSpeed){
@@ -55,11 +60,21 @@ public class ToteGrabber extends Subsystem {
 		}
 		rightMotor.set(pos);
 	}
+	
+	public int getRightPos()
+	{
+		return rightMotor.getEncPosition();
+	}
+	
+	public int getLeftPos()
+	{
+		return leftMotor.getEncPosition();
+	}
 	public CANTalon getLeftMotor(){
-		return (CANTalon) this.leftMotor;
+		return this.leftMotor;
 	}
 	public CANTalon getRightMotor(){
-		return (CANTalon) this.rightMotor;
+		return this.rightMotor;
 	}
 	public void stop(){
 		this.setLeftMotorSpeed(0);

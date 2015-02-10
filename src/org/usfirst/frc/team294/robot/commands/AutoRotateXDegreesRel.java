@@ -69,7 +69,7 @@ private boolean addMode = false;
  
     	System.out.println("error: " + error);
     	
-    	Robot.drivetrain.tankDrive(-error * .020,error * .020);
+    	Robot.drivetrain.tankDrive(-error * .010,error * .010);
     }
 
     // Make this return true when this Command no longer needs to run execute()

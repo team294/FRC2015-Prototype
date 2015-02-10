@@ -26,9 +26,9 @@ public class OI {
 	//KinectStick kStick2 = KinectStick(2);
 
 	// Joystick buttons
-	Button[] left = new Button[13];
-	Button[] right = new Button[13];
-	Button[] co = new Button[13];
+	public Button[] left = new Button[13];
+	public Button[] right = new Button[13];
+	public Button[] co = new Button[13];
 	public Button[] test = new Button[13];
 
 	public OI() {
@@ -45,24 +45,19 @@ public class OI {
 		left[5].whenPressed(new ToteMotorControl(ToteMotorAction.CLOSE));
 		left[5].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
 		
-		left[1].whenPressed(new AutoRotateXDegreesRel(45));
+		right[1].whenPressed(new ToteMotorControl(ToteMotorAction.PAN_RIGHT));
+		left[1].whenPressed(new ToteMotorControl(ToteMotorAction.PAN_LEFT));
 		
 		test[2].whileHeld(new IntakeArmControl(IntakeArmAction.OPEN));
-		test[2].whenReleased(new IntakeArmControl(IntakeArmAction.STOP));
+		test[3].whenPressed(new IntakeArmControl(IntakeArmAction.STOP));
+		test[4].whenPressed(new IntakeArmControl(IntakeArmAction.CLOSE));
 		
-		test[3].whileHeld(new IntakeArmControl(IntakeArmAction.CLOSE));
-		test[3].whenReleased(new IntakeArmControl(IntakeArmAction.STOP));
-		
-		test[1].whenPressed(new ToteMotorControl(ToteMotorAction.OPEN)); 
-		//test[1].whenPressed(new ToteMotorOpen(leftPos, rightPos)); // DO NOT USE TILL POTS ARE IN
 		test[1].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
 		test[7].whenPressed(new AutoRotateXDegreesRel(45));
-		test[4].whenPressed(new ToteMotorControl(ToteMotorAction.CLOSE));
-		test[4].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
+
+		
+		test[6].whenPressed(new ToteMotorControl(ToteMotorAction.AUTO_OPEN));
 		
 		test[5].whileHeld(new TeleWithJoystick());
-		//test[6].whenPressed(new TelescopeToPos(700)); //Value between 480 and 915
-		
-		//test[2].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
 	}
 }

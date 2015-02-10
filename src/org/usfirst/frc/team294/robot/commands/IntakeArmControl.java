@@ -25,6 +25,7 @@ public class IntakeArmControl extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		System.out.println("Running");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -32,15 +33,29 @@ public class IntakeArmControl extends Command {
 		switch (this.act){
 		case OPEN:
 			Robot.intakeRollerArms.open();
+			break;
 		case CLOSE:
+			System.out.println("Running close()");
 			Robot.intakeRollerArms.close();
+			break;
 		case STOP:
+			System.out.println("stop");
 			Robot.intakeRollerArms.stop();
+			break;
 		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
+		switch(this.act)
+		{
+		case OPEN:
+			return true;
+		case CLOSE:
+			return true;
+		case STOP:
+			return true;
+		}
 		return true;
 	}
 

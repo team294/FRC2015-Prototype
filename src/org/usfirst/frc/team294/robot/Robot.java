@@ -64,30 +64,28 @@ public class Robot extends IterativeRobot {
     	pdp = new PowerDistributionPanel();
     	
     	driveController = new TrajectoryDriveController();
-    	
-    	//toteGrab = new ToteGrab();
+
     	canGrab = new CanGrab();
     	drivetrain = new Drivetrain();
     	telescope = new Telescope();
     	intakeRollerArms = new IntakeRollerArms();
     	rangeFinder = new RangeFinder();
-    	//compressor = new compress();
     	toteGrab = new ToteGrabber();
-    	
+
     	SmartDashboard.putData(drivetrain);
 		SmartDashboard.putData(toteGrab);
 		SmartDashboard.putData(canGrab);
 		SmartDashboard.putData(intakeRollerArms);
 		SmartDashboard.putData(rangeFinder);
 		SmartDashboard.putData(telescope);
-		SmartDashboard.putNumber("YAW", Robot.drivetrain.getYaw());
-   	
+		
+		SmartDashboard.putNumber("LeftGrabPos", Robot.toteGrab.getLeftPos());
+		SmartDashboard.putNumber("RightGrabPos", Robot.toteGrab.getRightPos());
 		oi = new OI();
 		//toteGrab = new ToteGrab();
         // instantiate the command used for the autonomous period
-      
     }
-	
+   
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 	}
@@ -125,6 +123,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        SmartDashboard.putNumber("YAW", Robot.drivetrain.getYaw());
     }
     
     /**

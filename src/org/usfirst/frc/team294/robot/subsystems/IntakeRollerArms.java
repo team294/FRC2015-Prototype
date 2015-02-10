@@ -3,8 +3,10 @@ package org.usfirst.frc.team294.robot.subsystems;
 import org.usfirst.frc.team294.robot.RobotMap;
 import org.usfirst.frc.team294.robot.util.MultiCANTalon;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -16,7 +18,7 @@ public class IntakeRollerArms extends Subsystem {
     // here. Call these from Commands.
 	
 	int[] motors=new int[]{RobotMap.intakeWheelMotorLeft, RobotMap.intakeWheelMotorRight};
-	SpeedController intakeMotors = new MultiCANTalon(motors);
+	MultiCANTalon intakeMotors = new MultiCANTalon(motors);
 	DoubleSolenoid armPistons = new DoubleSolenoid(RobotMap.kSOL_IntakePistons1, RobotMap.kSOL_IntakePistons2);
 	
 	private boolean bothOpen=false;
@@ -34,12 +36,22 @@ public class IntakeRollerArms extends Subsystem {
 		return bothOpen;
 	}
 	
-	public void setMotorSpeed(double speed){
+	public CANTalon getMainIntake()
+	{
+		return intakeMotors.getCANTalon(0);
+	}
+	
+	public void setMotorSpeed(double speed)
+	{
+		
+		getMainIntake().changeControlMode(ControlMode.PercentVbus);
+		System.out.println("hi");
 		intakeMotors.set(speed);
 	}
 	
 	public synchronized void close(){
-		this.setMotorSpeed(-1);
+		
+		this.setMotorSpeed(-.8);
 		/*if(!(armPistons.get() == DoubleSolenoid.Value.kReverse))
 		{
 		armPistons.set(DoubleSolenoid.Value.kReverse);
@@ -47,7 +59,7 @@ public class IntakeRollerArms extends Subsystem {
 	}
 	
 	public synchronized void open(){
-		this.setMotorSpeed(1);
+		this.setMotorSpeed(.8);
 		/*if(!(armPistons.get() == DoubleSolenoid.Value.kForward))
 		{
 		armPistons.set(DoubleSolenoid.Value.kForward);
