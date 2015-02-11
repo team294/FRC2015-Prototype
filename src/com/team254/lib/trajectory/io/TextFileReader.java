@@ -26,6 +26,7 @@ public class TextFileReader {
 		try
 		{
 			reader_ = new BufferedReader(new FileReader(filename));
+			System.out.println("opened '" + filename + "'");
 			//			String line;
 			//			while ((line = reader_.readLine()) != null)
 			//			{
@@ -33,12 +34,12 @@ public class TextFileReader {
 			//			}
 			//			reader_ = new BufferedReader(new InputStreamReader(System.in));
 			if(reader_==null){
-				System.out.println("READER IS NULL");
+				System.out.println("WARNING\n--------------------------- \n READER IS NULL! \n -------------------------------\n");
 			}
 		}
 		catch (Exception e)
 		{
-			System.err.format("Exception occurred trying to read '%s'.", filename);
+			System.err.format("Exception occurred trying to read '" + filename + "'.");
 			System.err.println("Could not find specified file!");
 			e.printStackTrace();
 			return;
@@ -47,7 +48,8 @@ public class TextFileReader {
 
 	public String readLine() {
 		if(reader_==null){
-			System.out.println("READER IS NULL");
+			System.out.println("WARNING\n--------------------------- \n READER IS NULL! \n -------------------------------\n");
+			return null;
 		}
 		String line = null;
 		try {
@@ -62,10 +64,13 @@ public class TextFileReader {
 	public String readWholeFile() {
 		StringBuffer buffer = new StringBuffer();
 		String line;
+		int nlines = 0;
 		while ((line = readLine()) != null) {
 			buffer.append(line);
 			buffer.append("\n");
+			nlines += 1;
 		}
+		System.out.println("read " + nlines);
 		return buffer.toString();
 	}
 }

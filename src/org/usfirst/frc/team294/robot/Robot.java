@@ -31,7 +31,7 @@ public class Robot extends IterativeRobot {
 	public static Gyro gyro;
 
 	public static Drivetrain drivetrain;
-	public static TrajectoryDriveController driveController;
+	public static TrajectoryDriveController trajectoryDriveController;//virtual drivetrain controller that follows paths in auto
 	//public static ToteGrab toteGrab;
 	public static CanGrab canGrab;
 	public static Telescope telescope;
@@ -63,7 +63,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	pdp = new PowerDistributionPanel();
     	
-    	driveController = new TrajectoryDriveController();
+    	trajectoryDriveController = new TrajectoryDriveController();
 
     	canGrab = new CanGrab();
     	drivetrain = new Drivetrain();

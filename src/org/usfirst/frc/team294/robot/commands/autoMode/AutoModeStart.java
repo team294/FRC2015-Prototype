@@ -27,24 +27,32 @@ public class AutoModeStart extends Command {
 	protected void end() {
 		Robot.drivetrain.stop();
 	}
+	private boolean runningAuto=true;
 
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
+		//emulates 254 action for running path
+		if(runningAuto){
+			runningAuto=action.execute();
+		}
+		Robot.trajectoryDriveController.update();
 		
 	}
 
-	@Override
+
+	private AbstractAction action;
 	protected void initialize() {
 		this.loadPaths();
 		System.out.println("Starting Auto");
-		new DrivePathAction(this.getPath("StraightAheadPath"), 10000000);
-		
+		action=new DrivePathAction(this.getPath("StraightAheadPath"), 10000000);
+		action.init();
+		runningAuto=true;
 	}
+
 
 	@Override
 	protected void interrupted() {
-		
+
 	}
 
 	@Override
@@ -76,7 +84,9 @@ public class AutoModeStart extends Command {
 		TextFileDeserializer deserializer = new TextFileDeserializer();
 		for (int i = 0; i < kPathNames.length; ++i) {
 
-			TextFileReader reader = new TextFileReader("file://" + kPathNames[i] + 
+//			TextFileReader reader = new TextFileReader("file://" + kPathNames[i] + 
+//					".txt");
+			TextFileReader reader = new TextFileReader("/home/lvuser/" + kPathNames[i] + 
 					".txt");
 
 			Path path = deserializer.deserialize(reader.readWholeFile());
