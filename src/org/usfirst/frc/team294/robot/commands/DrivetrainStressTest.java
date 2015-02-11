@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DrivetrainStressTest extends Command {
 
-	private boolean backwards=false;
 	private double speedMultiplier=1.0;
 	Timer t=new Timer();
 
@@ -28,7 +27,6 @@ public class DrivetrainStressTest extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		System.out.println(t.get());
 		if(t.get()<20.0){
 			Robot.drivetrain.tankDrive(1.0*speedMultiplier, 1.0*speedMultiplier);
 		}else{
