@@ -54,12 +54,14 @@ public class OI {
 		
 		test[1].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
 		test[7].whenPressed(new AutoRotateXDegreesRel(45));
+		test[8].whenPressed(new RepositionDrivetrain());
+		
 
 		
 		test[6].whenPressed(new ToteMotorControl(ToteMotorAction.AUTO_OPEN));
 		
 		test[5].whileHeld(new TeleWithJoystick());
 		
-		test[8].whenPressed(new DrivetrainStressTest());
+		//test[8].whenPressed(new DrivetrainStressTest());
 	}
 }
