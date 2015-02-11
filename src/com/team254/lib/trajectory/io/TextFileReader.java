@@ -32,6 +32,9 @@ public class TextFileReader {
 			//				records.add(line);
 			//			}
 			//			reader_ = new BufferedReader(new InputStreamReader(System.in));
+			if(reader_==null){
+				System.out.println("READER IS NULL");
+			}
 		}
 		catch (Exception e)
 		{
@@ -43,6 +46,9 @@ public class TextFileReader {
 	}
 
 	public String readLine() {
+		if(reader_==null){
+			System.out.println("READER IS NULL");
+		}
 		String line = null;
 		try {
 			line = reader_.readLine();
