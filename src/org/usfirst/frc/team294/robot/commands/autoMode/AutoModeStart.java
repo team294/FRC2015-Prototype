@@ -37,6 +37,7 @@ public class AutoModeStart extends Command {
 	@Override
 	protected void initialize() {
 		this.loadPaths();
+		System.out.println("Starting Auto");
 		new DrivePathAction(this.getPath("StraightAheadPath"), 10000000);
 		
 	}
