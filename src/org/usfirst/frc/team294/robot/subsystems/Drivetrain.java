@@ -126,9 +126,9 @@ public class Drivetrain extends Subsystem {
 	}
 
 	public void tankDrive(double lPower, double rPower) {
-		double[] motorPower=this.scaleMotorPowerToPreventBurnout(lPower, rPower);
-		lPower=motorPower[0];
-		rPower=motorPower[1];
+//		double[] motorPower=this.scaleMotorPowerToPreventBurnout(lPower, rPower);
+//		lPower=motorPower[0];
+//		rPower=motorPower[1];
 		double l = leftFilter.update(lPower);
 		double r = rightFilter.update(rPower);
 		// monitor battery voltage; if less than 6V for X time, reduce

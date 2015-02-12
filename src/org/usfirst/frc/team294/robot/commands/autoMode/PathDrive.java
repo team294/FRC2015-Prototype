@@ -34,6 +34,7 @@ public class PathDrive extends Command {
 		//emulates 254 action for running path
 		if(runningAuto){
 			runningAuto=action.execute();
+			
 		}
 		Robot.trajectoryDriveController.update();
 		
