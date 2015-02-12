@@ -17,6 +17,8 @@ public class DrivePathAction extends AbstractAction {
 
 	public boolean execute() {
 		// We need to set the Trajectory each update as it may have been flipped from under us
+		System.out.println("\nValue sent to left drivetrain from path: "+path.getLeftWheelTrajectory()
+							+"\nValue sent to right drivetrain from path: "+path.getRightWheelTrajectory()+"\n");
 		Robot.trajectoryDriveController.loadProfileNoReset(path.getLeftWheelTrajectory(), path.getRightWheelTrajectory());
 		return isTimedOut() || Robot.trajectoryDriveController.onTarget();
 	}

@@ -15,11 +15,11 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 
-public class AutoModeStart extends Command {
+public class PathDrive extends Command {
 
 	protected Timer autoTimer = new Timer();
 
-	public  AutoModeStart() {
+	public  PathDrive() {
 		requires(Robot.drivetrain);
 	}
 

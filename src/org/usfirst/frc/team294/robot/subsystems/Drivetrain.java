@@ -126,6 +126,9 @@ public class Drivetrain extends Subsystem {
 	}
 
 	public void tankDrive(double lPower, double rPower) {
+		double[] motorPower=this.scaleMotorPowerToPreventBurnout(lPower, rPower);
+		lPower=motorPower[0];
+		rPower=motorPower[1];
 		double l = leftFilter.update(lPower);
 		double r = rightFilter.update(rPower);
 		// monitor battery voltage; if less than 6V for X time, reduce
@@ -140,6 +143,27 @@ public class Drivetrain extends Subsystem {
 		// System.out.println("l: " + l + " r: " + r + " lbs: " +
 		// lowBatteryScale);
 		drive.tankDrive(l * lowBatteryScale, r * lowBatteryScale, false);
+	}
+
+	//to prevent burnout and overspeed in auto mode
+	public double[] scaleMotorPowerToPreventBurnout(double lPower, double rPower){
+		double absLPower=Math.abs(lPower);
+		double absRPower=Math.abs(rPower);
+		if(absRPower>1 || absLPower>1){
+			System.out.println("Scaling down tank drive command power to prevent burnout.\n"
+					+ "One or more absolute values sent to tank drive was greater than 1.\n"
+					+ "Recieved lPower: "+lPower+" \nRecieved rPower: "+rPower);
+			if(absRPower>=1){
+				rPower/=absRPower;
+				lPower/=absRPower;
+			}else{
+				rPower/=absLPower;
+				lPower/=absLPower;
+			}
+			System.out.println("New lPower: "+lPower+" \nNew rPower: "+rPower);
+		}
+		double[] finalVals=new double[]{lPower,rPower};
+		return finalVals;
 	}
 
 	public void arcDrive(double lPower, double rPower) {
@@ -170,7 +194,7 @@ public class Drivetrain extends Subsystem {
 	public double getLeftEncoderDistance() { // in feet
 		return leftDriveEncoder.get() * LEFT_ENCOCDER_TO_DISTANCE_RATIO;
 	}
-	
+
 	public double getRightEncoderDistance(){
 		return rightDriveEncoder.get() * LEFT_ENCOCDER_TO_DISTANCE_RATIO;
 	}
@@ -182,7 +206,7 @@ public class Drivetrain extends Subsystem {
 
 	public void useController(TrajectoryDriveController driveController) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
