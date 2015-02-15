@@ -1,8 +1,10 @@
 package org.usfirst.frc.team294.robot.subsystems;
 
+import org.usfirst.frc.team294.robot.Robot;
 import org.usfirst.frc.team294.robot.RobotMap;
 import org.usfirst.frc.team294.robot.commands.TankDriveWithJoysticks;
 import org.usfirst.frc.team294.robot.commands.autoMode.TrajectoryDriveController;
+import org.usfirst.frc.team294.robot.util.Constants;
 import org.usfirst.frc.team294.robot.util.MultiCANTalon;
 import org.usfirst.frc.team294.robot.util.RateLimitFilter;
 
@@ -38,12 +40,14 @@ public class Drivetrain extends Subsystem {
 	RateLimitFilter rightFilter = new RateLimitFilter(6.0);
 
 	// ticks to feet
-	public final double RIGHT_ENCOCDER_TO_DISTANCE_RATIO = (3.5 * Math.PI) / (12.0 * 256.0);
-	public final double LEFT_ENCOCDER_TO_DISTANCE_RATIO = (3.5 * Math.PI) / (12.0 * 256.0);
+	public final double RIGHT_ENCOCDER_TO_DISTANCE_RATIO = (5 * Math.PI) / (12.0 * 256.0);
+	public final double LEFT_ENCOCDER_TO_DISTANCE_RATIO = (5 * Math.PI) / (12.0 * 256.0);
 
 	Timer lowBatteryTimer = new Timer();
 	Timer lowBatteryScaleTimer = new Timer();
 	double lowBatteryScale = 1.0;
+
+	
 
 	SerialPort serial_port;
 	//IMU imu;  // Alternatively, use IMUAdvanced for advanced features
@@ -124,11 +128,12 @@ public class Drivetrain extends Subsystem {
 		// rightValue, leftSpeed, rightSpeed)
 		tankDrive(leftSpeed, rightSpeed);
 	}
-
+	private double currentLPower=0;
+	private double currentRPower=0;
 	public void tankDrive(double lPower, double rPower) {
-//		double[] motorPower=this.scaleMotorPowerToPreventBurnout(lPower, rPower);
-//		lPower=motorPower[0];
-//		rPower=motorPower[1];
+		double[] motorPower=this.scaleMotorPowerWithSafeAcceleration(lPower, rPower);
+		lPower=motorPower[0];
+		rPower=motorPower[1];
 		double l = leftFilter.update(lPower);
 		double r = rightFilter.update(rPower);
 		// monitor battery voltage; if less than 6V for X time, reduce
@@ -142,15 +147,17 @@ public class Drivetrain extends Subsystem {
 		lowBatteryScale = 1.0;
 		// System.out.println("l: " + l + " r: " + r + " lbs: " +
 		// lowBatteryScale);
+		this.currentLPower=l;
+		this.currentRPower=r;
 		drive.tankDrive(l * lowBatteryScale, r * lowBatteryScale, false);
 	}
 
 	//to prevent burnout and overspeed in auto mode
-	public double[] scaleMotorPowerToPreventBurnout(double lPower, double rPower){
+	public double[] scaleMotorPowerWithSafeAcceleration(double lPower, double rPower){
 		double absLPower=Math.abs(lPower);
 		double absRPower=Math.abs(rPower);
 		if(absRPower>1 || absLPower>1){
-			System.out.println("Scaling down tank drive command power to prevent burnout.\n"
+			System.out.println("Scaling down tank drive command power.\n"
 					+ "One or more absolute values sent to tank drive was greater than 1.\n"
 					+ "Recieved lPower: "+lPower+" \nRecieved rPower: "+rPower);
 			if(absRPower>=1){
@@ -160,8 +167,16 @@ public class Drivetrain extends Subsystem {
 				rPower/=absLPower;
 				lPower/=absLPower;
 			}
-			System.out.println("New lPower: "+lPower+" \nNew rPower: "+rPower);
+
 		}
+		
+		double centripetalAccel = Math.pow((Math.abs(lPower-rPower)*13*0.3048*9.8),2)/(38/2*0.0254);
+		if(Robot.navigator.getLinearAccel()/32.1740>=Constants.ACCEL_LIMIT || centripetalAccel/32.1740>=Constants.ACCEL_LIMIT ){
+			rPower*=0.7;
+			lPower*=0.7;
+		}
+
+		System.out.println("New lPower: "+lPower+" \nNew rPower: "+rPower);
 		double[] finalVals=new double[]{lPower,rPower};
 		return finalVals;
 	}
@@ -201,12 +216,20 @@ public class Drivetrain extends Subsystem {
 
 	public double getGyroAngleInRadians() {
 		// TODO Auto-generated method stub
-		return 0;
+		return (imu.getCompassHeading()+imu.getYaw());
 	}
 
 	public void useController(TrajectoryDriveController driveController) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public IMUAdvanced getImu(){
+		return this.imu;
+	}
+	
+	public double[] getDrivePower(){
+		return new double[]{this.currentLPower, this.currentRPower};
 	}
 
 }

@@ -40,7 +40,6 @@ public class PathDrive extends Command {
 		
 	}
 
-
 	private AbstractAction action;
 	protected void initialize() {
 		this.loadPaths();
@@ -85,8 +84,6 @@ public class PathDrive extends Command {
 		TextFileDeserializer deserializer = new TextFileDeserializer();
 		for (int i = 0; i < kPathNames.length; ++i) {
 
-//			TextFileReader reader = new TextFileReader("file://" + kPathNames[i] + 
-//					".txt");
 			TextFileReader reader = new TextFileReader("/home/lvuser/" + kPathNames[i] + 
 					".txt");
 
