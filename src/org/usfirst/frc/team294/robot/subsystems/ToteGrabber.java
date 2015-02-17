@@ -6,7 +6,7 @@ import org.usfirst.frc.team294.robot.RobotMap;
 
 
 
-import org.usfirst.frc.team294.robot.commands.checkForLimits;
+import org.usfirst.frc.team294.robot.commands.CheckForLimits;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.ControlMode;
@@ -34,7 +34,7 @@ public class ToteGrabber extends Subsystem {
 	
 	public void initDefaultCommand() {
 
-		new checkForLimits();		
+		new CheckForLimits();		
 		}
 		
 	//public void periodicDefaultCommand()
