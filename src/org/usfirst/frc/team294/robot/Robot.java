@@ -1,6 +1,8 @@
 
 package org.usfirst.frc.team294.robot;
 
+import org.usfirst.frc.team294.robot.commands.autoMode.MultiLooper;
+import org.usfirst.frc.team294.robot.commands.autoMode.Navigator;
 import org.usfirst.frc.team294.robot.commands.autoMode.TrajectoryDriveController;
 import org.usfirst.frc.team294.robot.subsystems.CanGrab;
 import org.usfirst.frc.team294.robot.subsystems.Drivetrain;
@@ -32,7 +34,7 @@ public class Robot extends IterativeRobot {
 	public static Gyro gyro;
 
 	public static Drivetrain drivetrain;
-	public static TrajectoryDriveController driveController;
+	public static TrajectoryDriveController trajectoryDriveController;//virtual drivetrain controller that follows paths in auto
 	//public static ToteGrab toteGrab;
 	public static CanGrab canGrab;
 	public static Telescope telescope;
@@ -54,6 +56,9 @@ public class Robot extends IterativeRobot {
 	public static int telescopeBottomLim=0;//TODO
 	public static int toteGrabberOutsideLim=1000;//TODO
 	public static int toteGrabberInsideLim=0;//TODO
+	public static Navigator navigator;
+	
+	public static MultiLooper autoUpdater100Hz = new MultiLooper(1.0 / 100.0);
 	
     Command autonomousCommand;
 
@@ -64,8 +69,6 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	pdp = new PowerDistributionPanel();
     	
-    	driveController = new TrajectoryDriveController();
-
     	canGrab = new CanGrab();
     	drivetrain = new Drivetrain();
     	telescope = new Telescope();
@@ -73,6 +76,12 @@ public class Robot extends IterativeRobot {
     	rangeFinder = new RangeFinder();
     	toteGrab = new ToteGrabber();
 
+    	trajectoryDriveController = new TrajectoryDriveController();
+    	navigator = new Navigator(drivetrain);
+    	
+    	autoUpdater100Hz.addLoopable(navigator);
+    	autoUpdater100Hz.addLoopable(trajectoryDriveController);
+    	
     	SmartDashboard.putData(drivetrain);
 		SmartDashboard.putData(toteGrab);
 		SmartDashboard.putData(canGrab);
@@ -123,6 +132,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	
         Scheduler.getInstance().run();
         SmartDashboard.putNumber("YAW", Robot.drivetrain.getYaw());
 

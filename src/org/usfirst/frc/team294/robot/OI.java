@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team294.robot.commands.*;
 import org.usfirst.frc.team294.robot.commands.IntakeArmControl.IntakeArmAction;
 import org.usfirst.frc.team294.robot.commands.ToteMotorControl.ToteMotorAction;
+import org.usfirst.frc.team294.robot.commands.autoMode.PathDrive;
 //import org.usfirst.frc.team294.robot.commands.SafeGrabOrReleaseTote.GrabOrRelease;
 //import org.usfirst.frc.team294.robot.subsystems.Telescope.Setpoint;
 

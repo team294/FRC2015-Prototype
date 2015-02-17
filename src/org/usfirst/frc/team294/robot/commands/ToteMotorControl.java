@@ -2,7 +2,6 @@ package org.usfirst.frc.team294.robot.commands;
 
 import org.usfirst.frc.team294.robot.Robot;
 
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -39,8 +38,8 @@ public class ToteMotorControl extends Command {
 	private int openSlightAmt = 30;
 	private int openSlightPosL;
 	private int openSlightPosR;
-	private int autoAbsOpenDist=400;//TODO
-	private int autoAbsCloseDist=300;//TODO
+	//private int autoAbsOpenDist=400;//TODO
+	//private int autoAbsCloseDist=300;//TODO
 	private int leftInit, rightInit;
 	private double tolerance=15;
 	ToteMotorAction action;
