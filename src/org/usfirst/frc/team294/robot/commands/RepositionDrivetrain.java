@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class RepositionDrivetrain extends CommandGroup {
     
-    public  RepositionDrivetrain() {
+    public  RepositionDrivetrain(boolean leftSide) {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -24,9 +24,20 @@ public class RepositionDrivetrain extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+ 
+    	if(leftSide)
+    	{
+    		addSequential(new AutoRotateXDegreesRel(45, false));
+        	addSequential(new AutoDriveTimer(true, .25));
+        	addSequential(new AutoRotateXDegreesRel(-45));
+        	addSequential(new AutoDriveTimer(false, .4));
+    	}
+    	else
+    	{
+    	addSequential(new AutoRotateXDegreesRel(-45, true));
+    	addSequential(new AutoDriveTimer(true, .25));
     	addSequential(new AutoRotateXDegreesRel(45));
-    	addSequential(new AutoDriveTimer(true));
-    	addSequential(new AutoRotateXDegreesRel(-45));
-    	addSequential(new AutoDriveTimer(false));
+    	addSequential(new AutoDriveTimer(false, .4));
+    	}
     }
 }

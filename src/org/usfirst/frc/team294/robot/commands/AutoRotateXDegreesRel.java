@@ -15,6 +15,8 @@ private double degBuffer = 5;
 private boolean first = true;
 private double previousPos;
 private boolean addMode = false;
+private boolean oneSide = false;
+private boolean leftSide;
 
     public AutoRotateXDegreesRel(double degs) {//degs = degrees. positive number = turn Right. Negative number = turn Left
     	requires(Robot.drivetrain);
@@ -25,6 +27,17 @@ private boolean addMode = false;
     	System.out.println("Constructor degrees: " + degrees);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    }
+    public AutoRotateXDegreesRel(double degs, boolean leftSide)
+    {
+    	requires(Robot.drivetrain);
+    	oneSide = true;
+    	this.leftSide = leftSide;
+    	degrees = degs;
+    	degBuffer = degs * (1/9);
+    	if(degBuffer < 2)
+    		degBuffer = 2;
+    	System.out.println("Constructor degrees: " + degrees);
     }
 
     // Called just before this Command runs the first time
@@ -94,7 +107,16 @@ private boolean addMode = false;
     		output = -.47;
     	}
     	
-    	Robot.drivetrain.tankDrive(-output,output);
+    	if(oneSide)
+    	{
+    		if(leftSide)
+    			Robot.drivetrain.tankDrive(-output + .1, 0);
+    		else
+    			Robot.drivetrain.tankDrive(0, output + .1);
+    	}
+    	
+    	else
+    		Robot.drivetrain.tankDrive(-output,output);
     	}
     }
 

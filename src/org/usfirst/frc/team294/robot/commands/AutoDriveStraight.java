@@ -34,7 +34,7 @@ public class AutoDriveStraight extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drivetrain.resetEncoders();
+    	Robot.drivetrain.resetDriveEncoders();
     	//initDir=(int) Robot.drivetrain.getYaw();
     }
 
@@ -49,8 +49,8 @@ public class AutoDriveStraight extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	double left=Robot.drivetrain.getLeft();
-    	double right=Robot.drivetrain.getRight();
+    	double left=Robot.drivetrain.getLeftEnc();
+    	double right=Robot.drivetrain.getRightEnc();
         return (right>=dis)||(left>=dis);
     }
 

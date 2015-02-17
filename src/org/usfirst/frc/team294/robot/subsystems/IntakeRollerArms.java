@@ -6,6 +6,7 @@ import org.usfirst.frc.team294.robot.util.MultiCANTalon;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.CANTalon.ControlMode;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -19,6 +20,7 @@ public class IntakeRollerArms extends Subsystem {
 	int[] motors=new int[]{RobotMap.intakeWheelMotorLeft, RobotMap.intakeWheelMotorRight};
 	MultiCANTalon intakeMotors = new MultiCANTalon(motors);
 	DoubleSolenoid armPistons = new DoubleSolenoid(RobotMap.kSOL_IntakePistons1, RobotMap.kSOL_IntakePistons2);
+	Solenoid secondStage = new Solenoid(RobotMap.kSOL_IntakePistons3);
 	
 	private boolean bothOpen=false;
 	//DigitalInput buttonIntake = new DigitalInput(RobotMap.KDIN_buttonIntake);
@@ -29,6 +31,7 @@ public class IntakeRollerArms extends Subsystem {
 		//setDefaultCommand(new MySpecialCommand());
 		//buttonIntakeHit.whileActive(new IntakeStop());
 		//this.close();
+		intakeMotors.SetInverted(1, true);
 	}
 	
 	public boolean isOpen(){
@@ -57,14 +60,32 @@ public class IntakeRollerArms extends Subsystem {
 		}*/
 	}
 	
-	public synchronized void open(){
-		this.setMotorSpeed(.8);
-		/*if(!(armPistons.get() == DoubleSolenoid.Value.kForward))
-		{
+	public synchronized void openAll()
+	{
 		armPistons.set(DoubleSolenoid.Value.kForward);
-		}*/
+		secondStage.set(true);
 	}
-
+	
+	public synchronized void closeAll()
+	{
+		armPistons.set(DoubleSolenoid.Value.kReverse);
+		secondStage.set(false);
+	}
+	
+	public synchronized void openMid()
+	{
+		armPistons.set(DoubleSolenoid.Value.kForward);
+		secondStage.set(false);
+	}
+	
+	public synchronized void openMotor(){
+		this.setMotorSpeed(.8);
+		
+	}
+	public synchronized void closeMotor(){
+		this.setMotorSpeed(-.8);
+		
+	}
 	
 	public boolean getButton()
 	{

@@ -13,9 +13,11 @@ public class AutoDriveTimer extends Command {
 	private double timeInit;
 	private double elapsedTime;
 	private boolean forwBack;
-    public AutoDriveTimer(boolean forwBack) {
+	private double time;
+    public AutoDriveTimer(boolean forwBack, double time) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	this.time = time;
 		this.forwBack = forwBack;
     	requires(Robot.drivetrain);
     	 
@@ -32,14 +34,14 @@ public class AutoDriveTimer extends Command {
     	SmartDashboard.putNumber("ElapsedTime", elapsedTime);
     	elapsedTime = System.currentTimeMillis() - timeInit;
     	if(forwBack == false)
-    		Robot.drivetrain.tankDrive(-.32,-.32);
+    		Robot.drivetrain.tankDrive(-.64,-.64);
     	else
-    		Robot.drivetrain.tankDrive(.32,.32);
+    		Robot.drivetrain.tankDrive(.64,.64);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (elapsedTime / 1000 > .7);
+        return (elapsedTime / 1000 > time);
     }
 
     // Called once after isFinished returns true

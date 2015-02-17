@@ -12,6 +12,7 @@ import org.usfirst.frc.team294.robot.subsystems.ToteGrabber;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -124,6 +125,25 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         SmartDashboard.putNumber("YAW", Robot.drivetrain.getYaw());
+
+        
+        SmartDashboard.putNumber("Left Drive Position:", Robot.drivetrain.getLeftEnc());
+        SmartDashboard.putNumber("Right Drive Position:", Robot.drivetrain.getRightEnc());
+        
+        SmartDashboard.putBoolean("leftToteBump:", Robot.toteGrab.getLeftMotor().isRevLimitSwitchClosed());
+        SmartDashboard.putBoolean("rightToteBump:", Robot.toteGrab.getRightMotor().isFwdLimitSwitchClosed());
+        
+        SmartDashboard.putNumber("Left Tote Position:", Robot.toteGrab.getLeftPos());
+        SmartDashboard.putNumber("Right Tote Position:", Robot.toteGrab.getRightPos());
+        
+        SmartDashboard.putNumber("Telescope Position",  Robot.telescope.getPotVal());
+        
+        if(Robot.toteGrab.getRightMotor().isFwdLimitSwitchClosed()){
+    		Robot.toteGrab.resetRightEnc();
+		}
+        if(Robot.toteGrab.getLeftMotor().isFwdLimitSwitchClosed()){
+    		Robot.toteGrab.resetLeftEnc();
+		}
     }
     
     /**
@@ -131,5 +151,6 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+       
     }
 }

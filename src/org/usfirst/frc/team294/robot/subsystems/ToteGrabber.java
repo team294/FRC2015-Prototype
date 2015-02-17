@@ -3,10 +3,17 @@ package org.usfirst.frc.team294.robot.subsystems;
 import org.usfirst.frc.team294.robot.Robot;
 import org.usfirst.frc.team294.robot.RobotMap;
 
+
+
+
+import org.usfirst.frc.team294.robot.commands.checkForLimits;
+
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -16,20 +23,35 @@ public class ToteGrabber extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
-	private CANTalon rightMotor = new CANTalon(RobotMap.toteCloseIntake);
-	private CANTalon leftMotor = new CANTalon(RobotMap.toteCloseIntake2);
+	private CANTalon rightMotor = new CANTalon(RobotMap.toteCloseIntakeRight);
+	private CANTalon leftMotor = new CANTalon(RobotMap.toteCloseIntakeLeft);
+	
+	public DigitalInput bumpLeft = new DigitalInput(RobotMap.bumpLeft);
 
+
+	// Put methods for controlling this subsystem
+	// here. Call these from Commands.
+	
+	public void initDefaultCommand() {
+
+		new checkForLimits();		
+		}
+		
+	//public void periodicDefaultCommand()
+
+	
+	
 	public ToteGrabber()
 	{
 		leftMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		rightMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		rightMotor.setPosition(0);
-		leftMotor.setPosition(0);
 		
 		rightMotor.setPID(4.0, 0, 0);
 		leftMotor.setPID(4.0, 0, 0);
 		
-		rightMotor.enableLimitSwitch(false, true);
+		rightMotor.enableLimitSwitch(true, false);
+		leftMotor.enableLimitSwitch(true, false);
+		
 	}
 
 	public void setLeftMotorSpeed(double leftSpeed){
@@ -80,10 +102,30 @@ public class ToteGrabber extends Subsystem {
 		this.setLeftMotorSpeed(0);
 		this.setRightMotorSpeed(0);
 	}
-	@Override
-	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-
+	
+	public void resetRightEnc()
+	{
+		
+		rightMotor.changeControlMode(ControlMode.Position);
+		
+		rightMotor.setPosition(0);
 	}
+	
+	public void resetLeftEnc()
+	{
+		
+		leftMotor.changeControlMode(ControlMode.Position);
+		leftMotor.setPosition(0);
+	}
+	
+	public boolean getRightLimit()
+	{
+		return rightMotor.isRevLimitSwitchClosed();
+	}
+	public boolean getLeftLimit()
+	{
+		return leftMotor.isRevLimitSwitchClosed();
+	}
+
 }
 
