@@ -47,7 +47,7 @@ public class TrajectoryDriveController extends AbstractController{
 	public void reset() {
 		followerLeft.reset();
 		followerRight.reset();
-		Robot.drivetrain.resetEncoders();
+		Robot.drivetrain.resetDriveEncoders();
 	}
 
 	public int getFollowerCurrentSegment() {

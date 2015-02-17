@@ -24,31 +24,31 @@ public class RobotMap {
  	public static int telescope1 = 5;
  	public static int telescope2 = 6;
  	
- 	public static int toteCloseIntake = 7;
- 	public static int toteCloseIntake2 = 8;
+ 	public static int toteCloseIntakeRight = 7;
+ 	public static int toteCloseIntakeLeft = 8;
  	
  	public static int intakeWheelMotorRight = 9;
  	public static int intakeWheelMotorLeft = 10;
 
  	// Digital Inputs
- 	public static int kDIN_leftDriveEncoderA = 1;
- 	public static int kDIN_leftDriveEncoderB = 2;
- 	public static int kDIN_rightDriveEncoderA = 3;
- 	public static int kDIN_rightDriveEncoderB = 4;
- 	//public static int KDIN_buttonIntake = 1;
+ 	public static int kDIN_leftDriveEncoderA = 4;
+ 	public static int kDIN_leftDriveEncoderB = 1;
+ 	public static int kDIN_rightDriveEncoderA = 2;
+ 	public static int kDIN_rightDriveEncoderB = 3;
 
+ 	public static int bumpLeft = 0;
  	// Analog Inputs
 
  	// Solenoids
 
- 	public static int kSOL_canPiston = 4;
- 	public static int kSOL_IntakePistons1 = 3;
- 	public static int kSOL_IntakePistons2 = 1;
- 	
- 	public static int kSOL_system_module = 1;
+ 	public static int kSOL_canPiston;
+ 	public static int kSOL_IntakePistons1 = 1;
+ 	public static int kSOL_IntakePistons2 = 2;
+	public static int kSOL_IntakePistons3 = 3;
+	
+	public static int kSOL_system_module = 1;
  	public static int kSOL_system = 0;
 	public static int kSOL_shiftLight;//TODO
 	public static int kAIN_rangeFinder;//TODO
 	public static int kSOL_rangeLight;//TODO
-	
 }

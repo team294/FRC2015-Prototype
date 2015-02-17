@@ -83,6 +83,7 @@ public class Navigator extends edu.wpi.first.wpilibj.command.Subsystem implement
 		return new Hashtable();
 	}
 
+
 	public void update() {
 		this.update(Robot.drivetrain.getLeftEncPos(), Robot.drivetrain.getRightEncPos(), Robot.drivetrain.getImu().getCompassHeading());
 	}

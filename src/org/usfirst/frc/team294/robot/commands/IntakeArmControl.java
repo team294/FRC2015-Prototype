@@ -11,8 +11,11 @@ public class IntakeArmControl extends Command {
 
 	public static enum IntakeArmAction{
 		OPEN,
+		OPENMID,
 		CLOSE,
-		STOP
+		STOP,
+		MOTOROUT,
+		MOTORIN
 	}
 
 	private IntakeArmAction act;
@@ -32,15 +35,26 @@ public class IntakeArmControl extends Command {
 	protected void execute() {
 		switch (this.act){
 		case OPEN:
-			Robot.intakeRollerArms.open();
+			Robot.intakeRollerArms.openAll();
 			break;
 		case CLOSE:
 			System.out.println("Running close()");
-			Robot.intakeRollerArms.close();
+			Robot.intakeRollerArms.closeAll();
 			break;
 		case STOP:
 			System.out.println("stop");
 			Robot.intakeRollerArms.stop();
+			break;
+		case OPENMID:
+			Robot.intakeRollerArms.openMid();
+			break;
+			
+		case MOTOROUT:
+			Robot.intakeRollerArms.openMotor();
+			break;
+			
+		case MOTORIN:
+			Robot.intakeRollerArms.closeMotor();
 			break;
 		}
 	}

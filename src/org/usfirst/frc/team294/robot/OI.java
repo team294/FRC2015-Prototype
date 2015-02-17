@@ -49,20 +49,51 @@ public class OI {
 		right[1].whenPressed(new ToteMotorControl(ToteMotorAction.PAN_RIGHT));
 		left[1].whenPressed(new ToteMotorControl(ToteMotorAction.PAN_LEFT));
 		
-		test[2].whileHeld(new IntakeArmControl(IntakeArmAction.OPEN));
-		test[3].whenPressed(new IntakeArmControl(IntakeArmAction.STOP));
-		test[4].whenPressed(new IntakeArmControl(IntakeArmAction.CLOSE));
+		right[3].whenPressed(new RepositionDrivetrain(false)); //False for right reposition
+		left[3].whenPressed(new RepositionDrivetrain(true)); //True for left reposition
 		
-		test[1].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
-		test[7].whenPressed(new AutoRotateXDegreesRel(45));
+		//test[2].whileHeld(new IntakeArmControl(IntakeArmAction.OPEN));
+		//test[3].whenPressed(new IntakeArmControl(IntakeArmAction.STOP));
+		//test[4].whenPressed(new IntakeArmControl(IntakeArmAction.CLOSE));
+		
+		
+		//testing INTAKE ARM ACTION
+		//test[1].whenPressed(new IntakeArmControl(IntakeArmAction.OPEN));
+		//test[4].whenPressed(new IntakeArmControl(IntakeArmAction.CLOSE));
+		//test[3].whenPressed(new IntakeArmControl(IntakeArmAction.OPENMID));
+		
+		
+		//test[2].whenPressed(new IntakeArmControl(IntakeArmAction.MOTOROUT));
+		//test[6].whenPressed(new IntakeArmControl(IntakeArmAction.MOTORIN));
+		//test[7].whenPressed(new IntakeArmControl(IntakeArmAction.STOP));
+		
+		
+		
+		//test[1].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
+		//test[7].whenPressed(new AutoRotateXDegreesRel(45));
+		
+		test[8].whenPressed(new ToteMotorControl(ToteMotorAction.CLOSE));
+		test[8].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
+		test[7].whenPressed(new ToteMotorControl(ToteMotorAction.OPEN));
+		test[7].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
 
+		test[2].whenPressed(new ToteMotorControl(ToteMotorAction.LEFTCONTROL));
+		test[2].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
+		test[3].whenPressed(new ToteMotorControl(ToteMotorAction.LEFTCONTROL2));
+		test[3].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
 		
-		test[6].whenPressed(new ToteMotorControl(ToteMotorAction.AUTO_OPEN));
+		test[1].whenPressed(new ToteMotorControl(ToteMotorAction.RIGHTCONTROL));
+		test[1].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
+		test[4].whenPressed(new ToteMotorControl(ToteMotorAction.RIGHTCONTROL2));
+		test[4].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
 		
+		//test[5].whenPressed(new ToteMotorControl(ToteMotorAction.NARROW_TOTE));
+		
+		//test[6].whenPressed(new ToteMotorControl(ToteMotorAction.AUTO_OPEN));
+		//test[5].whileHeld(new ToteMotorControl(ToteMotorAction.LEFTCONTROL));
+		//test[5].whileHeld(new ToteMotorControl(ToteMotorAction.RIGHTCONTROL));
 		test[5].whileHeld(new TeleWithJoystick());
 		
 		//test[8].whenPressed(new DrivetrainStressTest());
-		
-		test[8].whenPressed(new PathDrive());
 	}
 }

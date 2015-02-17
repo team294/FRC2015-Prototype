@@ -24,13 +24,17 @@ public class ToteMotorControl extends Command {
 		STOP,
 		WIDE_TOTE,
 		NARROW_TOTE,
-		OPEN_SLIGHT
+		OPEN_SLIGHT,
+		LEFTCONTROL,
+		LEFTCONTROL2,
+		RIGHTCONTROL,
+		RIGHTCONTROL2
 	}
 	
 	private int openPosR = 1000, //Make this amount "openSlightAmt" less than completely out
-			wideTotePosR = 100, narrowTotePosR;
+			wideTotePosR = 100, narrowTotePosR = 5000;
 	private int openPosL = 1000, //Make this amount "openSlightAmt" less than completely out
-			wideTotePosL= 100, narrowTotePosL;
+			wideTotePosL= 100, narrowTotePosL = 5000;
 	private int openSlightAmt = 30;
 	private int openSlightPosL;
 	private int openSlightPosR;
@@ -53,9 +57,9 @@ public class ToteMotorControl extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		leftInit = Robot.toteGrab.getLeftMotor().getAnalogInPosition();
-		rightInit = Robot.toteGrab.getRightMotor().getAnalogInPosition();
-		relativeDistance=Math.abs(Robot.toteGrab.getLeftMotor().getAnalogInPosition()-Robot.toteGrab.getRightMotor().getAnalogInPosition());
+		leftInit = Robot.toteGrab.getLeftMotor().getEncPosition();
+		rightInit = Robot.toteGrab.getRightMotor().getEncPosition();
+		relativeDistance=Math.abs(Robot.toteGrab.getLeftMotor().getEncPosition()-Robot.toteGrab.getRightMotor().getEncPosition());
 		
 		switch(this.action)
 		{
@@ -64,32 +68,42 @@ public class ToteMotorControl extends Command {
 			openSlightPosR = rightInit + openSlightAmt;
 		}
 		
-		
-		
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		//int checkDistance=Math.abs(Robot.toteGrab.getLeftPos()-Robot.toteGrab.getRightPos());
     	//int error = checkDistance - relativeDistance;
-    	int error = Robot.toteGrab.getRightPos();
+    	int error = -Robot.toteGrab.getRightPos() + Robot.toteGrab.getLeftPos();
     	SmartDashboard.putNumber("Error:", error);
     	SmartDashboard.putNumber("Modified error", error* .0007);
+    	int errorLeft = 1500 - Robot.toteGrab.getLeftPos();
+    	int errorRight = 2500 - Robot.toteGrab.getRightPos();
+    	//SmartDashboard.putNumber("LeftMotorOutput ", Robot.toteGrab.getLeftMotor().get());
+    	//SmartDashboard.putNumber("LeftMotorOutput ", Robot.toteGrab.getRightMotor().get());
+    	
+    	
     	
 		switch(this.action){
 		
 		case OPEN:
-			Robot.toteGrab.setLeftMotorSpeed(-.8);
-			Robot.toteGrab.setRightMotorSpeed(-.8);	
+			System.out.println("Opening");
+			if(!Robot.toteGrab.getRightLimit())
+				Robot.toteGrab.setRightMotorSpeed(.8);	
+			if(!Robot.toteGrab.getLeftLimit())
+				Robot.toteGrab.setLeftMotorSpeed(.8);
+			
+			
 			break;
 		case CLOSE:
-			Robot.toteGrab.setLeftMotorSpeed(.8);
-			Robot.toteGrab.setRightMotorSpeed(.8);
+			System.out.println("closing");
+			Robot.toteGrab.setLeftMotorSpeed(-.8);
+			Robot.toteGrab.setRightMotorSpeed(-.8);
 			break;
 			
 		case PAN_LEFT:
 	    	Robot.toteGrab.setLeftMotorSpeed(.3 - error * .0007);
-	    	Robot.toteGrab.setRightMotorSpeed(.3 + error * .0007);
+	    	Robot.toteGrab.setRightMotorSpeed(-.3 + error * .0007);
 	    	break;
 		case PAN_RIGHT:
 	    	Robot.toteGrab.setLeftMotorSpeed(-.3 + error * .0007);
@@ -106,8 +120,8 @@ public class ToteMotorControl extends Command {
 			Robot.toteGrab.setRightPosition(wideTotePosR);
 			break;
 		case NARROW_TOTE:
-			Robot.toteGrab.setLeftPosition(narrowTotePosL);
-			Robot.toteGrab.setRightPosition(narrowTotePosR);
+			Robot.toteGrab.setLeftMotorSpeed(-errorLeft * .001);
+			Robot.toteGrab.setRightMotorSpeed(-errorRight * .001);
 			break;
 			
 		case OPEN_SLIGHT:
@@ -117,6 +131,19 @@ public class ToteMotorControl extends Command {
 			
 		case STOP:
 			this.end();
+			break;
+			
+		case LEFTCONTROL:
+			Robot.toteGrab.setLeftMotorSpeed(-.8);
+			break;
+		case LEFTCONTROL2:
+			Robot.toteGrab.setLeftMotorSpeed(.8);
+			break;
+		case RIGHTCONTROL:
+			Robot.toteGrab.setRightMotorSpeed(-.8);
+			break;
+		case RIGHTCONTROL2:
+			Robot.toteGrab.setRightMotorSpeed(.8);
 			break;
 		default:
 			this.end();
@@ -130,8 +157,6 @@ public class ToteMotorControl extends Command {
 			return false;
 		case CLOSE:
 			return false;
-			
-			
 		case PAN_LEFT:
 			System.out.println("Pan Left Done");
 			return !(Robot.oi.left[1].get());
@@ -145,7 +170,7 @@ public class ToteMotorControl extends Command {
 		case WIDE_TOTE:
 			return onTargetRight(wideTotePosR) && onTargetLeft(wideTotePosL);
 		case NARROW_TOTE:
-			return onTargetRight(narrowTotePosR) && onTargetLeft(narrowTotePosL);
+			return onTargetRight(2500) && onTargetLeft(1500);
 			
 		
 		case OPEN_SLIGHT:

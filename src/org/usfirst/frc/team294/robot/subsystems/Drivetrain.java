@@ -11,6 +11,7 @@ import org.usfirst.frc.team294.robot.util.RateLimitFilter;
 import com.kauailabs.nav6.frc.IMUAdvanced;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -28,15 +29,11 @@ public class Drivetrain extends Subsystem {
 	int[] leftDrive={RobotMap.leftMotor2,RobotMap.leftMotor1};
 	MultiCANTalon leftMotor = new MultiCANTalon(leftDrive);
 
+
 	int[] rightDrive={RobotMap.rightMotor2,RobotMap.rightMotor1};
 	MultiCANTalon rightMotor = new MultiCANTalon(rightDrive);
 
 	RobotDrive drive = new RobotDrive(leftMotor, rightMotor);
-
-	//Encoder rightDriveEncoder = new Encoder(RobotMap.kDIN_rightDriveEncoderA,
-	//		RobotMap.kDIN_rightDriveEncoderB);
-	//Encoder leftDriveEncoder = new Encoder(RobotMap.kDIN_leftDriveEncoderA,
-	//		RobotMap.kDIN_leftDriveEncoderB);
 
 	RateLimitFilter leftFilter = new RateLimitFilter(6.0);
 	RateLimitFilter rightFilter = new RateLimitFilter(6.0);
@@ -68,15 +65,6 @@ public class Drivetrain extends Subsystem {
 		leftMotor.getCANTalon(0).setPosition(0);
 		try {
 			serial_port = new SerialPort(57600,SerialPort.Port.kMXP);
-
-			// You can add a second parameter to modify the 
-			// update rate (in hz) from 4 to 100.  The default is 100.
-			// If you need to minimize CPU load, you can set it to a
-			// lower value, as shown here, depending upon your needs.
-
-			// You can also use the IMUAdvanced class for advanced
-			// features.
-
 			//byte update_rate_hz = 50;
 			//imu = new IMU(serial_port,update_rate_hz);
 			imu = new IMUAdvanced(serial_port);
@@ -94,7 +82,15 @@ public class Drivetrain extends Subsystem {
 
 	}
 
+	public CANTalon getLeftMain()
+	{
+		return leftMotor.getCANTalon(0);
+	}
 
+	public CANTalon getRightMain()
+	{
+		return rightMotor.getCANTalon(0);
+	}
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
@@ -108,19 +104,26 @@ public class Drivetrain extends Subsystem {
 		return rightMotor.getCANTalon(0).getEncPosition();
 	}
 
-	public CANTalon getLeftEnc()
-	{
-		return leftMotor.getCANTalon(0);
+	public double getLeftEncoderDistance() { // in feet
+		return getLeftEncPos()  * LEFT_ENCOCDER_TO_DISTANCE_RATIO;
 	}
 
-	public CANTalon getRightEnc()
-	{
-		return rightMotor.getCANTalon(0);
+	public double getRightEncoderDistance(){//in feet
+		return getRightEncPos() * RIGHT_ENCOCDER_TO_DISTANCE_RATIO;
+	}
+
+	public double getLeftEnc() {
+		return getLeftMain().getEncPosition();
+	}
+
+	public double getRightEnc(){
+		return getRightMain().getEncPosition();
 	}
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		setDefaultCommand(new TankDriveWithJoysticks());
+
 	}
 
 	public void stop() {
@@ -128,14 +131,28 @@ public class Drivetrain extends Subsystem {
 		lowBatteryScale = 1.0;
 	}
 
-	public void resetEncoders() {
-		leftMotor.getCANTalon(0).setPosition(0);
-		rightMotor.getCANTalon(0).setPosition(0);
+	public void resetDriveEncoders() {
+		getLeftMain().changeControlMode(ControlMode.Position);
+		getLeftMain().setPosition(0);
+		getRightMain().changeControlMode(ControlMode.Position);
+		getRightMain().setPosition(0);
+	}
+
+	public void resetRightDriveEnc()
+	{
+		getRightMain().changeControlMode(ControlMode.Position);
+		getRightMain().setPosition(0);
+	}
+	public void resetLeftDriveEnc()
+	{
+
+		getLeftMain().changeControlMode(ControlMode.Position);
+		getLeftMain().setPosition(0);
 	}
 
 	public void autoDrive(double speed) {
-		double leftValue = getRightEncPos() ;
-		double rightValue = getRightEncPos();
+		double leftValue = getLeftEnc();
+		double rightValue = getRightEnc();
 
 		double leftSpeed = speed;
 		double rightSpeed = speed;
@@ -154,6 +171,7 @@ public class Drivetrain extends Subsystem {
 		// rightValue, leftSpeed, rightSpeed)
 		tankDrive(leftSpeed, rightSpeed);
 	}
+
 	private double currentLPower=0;
 	private double currentRPower=0;
 	public void tankDrive(double lPower, double rPower) {
@@ -224,26 +242,6 @@ public class Drivetrain extends Subsystem {
 		 */
 		lowBatteryScale = 1.0;
 		drive.arcadeDrive(l * lowBatteryScale, r * lowBatteryScale, false);
-	}
-
-	//	public double getLeft() {
-	//		leftDriveEncoder.setDistancePerPulse(.1);
-	//		double left = leftDriveEncoder.getDistance();
-	//		return left;
-	//	}
-	//
-	//	public double getRight() {
-	//		getRightEnc().setDistancePerPulse(.1);
-	//		double right = getRightEnc().getPosition();
-	//		return right;
-	//	}
-
-	public double getLeftEncoderDistance() { // in feet
-		return getLeftEncPos()  * LEFT_ENCOCDER_TO_DISTANCE_RATIO;
-	}
-
-	public double getRightEncoderDistance(){
-		return getRightEncPos() * LEFT_ENCOCDER_TO_DISTANCE_RATIO;
 	}
 
 	public double getGyroAngleInRadians() {
