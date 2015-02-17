@@ -134,6 +134,8 @@ public class Robot extends IterativeRobot {
     	
         Scheduler.getInstance().run();
         SmartDashboard.putNumber("YAW", Robot.drivetrain.getYaw());
+        SmartDashboard.putNumber("right encoder get", this.drivetrain.getRightEncoderDistance());
+        SmartDashboard.putNumber("left encoder get", this.drivetrain.getLeftEncoderDistance());
     }
     
     /**

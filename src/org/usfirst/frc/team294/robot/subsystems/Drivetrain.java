@@ -10,6 +10,8 @@ import org.usfirst.frc.team294.robot.util.RateLimitFilter;
 
 import com.kauailabs.nav6.frc.IMUAdvanced;
 
+import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SerialPort;
@@ -23,18 +25,18 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Drivetrain extends Subsystem {
 
-	int[] leftDrive={RobotMap.leftMotor1,RobotMap.leftMotor2};
-	SpeedController leftMotor = new MultiCANTalon(leftDrive);
+	int[] leftDrive={RobotMap.leftMotor2,RobotMap.leftMotor1};
+	MultiCANTalon leftMotor = new MultiCANTalon(leftDrive);
 
-	int[] rightDrive={RobotMap.rightMotor1,RobotMap.rightMotor2};
-	SpeedController rightMotor = new MultiCANTalon(rightDrive);
+	int[] rightDrive={RobotMap.rightMotor2,RobotMap.rightMotor1};
+	MultiCANTalon rightMotor = new MultiCANTalon(rightDrive);
 
 	RobotDrive drive = new RobotDrive(leftMotor, rightMotor);
 
-	Encoder rightDriveEncoder = new Encoder(RobotMap.kDIN_rightDriveEncoderA,
-			RobotMap.kDIN_rightDriveEncoderB);
-	Encoder leftDriveEncoder = new Encoder(RobotMap.kDIN_leftDriveEncoderA,
-			RobotMap.kDIN_leftDriveEncoderB);
+	//Encoder rightDriveEncoder = new Encoder(RobotMap.kDIN_rightDriveEncoderA,
+	//		RobotMap.kDIN_rightDriveEncoderB);
+	//Encoder leftDriveEncoder = new Encoder(RobotMap.kDIN_leftDriveEncoderA,
+	//		RobotMap.kDIN_leftDriveEncoderB);
 
 	RateLimitFilter leftFilter = new RateLimitFilter(6.0);
 	RateLimitFilter rightFilter = new RateLimitFilter(6.0);
@@ -47,7 +49,7 @@ public class Drivetrain extends Subsystem {
 	Timer lowBatteryScaleTimer = new Timer();
 	double lowBatteryScale = 1.0;
 
-	
+
 
 	SerialPort serial_port;
 	//IMU imu;  // Alternatively, use IMUAdvanced for advanced features
@@ -59,7 +61,11 @@ public class Drivetrain extends Subsystem {
 		drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
 		drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
 
+		rightMotor.getCANTalon(0).setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		leftMotor.getCANTalon(0).setFeedbackDevice(FeedbackDevice.QuadEncoder);
 
+		rightMotor.getCANTalon(0).setPosition(0);
+		leftMotor.getCANTalon(0).setPosition(0);
 		try {
 			serial_port = new SerialPort(57600,SerialPort.Port.kMXP);
 
@@ -92,6 +98,26 @@ public class Drivetrain extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
+	public int getLeftEncPos()
+	{
+		return leftMotor.getCANTalon(0).getEncPosition();
+	}
+
+	public int getRightEncPos()
+	{
+		return rightMotor.getCANTalon(0).getEncPosition();
+	}
+
+	public CANTalon getLeftEnc()
+	{
+		return leftMotor.getCANTalon(0);
+	}
+
+	public CANTalon getRightEnc()
+	{
+		return rightMotor.getCANTalon(0);
+	}
+
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		setDefaultCommand(new TankDriveWithJoysticks());
@@ -103,13 +129,13 @@ public class Drivetrain extends Subsystem {
 	}
 
 	public void resetEncoders() {
-		leftDriveEncoder.reset();
-		rightDriveEncoder.reset();
+		leftMotor.getCANTalon(0).setPosition(0);
+		rightMotor.getCANTalon(0).setPosition(0);
 	}
 
 	public void autoDrive(double speed) {
-		double leftValue = leftDriveEncoder.get();
-		double rightValue = rightDriveEncoder.get();
+		double leftValue = getRightEncPos() ;
+		double rightValue = getRightEncPos();
 
 		double leftSpeed = speed;
 		double rightSpeed = speed;
@@ -156,27 +182,33 @@ public class Drivetrain extends Subsystem {
 	public double[] scaleMotorPowerWithSafeAcceleration(double lPower, double rPower){
 		double absLPower=Math.abs(lPower);
 		double absRPower=Math.abs(rPower);
+		boolean scaled=false;
 		if(absRPower>1 || absLPower>1){
+			scaled= true;
 			System.out.println("Scaling down tank drive command power.\n"
 					+ "One or more absolute values sent to tank drive was greater than 1.\n"
 					+ "Recieved lPower: "+lPower+" \nRecieved rPower: "+rPower);
 			if(absRPower>=1){
 				rPower/=absRPower;
 				lPower/=absRPower;
-			}else{
+			}
+			if(absLPower>=1){
 				rPower/=absLPower;
 				lPower/=absLPower;
 			}
 
 		}
-		
-		double centripetalAccel = Math.pow((Math.abs(lPower-rPower)*13*0.3048*9.8),2)/(38/2*0.0254);
-		if(Robot.navigator.getLinearAccel()/32.1740>=Constants.ACCEL_LIMIT || centripetalAccel/32.1740>=Constants.ACCEL_LIMIT ){
-			rPower*=0.7;
-			lPower*=0.7;
+
+		//		double centripetalAccel = Math.pow((Math.abs(lPower-rPower)*13*0.3048*9.8),2)/(38/2*0.0254);
+		//		if(Robot.navigator.getLinearAccel()/32.1740>=Constants.ACCEL_LIMIT || centripetalAccel/32.1740>=Constants.ACCEL_LIMIT ){
+		//			rPower*=0.7;
+		//			lPower*=0.7;
+		//			scaled=true;
+		//		}
+		if(scaled){
+			System.out.println("New lPower: "+ lPower +"\nNew rPower: "+rPower);
 		}
 
-		System.out.println("New lPower: "+lPower+" \nNew rPower: "+rPower);
 		double[] finalVals=new double[]{lPower,rPower};
 		return finalVals;
 	}
@@ -194,24 +226,24 @@ public class Drivetrain extends Subsystem {
 		drive.arcadeDrive(l * lowBatteryScale, r * lowBatteryScale, false);
 	}
 
-	public double getLeft() {
-		leftDriveEncoder.setDistancePerPulse(.1);
-		double left = leftDriveEncoder.getDistance();
-		return left;
-	}
-
-	public double getRight() {
-		rightDriveEncoder.setDistancePerPulse(.1);
-		double right = rightDriveEncoder.getDistance();
-		return right;
-	}
+	//	public double getLeft() {
+	//		leftDriveEncoder.setDistancePerPulse(.1);
+	//		double left = leftDriveEncoder.getDistance();
+	//		return left;
+	//	}
+	//
+	//	public double getRight() {
+	//		getRightEnc().setDistancePerPulse(.1);
+	//		double right = getRightEnc().getPosition();
+	//		return right;
+	//	}
 
 	public double getLeftEncoderDistance() { // in feet
-		return leftDriveEncoder.get() * LEFT_ENCOCDER_TO_DISTANCE_RATIO;
+		return getLeftEncPos()  * LEFT_ENCOCDER_TO_DISTANCE_RATIO;
 	}
 
 	public double getRightEncoderDistance(){
-		return rightDriveEncoder.get() * LEFT_ENCOCDER_TO_DISTANCE_RATIO;
+		return getRightEncPos() * LEFT_ENCOCDER_TO_DISTANCE_RATIO;
 	}
 
 	public double getGyroAngleInRadians() {
@@ -223,11 +255,11 @@ public class Drivetrain extends Subsystem {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	public IMUAdvanced getImu(){
 		return this.imu;
 	}
-	
+
 	public double[] getDrivePower(){
 		return new double[]{this.currentLPower, this.currentRPower};
 	}

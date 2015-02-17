@@ -84,7 +84,7 @@ public class Navigator extends edu.wpi.first.wpilibj.command.Subsystem implement
 	}
 
 	public void update() {
-		this.update(Robot.drivetrain.getLeft(), Robot.drivetrain.getRight(), Robot.drivetrain.getImu().getCompassHeading());
+		this.update(Robot.drivetrain.getLeftEncPos(), Robot.drivetrain.getRightEncPos(), Robot.drivetrain.getImu().getCompassHeading());
 	}
 
 	@Override

@@ -31,10 +31,10 @@ public class RobotMap {
  	public static int intakeWheelMotorLeft = 10;
 
  	// Digital Inputs
- 	public static int kDIN_leftDriveEncoderA = 0;
- 	public static int kDIN_leftDriveEncoderB = 1;
- 	public static int kDIN_rightDriveEncoderA = 2;
- 	public static int kDIN_rightDriveEncoderB = 3;
+ 	public static int kDIN_leftDriveEncoderA = 1;
+ 	public static int kDIN_leftDriveEncoderB = 2;
+ 	public static int kDIN_rightDriveEncoderA = 3;
+ 	public static int kDIN_rightDriveEncoderB = 4;
  	//public static int KDIN_buttonIntake = 1;
 
  	// Analog Inputs
