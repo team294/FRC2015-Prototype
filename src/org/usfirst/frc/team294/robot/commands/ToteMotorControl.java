@@ -32,9 +32,9 @@ public class ToteMotorControl extends Command {
 	}
 	
 	private int openPosR = 1000, //Make this amount "openSlightAmt" less than completely out
-			wideTotePosR = 100, narrowTotePosR = 5000;
+			wideTotePosR = 100;
 	private int openPosL = 1000, //Make this amount "openSlightAmt" less than completely out
-			wideTotePosL= 100, narrowTotePosL = 5000;
+			wideTotePosL= 100;
 	private int openSlightAmt = 30;
 	private int openSlightPosL;
 	private int openSlightPosR;
@@ -43,8 +43,6 @@ public class ToteMotorControl extends Command {
 	private int leftInit, rightInit;
 	private double tolerance=15;
 	ToteMotorAction action;
-	private int relativeDistance;
-
 	public ToteMotorControl(ToteMotorAction a) {
 		requires(Robot.toteGrab);
 		this.action=a;
@@ -59,13 +57,16 @@ public class ToteMotorControl extends Command {
 	protected void initialize() {
 		leftInit = Robot.toteGrab.getLeftMotor().getEncPosition();
 		rightInit = Robot.toteGrab.getRightMotor().getEncPosition();
-		relativeDistance=Math.abs(Robot.toteGrab.getLeftMotor().getEncPosition()-Robot.toteGrab.getRightMotor().getEncPosition());
+		Math.abs(Robot.toteGrab.getLeftMotor().getEncPosition()-Robot.toteGrab.getRightMotor().getEncPosition());
 		
 		switch(this.action)
 		{
 		case OPEN_SLIGHT:
 			openSlightPosL = leftInit + openSlightAmt;
 			openSlightPosR = rightInit + openSlightAmt;
+			break;
+		default:
+			break;
 		}
 		
 	}

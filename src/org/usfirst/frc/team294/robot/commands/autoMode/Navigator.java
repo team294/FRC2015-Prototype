@@ -2,8 +2,6 @@ package org.usfirst.frc.team294.robot.commands.autoMode;
 
 
 
-import java.util.Hashtable;
-
 import org.usfirst.frc.team294.robot.Robot;
 import org.usfirst.frc.team294.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team294.robot.util.Constants;
@@ -65,7 +63,6 @@ public class Navigator extends edu.wpi.first.wpilibj.command.Subsystem implement
 		return centripetalAccel;
 	}
 
-
 	public double getLinearAccel(){//in ft/sec^2
 		//finds the magnitude of acceleration in the x and y planes in g and then converts to ft/sec^2 and returns
 		double linearAccel = Math.sqrt(Math.pow(
@@ -78,11 +75,6 @@ public class Navigator extends edu.wpi.first.wpilibj.command.Subsystem implement
 	public String toString() {
 		return "X: " + x + " Y: " + y + " Heading: " + heading;
 	}
-
-	public Hashtable serialize() {
-		return new Hashtable();
-	}
-
 
 	public void update() {
 		this.update(Robot.drivetrain.getLeftEncPos(), Robot.drivetrain.getRightEncPos(), Robot.drivetrain.getImu().getCompassHeading());

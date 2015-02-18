@@ -13,7 +13,7 @@ import java.util.Vector;
  */
 public class MultiLooper implements Loopable {
   private Looper looper;
-  private Vector loopables = new Vector();
+  private Vector<Loopable> loopables = new Vector<Loopable>();
   public MultiLooper(double period) {
     looper = new Looper(this, period);
   }

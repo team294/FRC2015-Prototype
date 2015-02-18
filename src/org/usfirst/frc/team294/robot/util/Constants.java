@@ -7,6 +7,6 @@ public final class Constants {
 
 	public static final double DRIVETRAIN_WIDTH=36; //inches
 	public static final double DRIVETRAIN_RADIUS=19; //inches
-	//measured in g (imperial)
-	public static final double ACCEL_LIMIT = 0.1;//g
+
+	public static final double ACCEL_LIMIT = 0.1;//g (imperial)
 }

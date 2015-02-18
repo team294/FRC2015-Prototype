@@ -69,8 +69,9 @@ public class IntakeArmControl extends Command {
 			return true;
 		case STOP:
 			return true;
+		default:
+			return true;
 		}
-		return true;
 	}
 
 	// Called once after isFinished returns true

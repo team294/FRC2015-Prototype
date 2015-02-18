@@ -14,7 +14,6 @@ import org.usfirst.frc.team294.robot.subsystems.ToteGrabber;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -51,11 +50,6 @@ public class Robot extends IterativeRobot {
 
 	public static int startPosition = 0;
 	
-	//Soft limits for all subsystems
-	public static int telescopeTopLim=1000;//TODO
-	public static int telescopeBottomLim=0;//TODO
-	public static int toteGrabberOutsideLim=1000;//TODO
-	public static int toteGrabberInsideLim=0;//TODO
 	public static Navigator navigator;
 	
 	public static MultiLooper autoUpdater100Hz = new MultiLooper(1.0 / 100.0);
@@ -136,8 +130,8 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         SmartDashboard.putNumber("YAW", Robot.drivetrain.getYaw());
 
-        SmartDashboard.putNumber("right encoder get", this.drivetrain.getRightEncoderDistance());
-        SmartDashboard.putNumber("left encoder get", this.drivetrain.getLeftEncoderDistance());
+        SmartDashboard.putNumber("right encoder get", drivetrain.getRightEncoderDistance());
+        SmartDashboard.putNumber("left encoder get", drivetrain.getLeftEncoderDistance());
         
         SmartDashboard.putBoolean("leftToteBump:", Robot.toteGrab.getLeftMotor().isRevLimitSwitchClosed());
         SmartDashboard.putBoolean("rightToteBump:", Robot.toteGrab.getRightMotor().isFwdLimitSwitchClosed());

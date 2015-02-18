@@ -5,11 +5,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team294.robot.commands.*;
-import org.usfirst.frc.team294.robot.commands.IntakeArmControl.IntakeArmAction;
 import org.usfirst.frc.team294.robot.commands.ToteMotorControl.ToteMotorAction;
-import org.usfirst.frc.team294.robot.commands.autoMode.PathDrive;
-//import org.usfirst.frc.team294.robot.commands.SafeGrabOrReleaseTote.GrabOrRelease;
-//import org.usfirst.frc.team294.robot.subsystems.Telescope.Setpoint;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -86,6 +82,8 @@ public class OI {
 		test[1].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
 		test[4].whenPressed(new ToteMotorControl(ToteMotorAction.RIGHTCONTROL2));
 		test[4].whenReleased(new ToteMotorControl(ToteMotorAction.STOP));
+		
+		
 		
 		//test[5].whenPressed(new ToteMotorControl(ToteMotorAction.NARROW_TOTE));
 		
