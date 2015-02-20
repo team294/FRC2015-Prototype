@@ -48,6 +48,10 @@ public class OI {
 		right[3].whenPressed(new RepositionDrivetrain(false)); //False for right reposition
 		left[3].whenPressed(new RepositionDrivetrain(true)); //True for left reposition
 		
+		co[2].whenPressed(new TelescopeToPos(TelescopeToPos.TelescopePosition.PICKUP));
+		co[3].whenPressed(new TelescopeToPos(TelescopeToPos.TelescopePosition.CARRY));
+		co[8].whileHeld(new TeleWithJoystick(coStick, 1));
+
 		//test[2].whileHeld(new IntakeArmControl(IntakeArmAction.OPEN));
 		//test[3].whenPressed(new IntakeArmControl(IntakeArmAction.STOP));
 		//test[4].whenPressed(new IntakeArmControl(IntakeArmAction.CLOSE));
@@ -90,7 +94,7 @@ public class OI {
 		//test[6].whenPressed(new ToteMotorControl(ToteMotorAction.AUTO_OPEN));
 		//test[5].whileHeld(new ToteMotorControl(ToteMotorAction.LEFTCONTROL));
 		//test[5].whileHeld(new ToteMotorControl(ToteMotorAction.RIGHTCONTROL));
-		test[5].whileHeld(new TeleWithJoystick());
+		test[5].whileHeld(new TeleWithJoystick(testStick, 1));
 		
 		//test[8].whenPressed(new DrivetrainStressTest());
 	}

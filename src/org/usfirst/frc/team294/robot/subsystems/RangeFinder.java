@@ -14,7 +14,7 @@ public class RangeFinder extends Subsystem {
 
 	// 24V solenoid to power range finder sensor
 	Solenoid system = new Solenoid(RobotMap.kSOL_system_module, RobotMap.kSOL_system);
-	AnalogInput rangeFinder = new AnalogInput(RobotMap.kAIN_rangeFinder);
+	//AnalogInput rangeFinder = new AnalogInput(RobotMap.kAIN_rangeFinder);
 	Solenoid rangeLight = new Solenoid(RobotMap.kSOL_rangeLight);
 	private int[] inRangeHistory = new int[10];
 

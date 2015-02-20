@@ -3,6 +3,7 @@ package org.usfirst.frc.team294.robot.subsystems;
 import org.usfirst.frc.team294.robot.Robot;
 import org.usfirst.frc.team294.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
@@ -21,6 +22,7 @@ public class ToteGrabber extends Subsystem {
 	private CANTalon leftMotor = new CANTalon(RobotMap.toteCloseIntakeLeft);
 	
 	public DigitalInput bumpLeft = new DigitalInput(RobotMap.bumpLeft);
+	public AnalogInput distLeft = new AnalogInput(RobotMap.kAIN_distLeft);
 
 
 	// Put methods for controlling this subsystem
@@ -118,6 +120,11 @@ public class ToteGrabber extends Subsystem {
 	public boolean getLeftLimit()
 	{
 		return leftMotor.isRevLimitSwitchClosed();
+	}
+
+	public double getLeftDistanceSensor()
+	{
+		return distLeft.getAverageVoltage();
 	}
 
 }

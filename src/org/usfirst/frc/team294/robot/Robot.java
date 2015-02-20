@@ -81,7 +81,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData(intakeRollerArms);
 		SmartDashboard.putData(rangeFinder);
 		SmartDashboard.putData(telescope);
-		
+	
 		SmartDashboard.putNumber("LeftGrabPos", Robot.toteGrab.getLeftPos());
 		SmartDashboard.putNumber("RightGrabPos", Robot.toteGrab.getRightPos());
 		oi = new OI();
@@ -139,6 +139,11 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("Right Tote Position:", Robot.toteGrab.getRightPos());
         
         SmartDashboard.putNumber("Telescope Position",  Robot.telescope.getPotVal());
+        
+    	SmartDashboard.putNumber("Left fork get", Robot.toteGrab.getLeftPos());
+    	SmartDashboard.putNumber("Right fork get", Robot.toteGrab.getRightPos());
+	
+        SmartDashboard.putNumber("Left Tote Distance", Robot.toteGrab.getLeftDistanceSensor());
         
         if(Robot.toteGrab.getRightMotor().isFwdLimitSwitchClosed()){
     		Robot.toteGrab.resetRightEnc();

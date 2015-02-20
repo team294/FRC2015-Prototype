@@ -38,7 +38,7 @@ public class RobotMap {
 
  	public static int bumpLeft = 0;
  	// Analog Inputs
-
+ 	public static int kAIN_distLeft=0;
  	// Solenoids
 
  	public static int kSOL_canPiston;
@@ -49,6 +49,6 @@ public class RobotMap {
 	public static int kSOL_system_module = 1;
  	public static int kSOL_system = 0;
 	public static int kSOL_shiftLight;//TODO
-	public static int kAIN_rangeFinder;//TODO
+	//public static int kAIN_rangeFinder;//TODO
 	public static int kSOL_rangeLight;//TODO
 }
