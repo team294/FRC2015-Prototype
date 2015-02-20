@@ -45,15 +45,13 @@ public class IntakeRollerArms extends Subsystem {
 	
 	public void setMotorSpeed(double speed)
 	{
-		
-		getMainIntake().changeControlMode(ControlMode.PercentVbus);
 		System.out.println("hi");
 		intakeMotors.set(speed);
 	}
 	
 	public synchronized void close(){
 		
-		this.setMotorSpeed(-.8);
+		setMotorSpeed(-.8);
 		/*if(!(armPistons.get() == DoubleSolenoid.Value.kReverse))
 		{
 		armPistons.set(DoubleSolenoid.Value.kReverse);
@@ -79,11 +77,11 @@ public class IntakeRollerArms extends Subsystem {
 	}
 	
 	public synchronized void openMotor(){
-		this.setMotorSpeed(.8);
+		setMotorSpeed(-.8);
 		
 	}
 	public synchronized void closeMotor(){
-		this.setMotorSpeed(-.8);
+		setMotorSpeed(.8);
 		
 	}
 	

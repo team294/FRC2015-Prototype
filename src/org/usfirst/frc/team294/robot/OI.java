@@ -48,9 +48,19 @@ public class OI {
 		right[3].whenPressed(new RepositionDrivetrain(false)); //False for right reposition
 		left[3].whenPressed(new RepositionDrivetrain(true)); //True for left reposition
 		
-		co[2].whenPressed(new TelescopeToPos(TelescopeToPos.TelescopePosition.PICKUP));
-		co[3].whenPressed(new TelescopeToPos(TelescopeToPos.TelescopePosition.CARRY));
+		co[1].whenPressed(new TelescopeToPos(TelescopeToPos.TelescopePosition.PICKUP));
+		co[2].whenPressed(new TelescopeToPos(TelescopeToPos.TelescopePosition.CARRY));
+		co[3].whenPressed(new TelescopeToPos(TelescopeToPos.TelescopePosition.GROUND_1TOTE));
 		co[8].whileHeld(new TeleWithJoystick(coStick, 1));
+		
+		co[11].whenPressed(new ToteMotorControl(ToteMotorAction.OPEN));
+		co[10].whenPressed(new ToteMotorControl(ToteMotorAction.WIDE_TOTE));
+		co[9].whenPressed(new PickUpTote());
+		co[6].whenPressed(new ToteMotorControl(ToteMotorAction.OPEN_SLIGHT));
+		co[7].whenPressed(new ToteMotorControl(ToteMotorAction.NARROW_TOTE));
+		
+		co[4].whileHeld(new IntakeArmControl(IntakeArmControl.IntakeArmAction.MOTOR_IN));
+		co[5].whileHeld(new IntakeArmControl(IntakeArmControl.IntakeArmAction.STOP));
 
 		//test[2].whileHeld(new IntakeArmControl(IntakeArmAction.OPEN));
 		//test[3].whenPressed(new IntakeArmControl(IntakeArmAction.STOP));

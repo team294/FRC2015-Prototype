@@ -25,8 +25,8 @@ public class Telescope extends Subsystem {
 		System.out.println("limit="+Preferences.getInstance().getDouble("pivMaxLimit", 0.0));
 
 		getMainTelescope().setFeedbackDevice(FeedbackDevice.AnalogPot);
-		getMainTelescope().setPID(50, 0.0, 0.0, 0.0, 0, 0.0, 0); //gains going up
-		getMainTelescope().setPID(30, 0.0, 0.0, 0.0, 0, 0.0, 1); //TODO gains going down, have to change this!
+		getMainTelescope().setPID(30, 0.05, 0.0, 0.0, 20, 5.0, 0); //gains going up
+		getMainTelescope().setPID(15, 0.05, 0.0, 0.0, 20, 5.0, 1); //TODO gains going down, have to change this!
 	}
 
 	public CANTalon getMainTelescope()
@@ -39,8 +39,8 @@ public class Telescope extends Subsystem {
 		return (getMainTelescope()).getAnalogInPosition();
 	}
 
-	private int forwardLimit=907;
-	private int reverseLimit=122;
+	private int forwardLimit=670;
+	private int reverseLimit=280;
 
 	public int getForwardLimit()
 	{
@@ -77,6 +77,10 @@ public class Telescope extends Subsystem {
 		telescope.set(pos);
 	}
 	
+	public boolean onTarget()
+	{
+		return Math.abs(getMainTelescope().getClosedLoopError()) <= 2;
+	}
 	public int getPotVal() 
 	{
 		return (int)getMainTelescope().getPosition();

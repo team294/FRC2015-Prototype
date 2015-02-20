@@ -132,11 +132,8 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("right encoder get", drivetrain.getRightEncoderDistance());
         SmartDashboard.putNumber("left encoder get", drivetrain.getLeftEncoderDistance());
         
-        SmartDashboard.putBoolean("leftToteBump:", Robot.toteGrab.getLeftMotor().isRevLimitSwitchClosed());
+        SmartDashboard.putBoolean("leftToteBump:", Robot.toteGrab.getLeftMotor().isFwdLimitSwitchClosed());
         SmartDashboard.putBoolean("rightToteBump:", Robot.toteGrab.getRightMotor().isFwdLimitSwitchClosed());
-        
-        SmartDashboard.putNumber("Left Tote Position:", Robot.toteGrab.getLeftPos());
-        SmartDashboard.putNumber("Right Tote Position:", Robot.toteGrab.getRightPos());
         
         SmartDashboard.putNumber("Telescope Position",  Robot.telescope.getPotVal());
         
@@ -145,10 +142,10 @@ public class Robot extends IterativeRobot {
 	
         SmartDashboard.putNumber("Left Tote Distance", Robot.toteGrab.getLeftDistanceSensor());
         
-        if(Robot.toteGrab.getRightMotor().isFwdLimitSwitchClosed()){
+        if(Robot.toteGrab.getRightLimit()){
     		Robot.toteGrab.resetRightEnc();
 		}
-        if(Robot.toteGrab.getLeftMotor().isFwdLimitSwitchClosed()){
+        if(Robot.toteGrab.getLeftLimit()){
     		Robot.toteGrab.resetLeftEnc();
 		}
 

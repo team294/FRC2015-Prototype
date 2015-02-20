@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -21,7 +20,6 @@ public class ToteGrabber extends Subsystem {
 	private CANTalon rightMotor = new CANTalon(RobotMap.toteCloseIntakeRight);
 	private CANTalon leftMotor = new CANTalon(RobotMap.toteCloseIntakeLeft);
 	
-	public DigitalInput bumpLeft = new DigitalInput(RobotMap.bumpLeft);
 	public AnalogInput distLeft = new AnalogInput(RobotMap.kAIN_distLeft);
 
 
@@ -40,6 +38,8 @@ public class ToteGrabber extends Subsystem {
 	{
 		leftMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		rightMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		leftMotor.reverseSensor(true);
+		rightMotor.reverseSensor(true);
 		
 		rightMotor.setPID(4.0, 0, 0);
 		leftMotor.setPID(4.0, 0, 0);
@@ -59,23 +59,13 @@ public class ToteGrabber extends Subsystem {
 	}
 
 	public void setLeftPosition(int pos) {
-		if (ControlMode.Position!=Robot.toteGrab.leftMotor.getControlMode()) {
-			if(!Robot.toteGrab.leftMotor.isControlEnabled()){
-				Robot.toteGrab.leftMotor.enableControl();
-			}
-			Robot.toteGrab.leftMotor.changeControlMode(ControlMode.Position);
-		}
-		leftMotor.set(pos);
+		leftMotor.changeControlMode(ControlMode.Position);
+		leftMotor.set(-pos);
 	}
 
 	public void setRightPosition(int pos) {
-		if (ControlMode.Position!=Robot.toteGrab.rightMotor.getControlMode()) {
-			if(!Robot.toteGrab.rightMotor.isControlEnabled()){
-				Robot.toteGrab.rightMotor.enableControl();
-			}
-			Robot.toteGrab.rightMotor.changeControlMode(ControlMode.Position);
-		}
-		rightMotor.set(pos);
+		rightMotor.changeControlMode(ControlMode.Position);
+		rightMotor.set(-pos);
 	}
 	
 	public int getRightPos()
@@ -115,11 +105,11 @@ public class ToteGrabber extends Subsystem {
 	
 	public boolean getRightLimit()
 	{
-		return rightMotor.isRevLimitSwitchClosed();
+		return rightMotor.isFwdLimitSwitchClosed();
 	}
 	public boolean getLeftLimit()
 	{
-		return leftMotor.isRevLimitSwitchClosed();
+		return leftMotor.isFwdLimitSwitchClosed();
 	}
 
 	public double getLeftDistanceSensor()
