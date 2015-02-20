@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class AutoDriveStraight extends Command {
-	
+
 	private double dis;
 	private double velocity;
 	//private int initDir;
@@ -16,53 +16,56 @@ public class AutoDriveStraight extends Command {
 	/**
 	 * 
 	 * @param distance is negative for backwards and positive for forwards.
+	 * speed is absolute val 0-1 and distance is in feet
 	 */
-    public AutoDriveStraight(double distance, double absoluteSpeed) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.drivetrain);
-    	dis=distance;
-    	velocity=absoluteSpeed;
-    }
-    public AutoDriveStraight(double distance) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.drivetrain);
-    	dis=distance;
-    	velocity=1;
-    }
+	public AutoDriveStraight(double distance, double absoluteSpeed) {
+		// Use requires() here to declare subsystem dependencies
+		// eg. requires(chassis);
+		requires(Robot.drivetrain);
+		dis=distance;
+		velocity=absoluteSpeed;
+	}
+	public AutoDriveStraight(double distance) {
+		// Use requires() here to declare subsystem dependencies
+		// eg. requires(chassis);
+		requires(Robot.drivetrain);
+		dis=distance;
+		velocity=1;
+	}
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	Robot.drivetrain.resetDriveEncoders();
-    	//initDir=(int) Robot.drivetrain.getYaw();
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		Robot.drivetrain.resetDriveEncoders();
+		//initDir=(int) Robot.drivetrain.getYaw();
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	if(dis<0){
-    		velocity*=-1;
-    	}
-    	Robot.drivetrain.autoDrive(velocity);
-    	
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		if(dis<0){
+			velocity*=-1;
+		}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-    	double left=Robot.drivetrain.getLeftEnc();
-    	double right=Robot.drivetrain.getRightEnc();
-        return (right>=dis)||(left>=dis);
-    }
+		Robot.drivetrain.autoDrive(velocity);
 
-    // Called once after isFinished returns true
-    protected void end() {
-    	Robot.drivetrain.stop();
-    	
-    }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	Robot.drivetrain.stop();
-    }
+	}
+
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		double left=Robot.drivetrain.getLeftEncoderDistance();
+		double right=Robot.drivetrain.getRightEncoderDistance();
+		return (right>=dis)||(left>=dis);
+	}
+
+	// Called once after isFinished returns true
+	protected void end() {
+		Robot.drivetrain.stop();
+
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+		Robot.drivetrain.stop();
+	}
 }

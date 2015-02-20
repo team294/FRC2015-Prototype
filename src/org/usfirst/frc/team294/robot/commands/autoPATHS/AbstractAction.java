@@ -1,4 +1,4 @@
-package org.usfirst.frc.team294.robot.commands.autoMode;
+package org.usfirst.frc.team294.robot.commands.autoPATHS;
 
 import edu.wpi.first.wpilibj.Timer;
 

@@ -1,9 +1,8 @@
 
 package org.usfirst.frc.team294.robot;
 
-import org.usfirst.frc.team294.robot.commands.autoMode.MultiLooper;
-import org.usfirst.frc.team294.robot.commands.autoMode.Navigator;
-import org.usfirst.frc.team294.robot.commands.autoMode.TrajectoryDriveController;
+import org.usfirst.frc.team294.robot.commands.autoPATHS.Navigator;
+import org.usfirst.frc.team294.robot.commands.autoPATHS.TrajectoryDriveController;
 import org.usfirst.frc.team294.robot.subsystems.CanGrab;
 import org.usfirst.frc.team294.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team294.robot.subsystems.IntakeRollerArms;
@@ -52,7 +51,7 @@ public class Robot extends IterativeRobot {
 	
 	public static Navigator navigator;
 	
-	public static MultiLooper autoUpdater100Hz = new MultiLooper(1.0 / 100.0);
+	//public static MultiLooper autoUpdater100Hz = new MultiLooper(1.0 / 100.0);
 	
     Command autonomousCommand;
 
@@ -73,8 +72,8 @@ public class Robot extends IterativeRobot {
     	trajectoryDriveController = new TrajectoryDriveController();
     	navigator = new Navigator(drivetrain);
     	
-    	autoUpdater100Hz.addLoopable(navigator);
-    	autoUpdater100Hz.addLoopable(trajectoryDriveController);
+//    	autoUpdater100Hz.addLoopable(navigator);
+//    	autoUpdater100Hz.addLoopable(trajectoryDriveController);
     	
     	SmartDashboard.putData(drivetrain);
 		SmartDashboard.putData(toteGrab);

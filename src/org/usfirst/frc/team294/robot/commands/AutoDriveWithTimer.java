@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class AutoDriveTimer extends Command {
+public class AutoDriveWithTimer extends Command {
 
 	private double timeInit;
 	private double elapsedTime;
 	private boolean forwBack;
 	private double time;
-    public AutoDriveTimer(boolean forwBack, double time) {
+    public AutoDriveWithTimer(boolean forwBack, double time) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	this.time = time;

@@ -28,16 +28,16 @@ public class RepositionDrivetrain extends CommandGroup {
     	if(leftSide)
     	{
     		addSequential(new AutoRotateXDegreesRel(45, false));
-        	addSequential(new AutoDriveTimer(true, .25));
+        	addSequential(new AutoDriveWithTimer(true, .25));
         	addSequential(new AutoRotateXDegreesRel(-45));
-        	addSequential(new AutoDriveTimer(false, .4));
+        	addSequential(new AutoDriveWithTimer(false, .4));
     	}
     	else
     	{
     	addSequential(new AutoRotateXDegreesRel(-45, true));
-    	addSequential(new AutoDriveTimer(true, .25));
+    	addSequential(new AutoDriveWithTimer(true, .25));
     	addSequential(new AutoRotateXDegreesRel(45));
-    	addSequential(new AutoDriveTimer(false, .4));
+    	addSequential(new AutoDriveWithTimer(false, .4));
     	}
     }
 }

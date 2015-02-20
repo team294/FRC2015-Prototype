@@ -1,4 +1,4 @@
-package org.usfirst.frc.team294.robot.commands.autoMode;
+package org.usfirst.frc.team294.robot.commands.autoPATHS;
 
 import org.usfirst.frc.team294.robot.Robot;
 import com.team254.lib.trajectory.Path;

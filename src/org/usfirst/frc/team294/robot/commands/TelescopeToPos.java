@@ -8,28 +8,12 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class TelescopeToPos extends Command {
-	
-	public static enum TelescopeMotorAction{
-		GROUND,
-		CLOSE,
-		PAN_LEFT,
-		PAN_RIGHT,
-		AUTO_OPEN,
-		STOP,
-		WIDE_TOTE,
-		NARROW_TOTE,
-		OPEN_SLIGHT
-	}
-	
-	
+
 	private int pos;
     public TelescopeToPos(int pos) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	this.pos = pos;
-    	requires(Robot.telescope);
-    }
-    public TelescopeToPos(TelescopeMotorAction action){
     	requires(Robot.telescope);
     }
 
