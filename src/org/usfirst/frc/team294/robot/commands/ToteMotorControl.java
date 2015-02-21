@@ -42,7 +42,7 @@ public class ToteMotorControl extends Command {
 	//private int autoAbsCloseDist=300;//TODO
 	private int leftInit, rightInit;
 	private double tolerance=30;
-	ToteMotorAction action;
+	protected ToteMotorAction action;
 	private int targetPosL, targetPosR;
 	public ToteMotorControl(ToteMotorAction a) {
 		requires(Robot.toteGrab);
@@ -145,6 +145,8 @@ public class ToteMotorControl extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
+    	if (timeSinceInitialized() > 2.0)
+    		return true;
 		switch(this.action){
 		case OPEN:
 			return Robot.toteGrab.getLeftLimit() && Robot.toteGrab.getRightLimit();

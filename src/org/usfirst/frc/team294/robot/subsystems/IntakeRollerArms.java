@@ -4,6 +4,7 @@ import org.usfirst.frc.team294.robot.RobotMap;
 import org.usfirst.frc.team294.robot.util.MultiCANTalon;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -22,6 +23,9 @@ public class IntakeRollerArms extends Subsystem {
 	DoubleSolenoid armPistons = new DoubleSolenoid(RobotMap.kSOL_IntakePistons1, RobotMap.kSOL_IntakePistons2);
 	Solenoid secondStage = new Solenoid(RobotMap.kSOL_IntakePistons3);
 	
+	DigitalInput bumpLeft = new DigitalInput(RobotMap.toteBumpSwitchLeft);
+	DigitalInput bumpRight = new DigitalInput(RobotMap.toteBumpSwitchRight);
+	
 	private boolean bothOpen=false;
 	//DigitalInput buttonIntake = new DigitalInput(RobotMap.KDIN_buttonIntake);
 	//LimitSwitchTrigger buttonIntakeHit = new LimitSwitchTrigger(buttonIntake);
@@ -32,6 +36,11 @@ public class IntakeRollerArms extends Subsystem {
 		//buttonIntakeHit.whileActive(new IntakeStop());
 		//this.close();
 		intakeMotors.SetInverted(1, true);
+	}
+	
+	public boolean getBumpSwitch()
+	{
+		return !bumpLeft.get() || !bumpRight.get();
 	}
 	
 	public boolean isOpen(){
@@ -61,7 +70,12 @@ public class IntakeRollerArms extends Subsystem {
 	public synchronized void openAll()
 	{
 		armPistons.set(DoubleSolenoid.Value.kForward);
-		secondStage.set(true);
+		//secondStage.set(true);
+	}
+	
+	public synchronized void openWideTote()
+	{
+		armPistons.set(DoubleSolenoid.Value.kReverse);
 	}
 	
 	public synchronized void closeAll()
@@ -80,8 +94,8 @@ public class IntakeRollerArms extends Subsystem {
 		setMotorSpeed(-.8);
 		
 	}
-	public synchronized void closeMotor(){
-		setMotorSpeed(.8);
+	public synchronized void closeMotor(double speed){
+		setMotorSpeed(speed);
 		
 	}
 	

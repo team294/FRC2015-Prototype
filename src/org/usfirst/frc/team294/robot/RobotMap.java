@@ -30,21 +30,17 @@ public class RobotMap {
  	public static int intakeWheelMotorRight = 9;
  	public static int intakeWheelMotorLeft = 10;
 
- 	// Digital Inputs
- 	public static int kDIN_leftDriveEncoderA = 4;
- 	public static int kDIN_leftDriveEncoderB = 1;
- 	public static int kDIN_rightDriveEncoderA = 2;
- 	public static int kDIN_rightDriveEncoderB = 3;
-
- 	public static int bumpLeft = 0;
+ 	// Digital Inputs 
+ 	public static int toteBumpSwitchLeft = 9;
+ 	public static int toteBumpSwitchRight = 8;
  	// Analog Inputs
  	public static int kAIN_distLeft=0;
  	// Solenoids
 
  	public static int kSOL_canPiston;
- 	public static int kSOL_IntakePistons1 = 1;
- 	public static int kSOL_IntakePistons2 = 2;
-	public static int kSOL_IntakePistons3 = 3;
+ 	public static int kSOL_IntakePistons1 = 0;
+ 	public static int kSOL_IntakePistons2 = 1;
+	public static int kSOL_IntakePistons3 = 2;
 	
 	public static int kSOL_system_module = 1;
  	public static int kSOL_system = 0;

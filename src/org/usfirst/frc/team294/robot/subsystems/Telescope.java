@@ -1,5 +1,6 @@
 package org.usfirst.frc.team294.robot.subsystems;
 
+import org.usfirst.frc.team294.robot.Robot;
 import org.usfirst.frc.team294.robot.RobotMap;
 import org.usfirst.frc.team294.robot.util.MultiCANTalon;
 
@@ -14,7 +15,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class Telescope extends Subsystem {
-
+	public static enum TelescopePosition {
+		PICKUP,
+		CARRY,
+		GROUND_1TOTE,
+		GROUND_2TOTE,
+		GROUND_3TOTE,
+		STEP_1TOTE,
+		STEP_2TOTE,
+		STEP_3TOTE,
+		SCORE_1TOTE,
+		SCORE_2TOTE,
+		SCORE_3TOTE
+	}
+	
 	int[] telescopeMotors = {RobotMap.telescope1,RobotMap.telescope2};
 	MultiCANTalon telescope = new MultiCANTalon(telescopeMotors);
 
@@ -70,11 +84,47 @@ public class Telescope extends Subsystem {
 		telescope.set(value);
 	}
 
-	public void setPosition(int pos)
+	int closedLoopPos;
+	TelescopePosition closedLoopPosEnum = TelescopePosition.CARRY;
+	
+	public void setPositionTarget(int pos)
+	{
+		closedLoopPos = pos;
+	}
+	public TelescopePosition getPositionTarget()
+	{
+		return closedLoopPosEnum;
+	}
+	public void setPositionTarget(TelescopePosition pos)
+	{
+		closedLoopPosEnum = pos;
+    	closedLoopPos = getPotVal();
+    	int bottom_pos = getReverseLimit();
+    	int top_pos = getForwardLimit();
+    	switch (pos) {
+    	case PICKUP: closedLoopPos = bottom_pos; break;
+    	case CARRY: closedLoopPos = bottom_pos + 40; break;
+    	case GROUND_1TOTE: closedLoopPos = top_pos - (670 - 417); break;
+    	case GROUND_2TOTE: closedLoopPos = top_pos - (670 - 525); break;
+    	case GROUND_3TOTE: break;
+    	case STEP_1TOTE: break;
+    	case STEP_2TOTE: break;
+    	case STEP_3TOTE: break;
+    	case SCORE_1TOTE: break;
+    	case SCORE_2TOTE: break;
+    	case SCORE_3TOTE: break;
+    	}
+    	if (getPotVal() < closedLoopPos)
+    		getMainTelescope().setProfile(0); //Values going up
+    	else
+    		getMainTelescope().setProfile(1); //Values going down
+	}
+	
+	public void gotoPosition()
 	{
 		SmartDashboard.putString("teleMode", "pos");
 		getMainTelescope().changeControlMode(ControlMode.Position);
-		telescope.set(pos);
+		telescope.set(closedLoopPos);
 	}
 	
 	public boolean onTarget()

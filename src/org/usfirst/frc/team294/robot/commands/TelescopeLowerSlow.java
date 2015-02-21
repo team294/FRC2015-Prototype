@@ -1,45 +1,32 @@
 package org.usfirst.frc.team294.robot.commands;
 
 import org.usfirst.frc.team294.robot.Robot;
-import org.usfirst.frc.team294.robot.subsystems.Telescope;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class TelescopeToPos extends Command {
-	
-	private int pos;
-	private Telescope.TelescopePosition action = null;
-    public TelescopeToPos(int pos) {
-    	this.pos = pos;
+public class TelescopeLowerSlow extends Command {
+
+	int targetPos;
+    public TelescopeLowerSlow() {
     	requires(Robot.telescope);
-    }
-    public TelescopeToPos(Telescope.TelescopePosition action){
-    	requires(Robot.telescope);
-    	this.action = action;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (action != null) {
-    		Robot.telescope.setPositionTarget(action);
-    	} else {
-    		Robot.telescope.setPositionTarget(pos);
-    	}
+    	targetPos = Robot.telescope.getPotVal() - 15;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.telescope.gotoPosition();
+    	Robot.telescope.setManual(-0.2);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (timeSinceInitialized() < 0.2)
-    		return false;
-    	return Robot.telescope.onTarget();
+        return Robot.telescope.getPotVal() <= targetPos;
     }
 
     // Called once after isFinished returns true

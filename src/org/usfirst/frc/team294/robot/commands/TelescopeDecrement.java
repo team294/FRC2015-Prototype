@@ -8,26 +8,29 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class TelescopeToPos extends Command {
-	
-	private int pos;
-	private Telescope.TelescopePosition action = null;
-    public TelescopeToPos(int pos) {
-    	this.pos = pos;
+public class TelescopeDecrement extends Command {
+
+    public TelescopeDecrement() {
     	requires(Robot.telescope);
-    }
-    public TelescopeToPos(Telescope.TelescopePosition action){
-    	requires(Robot.telescope);
-    	this.action = action;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (action != null) {
-    		Robot.telescope.setPositionTarget(action);
-    	} else {
-    		Robot.telescope.setPositionTarget(pos);
+    	Telescope.TelescopePosition action = Robot.telescope.getPositionTarget();
+    	switch (action) {
+    	case PICKUP: break;
+    	case CARRY: action = Telescope.TelescopePosition.PICKUP; break;
+    	case GROUND_1TOTE: action = Telescope.TelescopePosition.CARRY; break;
+    	case GROUND_2TOTE: action = Telescope.TelescopePosition.GROUND_1TOTE; break;
+    	case GROUND_3TOTE: action = Telescope.TelescopePosition.GROUND_2TOTE; break;
+    	case STEP_1TOTE: break;
+    	case STEP_2TOTE: break;
+    	case STEP_3TOTE: break;
+    	case SCORE_1TOTE: break;
+    	case SCORE_2TOTE: break;
+    	case SCORE_3TOTE: break;
     	}
+		Robot.telescope.setPositionTarget(action);
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -15,14 +15,16 @@ public class IntakeArmControl extends Command {
 		CLOSE,
 		STOP,
 		MOTOR_OUT,
-		MOTOR_IN
+		MOTOR_IN,
+		WIDE_TOTE
 	}
 
-	private IntakeArmAction act;
+	protected IntakeArmAction act;
 
 	public IntakeArmControl(IntakeArmAction action) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
+		requires(Robot.intakeRollerArms);
 		this.act=action;
 	}
 
@@ -48,30 +50,22 @@ public class IntakeArmControl extends Command {
 		case OPEN_MID:
 			Robot.intakeRollerArms.openMid();
 			break;
-			
+		case WIDE_TOTE:
+			Robot.intakeRollerArms.openWideTote();
+			break;
 		case MOTOR_OUT:
 			Robot.intakeRollerArms.openMotor();
 			break;
 			
 		case MOTOR_IN:
-			Robot.intakeRollerArms.closeMotor();
+			Robot.intakeRollerArms.closeMotor(0.6);
 			break;
 		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		switch(this.act)
-		{
-		case OPEN:
-			return true;
-		case CLOSE:
-			return true;
-		case STOP:
-			return true;
-		default:
-			return true;
-		}
+		return true;
 	}
 
 	// Called once after isFinished returns true
